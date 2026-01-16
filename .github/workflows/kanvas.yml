@@ -21,6 +21,7 @@ permissions:
 
 jobs:
   MeshMapScreenshot:
+    if: false  # to disable the workflow temporarily
     runs-on: ubuntu-24.04
     outputs:
       resource_url: ${{ steps.test_result.outputs.resource_url }}

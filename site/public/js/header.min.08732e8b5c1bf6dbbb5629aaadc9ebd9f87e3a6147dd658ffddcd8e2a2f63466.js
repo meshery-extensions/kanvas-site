@@ -1,0 +1,1 @@
+let tl=gsap.timeline({defaults:{ease:"power4.out"}});tl.from(".main-nav ul li a",{opacity:0,y:-50,duration:1,stagger:.1}),tl.from(".btn-secondary",{x:100,opacity:0,rotation:360,duration:.8},"-=0.5"),tl.from(".btn-primary",{x:100,opacity:0,rotation:360,duration:.8},"<"),document.addEventListener("visibilitychange",()=>{document.visibilityState==="visible"&&tl.restart()})

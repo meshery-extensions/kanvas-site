@@ -1,0 +1,188 @@
+.modes-section {
+  margin-top: 6rem;
+  padding: 100px 20px;
+  background-color: #2a2e20;
+  text-align: center;
+
+  .modes-header {
+    margin-bottom: 30px;
+
+    .modes-badge {
+      color: #b1b6b8;
+      font-size: 0.6rem;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: 20px;
+
+      .dot {
+        width: 6px;
+        height: 6px;
+        background: #00b399;
+        border-radius: 50%;
+      }
+    }
+
+    .modes-title {
+      margin-top:1rem;
+      font-size: 2.5rem;
+      color: #fff;
+      margin-bottom: 1rem;
+      font-weight: 800;
+    }
+
+    .modes-subtitle {
+      color: #b1b6b8;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+  }
+
+  .modes-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    max-width: 1200px;
+    margin: 0 5rem;
+  }
+
+  .mode-card {
+    background: #2a2e20;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    padding: 24px 32px;
+    border-radius: 16px;
+    text-align: left;
+    transition: all 0.3s ease;
+
+    .icon-container {
+        // 2. Reduce gap after icon
+        margin-bottom: 16px; 
+        width: 32px;
+        height: 32px;
+    }
+
+    &:hover {
+      border-color: rgba(0, 179, 153, 0.4);
+      transform: translateY(-10px);
+    }
+
+    &:nth-child(1), &:nth-child(2) {
+      i { color: #00b399; } 
+    }
+
+    .mode-icon {
+      font-size: 1rem;
+      margin-bottom: 20px;
+
+      &.teal { color: #00b399; }
+      &.green { color: #4caf50; }
+      &.yellow { color: #ffeb3b; }
+    }
+
+    h3 {
+      color: #fff;
+      margin-bottom: 8px; 
+      font-size: 1rem;
+    }
+
+    p {
+      color: #b1b6b8;
+      margin-bottom: 16px;
+      font-size: 0.9rem;
+      line-height: 1.4;
+    }
+
+    .mode-features {
+      list-style: none;
+      padding: 0;
+      margin-bottom: 20px;
+
+      li {
+        color: #b1b6b8;
+        font-size: 0.85rem;
+        margin-bottom: 4px;
+
+        &:before {
+          content: "•";
+          color: #00b399;
+          margin-right: 8px;
+        }
+      }
+    }
+
+    .learn-more {
+      color: #00b399;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.9rem;
+
+      &:hover {
+        color:#e4d233;
+        i {
+            color:#e4d233
+        }
+      }
+      
+    }
+  }
+
+  .icon-container {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 24px;
+    font-size: 1.2rem;
+
+    &.teal { color: #00b399; }
+    &.green { color: #4caf50; }
+    &.yellow { color: #ffeb3b; }
+
+    i {
+      filter: drop-shadow(0 0 8px currentColor);
+    }
+  }
+  .modes-footer {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    padding: 0 20px;
+
+    .footer-banner {
+      background-color: #2a2e20; // Matches your card color
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      padding: 12px 12px 12px 30px; // More padding on left for the text
+      border-radius: 10px; // Makes it a pill shape
+      display: flex;
+      align-items: center;
+      gap: 30px;
+      max-width: fit-content;
+
+      p {
+        color: #b1b6b8;
+        margin: 0;
+        font-size: 0.95rem;
+      }
+
+      .btn-get-started {
+        background-color: #00b399; // Meshery Teal
+        color: #050505;
+        padding: 10px 24px;
+        border-radius: 10px;
+        text-decoration: none;
+        font-weight: 700;
+        font-size: 0.9rem;
+        transition: all 0.3s ease;
+
+        &:hover {
+          background-color: #00d1b2;
+          transform: scale(1.05);
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,1 @@
+let tl=gsap.timeline({defaults:{ease:"power4.out"}});gsap.from(".main-nav ul li a",{opacity:0,duration:2,delay:1,y:-100,stagger:.2}),tl.from(".btn-secondary",{x:300,duration:1,delay:1,rotation:360}),tl.from(".btn-primary",{x:300,duration:1,rotation:360})

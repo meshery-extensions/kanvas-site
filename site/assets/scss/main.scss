@@ -1,0 +1,38 @@
+// 1. Variables
+$kanvas-black: #050505;
+$meshery-teal: #00b399;
+
+// 2. Imports
+@import "header";
+@import "hero";
+@import "modes";
+@import "demo";
+
+// 3. Global Styles
+body {
+  background-color: $kanvas-black;
+  color: #ffffff;
+  margin: 0;
+  -webkit-font-smoothing: antialiased;
+  font-family: 'Inter', sans-serif;
+}
+.logo-img {
+  height: 35px;
+  width: auto;
+  display: block;
+}
+.btn-primary {
+  background-color: $meshery-teal;
+  color: white;
+  padding: 0.5rem 1.25rem;
+  border-radius: 4px;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.9rem;
+  transition: all 0.2s ease;
+
+  &:hover {
+    filter: brightness(1.1);
+    box-shadow: 0 0 15px rgba(0, 179, 153, 0.3);
+  }
+}

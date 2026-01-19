@@ -1,0 +1,1 @@
+let tl=gsap.timeline({});gsap.from(".main-nav ul li a",{opacity:0,duration:2,delay:1,y:-100,stagger:.2}),gsap.from(".btn-secondary",{})

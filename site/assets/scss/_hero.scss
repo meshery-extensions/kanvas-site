@@ -1,0 +1,110 @@
+.hero-section {
+  padding: 40px 20px;
+  text-align: center;
+  background: radial-gradient(circle at center, #111 0%, #000 100%);
+
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(0, 179, 153, 0.3);
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    color: #00b399;
+  }
+
+  .hero-title {
+    margin-top: 1rem;
+    font-size: 5rem;
+    line-height: 1.1;
+    font-weight: 800;
+    margin-bottom: 1rem;
+    -webkit-text-stroke: 2px #000000;
+    
+    .text-gradient {
+      background: linear-gradient(90deg, #00b399, #00d1b2);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+  }
+
+  .hero-subtitle {
+    font-size: 1.2rem;
+    color: #fff;
+    max-width: 700px;
+    margin: 0 auto 2rem;
+    line-height: 1.6;
+    
+    strong { color: #00b399; }
+  }
+
+  .hero-stats {
+    display: flex;
+    justify-content: center;
+    gap: 4rem;
+    padding-top: 3rem;
+
+    .stat-item {
+      display: flex;
+      gap: 5px;
+
+      i{color: #00b399; padding-top:0.5rem;}
+      strong { display: block; font-size: 1.5rem; color: #fff; }
+      span { color: #fff; font-size: 0.7rem; }
+    }
+  }
+
+  .hero-actions {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1.5rem;
+  margin-top: 2rem;
+
+  // The "Start Designing" Button
+  .btn-start {
+    background-color: #00b399; // Meshery Teal
+    color: #050505; // Dark text for contrast
+    padding: 12px 28px;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 0.9rem;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    border: 2px solid #00b399;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+    i {
+      font-size: 0.9rem;
+    }
+
+    &:hover {
+      background-color: #00d1b2;
+      border-color: #00d1b2;
+      transform: translateY(-3px);
+      box-shadow: 0 10px 20px rgba(0, 179, 153, 0.3);
+    }
+  }
+  .btn-outline {
+    background-color: transparent;
+    color: #ffffff;
+    padding: 12px 28px;
+    border-radius: 8px;
+    font-weight: 500;
+    font-size: 0.9rem;
+    text-decoration: none;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    transition: all 0.3s ease;
+
+    &:hover {
+      background-color: rgba(255, 255, 255, 0.05);
+      border-color: rgba(255, 255, 255, 0.5);
+      color: #00b399;
+    }
+  }
+}
+}

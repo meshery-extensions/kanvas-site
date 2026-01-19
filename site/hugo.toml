@@ -25,6 +25,12 @@ enableMissingTranslationPlaceholders = true
     url = "/community/"
     weight = 30
 
+[params]
+  dark-mode = true
+  logo_light = "images/kanvas-logo-light.svg"
+  logo_dark = "images/kanvas-logo-dark.svg"
+  description = "Visual cloud native management for Kubernetes"
+
 
 [module]
   # uncomment line below for temporary local development of module

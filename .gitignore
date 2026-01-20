@@ -64,3 +64,6 @@ dist/**
 **errorutil_analyze_summary.json
 **errorutil_errors_export.json
 
+# Ignore Hugo build output inside site/
+site/public/
+site/resources/

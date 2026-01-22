@@ -8,29 +8,28 @@ on:
 
 jobs:
   deploy-preview:
-    if: github.repository == 'meshery-extensions/kanvas-site'
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@master
+        uses: actions/checkout@v6
 
       - name: Download Site dir
-        uses: dawidd6/action-download-artifact@v6
+        uses: dawidd6/action-download-artifact@v11
         with:
           github_token: ${{ secrets.GH_ACCESS_TOKEN }}
           workflow: build-and-preview-site.yml
           run_id: ${{ github.event.workflow_run.id }}
-          name: site-dir
+          name: public-dir
 
       - name: Unzip Site
         run: |
           rm -rf ./public
-          unzip site-dir.zip
-          rm -f site-dir.zip
+          unzip public-dir.zip
+          rm -f public-dir.zip
 
       - name: Deploy to Netlify
         id: netlify
-        uses: nwtgck/actions-netlify@v1.1
+        uses: nwtgck/actions-netlify@v3
         with:
           publish-dir: 'public'
           production-deploy: false
@@ -45,5 +44,3 @@ jobs:
         with:
           token: ${{ secrets.GH_ACCESS_TOKEN }}
           deploy_url: "${{ steps.netlify.outputs.deploy-url }}"
-
-

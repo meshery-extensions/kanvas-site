@@ -461,13 +461,21 @@ ifeq (,$(findstring $(GOVERSION), $(INSTALLED_GO_VERSION)))
 #	 Ensure go '$(GOVERSION).x' is installed and available in your 'PATH'.)
 endif
 
-.PHONY: site site-build
+.PHONY: site site-setup site-build setup build
 
 site: ## Run Kanvas site locally (Hugo dev server)
 	cd site && hugo server -D && hugo mod tidy
 
+site-setup: ## Setup Kanvas site dependencies (npm install)
+	cd site && npm ci
+
 site-build: ## Build Kanvas site (minified output)
 	cd site && hugo --minify
+
+# Generic targets for CI/CD workflows (matching layer5 pattern)
+setup: site-setup ## Setup dependencies
+
+build: site-build ## Build the site
 
 .PHONY: help
 

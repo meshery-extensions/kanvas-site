@@ -1,45 +1,51 @@
 name: Build and Preview Site
 on:
   pull_request:
-    branches: [ master ]
+    branches: [master]
     types: [opened, synchronize, reopened]
-    paths:
-    - '!**'
-    - 'site/**'
-    - 'hugo.toml'
-    - 'Makefile'
+
 jobs:
-  trigger-site-preview:
-    runs-on: ubuntu-24.04
+  site-preview:
+    runs-on: ubuntu-latest
     steps:
-      - name: Checkout 🛎️
-        uses: actions/checkout@master
+      - name: Checkout
+        uses: actions/checkout@v4
         with:
           persist-credentials: false
+          fetch-depth: 1
+
       - name: Setup Hugo
         uses: peaceiris/actions-hugo@v3
         with:
-          hugo-version: '0.154.5'
+          hugo-version: "0.154.5"
           extended: true
+
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: "20"
-      - name: Install npm PostCSS
+
+      - name: Install and Buil
+        run: |
+          make setup
+          make build
+
+      - name: Broken Link Check
+        uses: technote-space/broken-link-checker-action@v2
+        with:
+          target: ./site/public/**/*.html
+
+      - name: Zip Site
         run: |
           cd site
-          npm ci
-      - name: Build site 🔧
-        run: make site-build
-      - name: Zip site output
-        run: |
-          cd site
-          zip -r ../site-dir.zip public
+          zip -r ../public-dir.zip public
+
       - name: Upload files
         uses: actions/upload-artifact@v4
         with:
-          name: site-dir
-          path: ./site-dir.zip
+          name: public-dir
+          path: ./public-dir.zip
           retention-days: 1
+
       - name: Trigger Inner workflow
-        run: echo "triggering workflow"
+        run: echo "triggering inner workflow"

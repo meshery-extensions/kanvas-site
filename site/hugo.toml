@@ -1,4 +1,4 @@
-baseURL = 'https://kanvas.meshery.io'
+baseURL = 'https://kanvas.meshery.io' #temporary
 title = 'Kanvas'
 
 # Language settings

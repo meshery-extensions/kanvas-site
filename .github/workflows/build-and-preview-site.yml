@@ -25,7 +25,7 @@ jobs:
         with:
           node-version: "20"
 
-      - name: Install and Buil
+      - name: Install and Build
         run: |
           make setup
           make build

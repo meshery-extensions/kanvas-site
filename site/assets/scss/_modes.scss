@@ -1,41 +1,41 @@
 .modes-section {
   margin-top: 6rem;
   padding: 100px 20px;
-  background-color: $color-surface;
+  background-color: #2a2e20;
   text-align: center;
 
   .modes-header {
     margin-bottom: 30px;
 
     .modes-badge {
-      color: $color-muted;
-      font-size: $font-size-xs;
+      color: $casper;
+      font-size: $font-size-base * .75;
       text-transform: uppercase;
       letter-spacing: 2px;
       display: flex;
       align-items: center;
       justify-content: center;
       gap: 10px;
-      margin-bottom: $space-5;
+      margin-bottom: $spacer * 1.25;
 
       .dot {
         width: 6px;
         height: 6px;
-        background: $color-primary;
+        background: #00b399;
         border-radius: 50%;
       }
     }
 
     .modes-title {
-      margin-top: $space-4;
-      font-size: $font-size-xl;
-      color: $color-text;
-      margin-bottom: $space-4;
+      margin-top: $spacer;
+      font-size: $font-size-base * 1.5;
+      color: $white;
+      margin-bottom: $spacer;
       font-weight: 800;
     }
 
     .modes-subtitle {
-      color: $color-muted;
+      color: $casper;
       max-width: 600px;
       margin: 0 auto;
     }
@@ -51,27 +51,27 @@
   }
 
   .mode-card {
-    background: $color-surface;
-    border: 1px solid $color-border;
-    padding: $space-6 $space-7;
-    border-radius: $radius-md;
+    background: #2a2e20;
+    border: 1px solid $border-color;
+    padding: $spacer * 1.5 $spacer * 1.75;
+    border-radius: 8px;
     text-align: left;
-    transition: $transition;
+    transition: all 0.3s ease;
 
     &:hover {
-      border-color: $color-border-hover;
+      border-color: $primary;
       transform: translateY(-10px);
     }
 
     h3 {
-      color: $color-text;
-      margin-bottom: $space-2;
-      font-size: $font-size-lg;
+      color: $white;
+      margin-bottom: $spacer * .5;
+      font-size: $font-size-base * 1.25;
     }
 
     p {
-      color: $color-muted;
-      margin-bottom: $space-4;
+      color: $casper;
+      margin-bottom: $spacer;
       font-size: 0.9rem;
       line-height: 1.4;
     }
@@ -79,32 +79,32 @@
     .mode-features {
       list-style: none;
       padding: 0;
-      margin-bottom: $space-5;
+      margin-bottom: $spacer * 1.25;
 
       li {
-        color: $color-muted;
-        font-size: $font-size-sm;
-        margin-bottom: $space-1;
+        color: $casper;
+        font-size: $font-size-base * .875;
+        margin-bottom: $spacer * .25;
 
         &:before {
           content: "•";
-          color: $color-primary;
-          margin-right: $space-2;
+          color: #00b399;
+          margin-right: $spacer * .5;
         }
       }
     }
 
     .learn-more {
-      color: $color-primary;
+      color: #00b399;
       text-decoration: none;
       font-weight: 600;
       font-size: 0.9rem;
 
       &:hover {
-        color: $color-accent;
+        color: #e4d233;
 
         i {
-          color: $color-accent;
+          color: #e4d233;
         }
       }
     }
@@ -113,13 +113,13 @@
   .icon-container {
     width: 32px;
     height: 32px;
-    margin-bottom: $space-4;
+    margin-bottom: $spacer;
     display: flex;
     align-items: center;
     justify-content: center;
     font-size: 1.2rem;
 
-    &.teal { color: $color-primary; }
+    &.teal { color: #00b399; }
     &.green { color: #4caf50; }
     &.yellow { color: #ffeb3b; }
 
@@ -129,39 +129,39 @@
   }
 
   .modes-footer {
-    margin-top: $space-5;
+    margin-top: $spacer * 1.25;
     display: flex;
     justify-content: center;
     padding: 0 20px;
 
     .footer-banner {
-      background-color: $color-surface;
-      border: 1px solid $color-border;
-      padding: $space-3 $space-3 $space-3 $space-7;
-      border-radius: $radius-sm;
+      background-color: #2a2e20;
+      border: 1px solid $border-color;
+      padding: $spacer * 0.75 $spacer * 0.75 $spacer * 0.75 $spacer * 1.75;
+      border-radius: 4px;
       display: flex;
       align-items: center;
-      gap: $space-7;
+      gap: $spacer * 1.75;
       max-width: fit-content;
 
       p {
-        color: $color-muted;
+        color: $casper;
         margin: 0;
         font-size: $font-size-base;
       }
 
       .btn-get-started {
-        background-color: $color-primary;
-        color: $color-bg;
+        background-color: #00b399;
+        color: #050505;
         padding: 10px 24px;
-        border-radius: $radius-sm;
+        border-radius: 4px;
         text-decoration: none;
         font-weight: 700;
         font-size: 0.9rem;
-        transition: $transition;
+        transition: all 0.3s ease;
 
         &:hover {
-          background-color: lighten($color-primary, 8%);
+          background-color: lighten(#00b399, 8%);
           transform: scale(1.05);
         }
       }

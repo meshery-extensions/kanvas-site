@@ -1,38 +1,38 @@
 .community-section {
   padding: 100px 20px;
-  background-color: $color-surface;
+  background-color: #2a2e20;
   text-align: center;
 
   .community-header {
     margin-bottom: 50px;
 
     .community-badge {
-      color: $color-muted;
+      color: $casper;
       font-size: 0.8rem;
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: $space-3;
+      gap: $spacer * 0.75;
       margin-bottom: 15px;
 
       .dot {
         width: 6px;
         height: 6px;
-        background: $color-primary;
+        background: #00b399;
         border-radius: 50%;
       }
     }
 
     .community-title {
-      margin-top: $space-4;
-      font-size: $font-size-xl;
-      color: $color-text;
-      margin-bottom: $space-4;
+      margin-top: $spacer;
+      font-size: $font-size-base * 1.5;
+      color: $white;
+      margin-bottom: $spacer;
       font-weight: 800;
     }
 
     .capabilities-subtitle { // Using the class from your HTML
-      color: $color-muted;
+      color: $casper;
       max-width: 600px;
       margin: 0 auto;
     }
@@ -54,7 +54,7 @@
     text-decoration: none;   // Removes default underline
     background: rgba($white, 0.03); 
     border: 1px solid rgba($primary, 0.2); 
-    border-radius: $radius-md;
+    border-radius: 8px;
     padding: 35px;
     text-align: left;
     transition: all 0.3s ease;
@@ -117,7 +117,7 @@
       justify-content: center;
 
       .community-primary {
-        background-color: $secondary;
+        background-color: $primary;
         color: $white;
         padding: 14px 32px;
         font-weight: 700;
@@ -140,10 +140,10 @@
   }
 }
 .community-footer{
-    color: $color-muted;
+    color: $casper;
     font-size: 0.9rem;
     a {
-        color: $color-primary;
+        color: #00b399;
         text-decoration: none;
         &:hover {
             text-decoration: underline;

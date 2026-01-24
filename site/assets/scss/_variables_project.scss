@@ -3,28 +3,6 @@
 $enable-gradients: true;
 $enable-shadows: false;
 
-$white: #ffffff !default;
-$black: #000000 !default;
-$gray-100: #f8f9fa !default;
-$gray-200: #e9ecef !default;
-$gray-300: #dee2e6 !default;
-$gray-400: #ced4da !default;
-$gray-500: #adb5bd !default;
-$gray-600: #6c757d !default; // This is the one Hugo is missing
-$gray-700: #495057 !default;
-$gray-800: #343a40 !default;
-$gray-900: #212529 !default;
-$spacer: 1rem !default;
-$font-size-base: 1rem !default;
-
-$font-weight-lighter: 100 !default;
-$font-weight-light:   300 !default;
-$font-weight-normal:  400 !default;
-$font-weight-medium:  500 !default;
-$font-weight-bold:    700 !default;
-$font-weight-bolder:  900 !default;
-
-$border-radius: .25rem !default;
 // Theme colors
 
 $primary: #00b39f;
@@ -139,46 +117,3 @@ $navbar-dark-hover-color: rgba($white, 0.35) !default;
 // Footer
 
 $list-inline-padding: $spacer;
-
-
-$color-text: #ffffff;
-$color-primary: #00b399;
-$color-bg: #050505;
-$color-surface: #2a2e20;
-$color-text: #ffffff;
-$color-muted: #b1b6b8;
-$color-primary: #00b399;
-$color-accent: #e4d233;
-
-$transition: all 0.3s ease;
-
-$radius-md: 16px;
-
-$space-1: ($spacer * .25) !default; // 4px
-$space-2: ($spacer * .5) !default;  // 8px
-$space-3: ($spacer * .75) !default; // 12px
-$space-4: $spacer !default;         // 16px
-$space-5: ($spacer * 1.25) !default; // 20px
-$space-6: ($spacer * 1.5) !default;  // 24px
-$space-7: ($spacer * 1.75) !default; // 28px
-$space-8: ($spacer * 2) !default;    // 32px
-
-// Typography Scale
-$font-size-base: 1rem !default; // Usually 16px
-$font-size-lg:   ($font-size-base * 1.25) !default;
-$font-size-sm:   ($font-size-base * .875) !default;
-$font-size-md:   $font-size-base !default; 
-$font-size-xs:   ($font-size-base * .75) !default; 
-$font-size-xl:   ($font-size-base * 1.5) !default;
-$font-size-xxl:  ($font-size-base * 2) !default;
-
-$border-color: rgba($primary, 0.33) !default; 
-$color-border: $border-color;
-$color-border-hover: $primary !default;
-
-$radius-xs: 2px !default;
-$radius-sm: 4px !default;   
-$radius-md: 8px !default;
-$radius-lg: 12px !default;
-$radius-xl: 16px !default;
-$radius-full: 9999px !default;

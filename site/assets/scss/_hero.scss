@@ -1,35 +1,35 @@
 .hero-section {
-  padding: $space-8 $space-6;
+  padding: $spacer * 2 $spacer * 1.5;
   text-align: center;
 
 
   .hero-badge {
     display: inline-flex;
     align-items: center;
-    gap: $space-3;
+    gap: $spacer * 0.75;
     background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba($color-primary, 0.3);
-    padding: $space-2 $space-4;
+    border: 1px solid rgba(#00b399, 0.3);
+    padding: $spacer * .5 $spacer;
     border-radius: 20px;
     font-size: 0.75rem;
-    color: $color-primary;
+    color: #00b399;
   }
 
   .hero-title {
-    margin-top: $space-4;
+    margin-top: $spacer;
     font-size: 5rem;
     line-height: 1.1;
     font-weight: 800;
-    margin-bottom: $space-4;
+    margin-bottom: $spacer;
 
     // keep stroke, but use variable bg color
-    -webkit-text-stroke: 2px $color-bg;
+    -webkit-text-stroke: 2px #050505;
 
     .text-gradient {
       background: linear-gradient(
         90deg,
-        $color-primary,
-        lighten($color-primary, 10%)
+        #00b399,
+        lighten(#00b399, 10%)
       );
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
@@ -38,13 +38,13 @@
 
   .hero-subtitle {
     font-size: 1.2rem;
-    color: $color-text;
+    color: $white;
     max-width: 700px;
     margin: 0 auto 2rem;
     line-height: 1.6;
 
     strong {
-      color: $color-primary;
+      color: #00b399;
     }
   }
 
@@ -56,21 +56,21 @@
 
     .stat-item {
       display: flex;
-      gap: $space-2;
+      gap: $spacer * .5;
 
       i {
-        color: $color-primary;
+        color: #00b399;
         padding-top: 0.5rem;
       }
 
       strong {
         display: block;
         font-size: 1.5rem;
-        color: $color-text;
+        color: $white;
       }
 
       span {
-        color: $color-text;
+        color: $white;
         font-size: 0.7rem;
       }
     }
@@ -84,8 +84,8 @@
     margin-top: 2rem;
 
     .btn-start {
-      background-color: $color-primary;
-      color: $color-bg;
+      background-color: #00b399;
+      color: #050505;
       padding: 12px 28px;
       border-radius: 8px;
       font-weight: 700;
@@ -93,8 +93,8 @@
       text-decoration: none;
       display: inline-flex;
       align-items: center;
-      gap: $space-2;
-      border: 2px solid $color-primary;
+      gap: $spacer * .5;
+      border: 2px solid #00b399;
       transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 
       i {
@@ -102,28 +102,28 @@
       }
 
       &:hover {
-        background-color: lighten($color-primary, 10%);
-        border-color: lighten($color-primary, 10%);
+        background-color: lighten(#00b399, 10%);
+        border-color: lighten(#00b399, 10%);
         transform: translateY(-3px);
-        box-shadow: 0 10px 20px rgba($color-primary, 0.3);
+        box-shadow: 0 10px 20px rgba(#00b399, 0.3);
       }
     }
 
     .btn-outline {
       background-color: transparent;
-      color: $color-text;
+      color: $white;
       padding: 12px 28px;
       border-radius: 8px;
       font-weight: 500;
       font-size: 0.9rem;
       text-decoration: none;
-      border: 1px solid rgba($color-text, 0.2);
-      transition: $transition;
+      border: 1px solid rgba($white, 0.2);
+      transition: all 0.3s ease;
 
       &:hover {
-        background-color: rgba($color-text, 0.05);
-        border-color: rgba($color-text, 0.5);
-        color: $color-primary;
+        background-color: rgba($white, 0.05);
+        border-color: rgba($white, 0.5);
+        color: #00b399;
       }
     }
   }

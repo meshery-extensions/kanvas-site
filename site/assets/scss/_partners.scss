@@ -1,14 +1,14 @@
 .partners-section {
     padding: $td-block-space-top-base 0;
     text-align: center;
-    background-color: $color-surface;
+    background-color: #2a2e20;
     overflow: hidden;
 
     .partners-title {
-        color: $color-muted;
+        color: $casper;
         font-family: $font-qanelas;
-        font-size: $font-size-sm;
-        margin-bottom: $space-8;
+        font-size: $font-size-base * .875;
+        margin-bottom: $spacer * 2;
         text-transform: uppercase; 
     }
 
@@ -21,7 +21,7 @@
     .partners-logos {
         display: flex;
         align-items: center;
-        gap: $space-8;
+        gap: $spacer * 2;
         width: max-content; 
 
         img {
@@ -29,7 +29,7 @@
             width: auto;
             filter: brightness(0) invert(1); 
             opacity: 0.8; 
-            transition: $transition;
+            transition: all 0.3s ease;
 
             &:hover {
                 filter: none; 

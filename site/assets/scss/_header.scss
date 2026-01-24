@@ -2,10 +2,16 @@
   position: sticky;
   top: 0;
   z-index: 1000;
-  background: transparent;
+  background: $dark;
   padding: 0.75rem 2rem;
-  backdrop-filter: blur(12px) saturate(180%); 
-  -webkit-backdrop-filter: blur(12px) saturate(180%);
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  transition: background 0.3s ease, backdrop-filter 0.3s ease;
+  &.scrolled {
+    background: rgba(0, 0, 0, 0.05);
+    backdrop-filter: blur(12px) saturate(180%);
+    -webkit-backdrop-filter: blur(12px) saturate(180%);
+  }
   .container {
     display: flex;
     justify-content: space-between;
@@ -32,19 +38,19 @@
     padding: 0;
 
     a {
-      color: $color-text;
+      color: $white;
       text-decoration: none;
       font-size: 0.95rem;
       transition: color 0.3s ease;
 
       &:hover {
-        color: $color-primary;
+        color: #00b399;
       }
     }
   }
 
   .btn-secondary {
-    color: $color-text;
+    color: $white;
     font-size: 1.6rem;
     margin: 0 15px;
     display: inline-block;
@@ -52,13 +58,13 @@
     transition: color 0.3s ease;
 
     &:hover {
-      color: $color-primary;
+      color: #00b399;
       transform: translateY(-2px);
     }
   }
 
   .btn-primary {
-    color: $color-bg;
+    color: #050505;
     transition: background-color 0.3s ease, box-shadow 0.3s ease;
   }
 }

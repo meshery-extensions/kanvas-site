@@ -1,38 +1,38 @@
 .demo-section {
   padding: 100px 20px;
-  background-color: $color-surface;
+  background-color: #2a2e20;
   text-align: center;
 
   .demo-header {
     margin-bottom: 50px;
 
     .demo-badge {
-      color: $color-muted;
+      color: $casper;
       font-size: 0.8rem;
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: $space-3;
+      gap: $spacer * 0.75;
       margin-bottom: 15px;
 
       .dot {
         width: 6px;
         height: 6px;
-        background: $color-primary;
+        background: #00b399;
         border-radius: 50%;
       }
     }
 
     .demo-title {
-      margin-top: $space-4;
-      font-size: $font-size-xl;
-      color: $color-text;
-      margin-bottom: $space-4;
+      margin-top: $spacer;
+      font-size: $font-size-base * 1.5;
+      color: $white;
+      margin-bottom: $spacer;
       font-weight: 800;
     }
 
     .demo-subtitle {
-      color: $color-muted;
+      color: $casper;
       max-width: 600px;
       margin: 0 auto;
     }
@@ -45,7 +45,7 @@
     backdrop-filter: blur(8px);
     border-radius: 24px;
     overflow: hidden;
-    border: 1px solid rgba($color-text, 0.1);
+    border: 1px solid rgba($white, 0.1);
   }
 
   .video-wrapper {
@@ -61,10 +61,10 @@
 
     .video-label {
       position: absolute;
-      top: $space-5;
-      right: $space-5;
+      top: $spacer * 1.25;
+      right: $spacer * 1.25;
       background: rgba(0, 0, 0, 0.6);
-      color: $color-text;
+      color: $white;
       padding: 5px 12px;
       border-radius: 20px;
       font-size: 0.7rem;
@@ -78,31 +78,31 @@
 
     .card-badges {
       display: flex;
-      gap: $space-3;
-      margin-bottom: $space-5;
+      gap: $spacer * 0.75;
+      margin-bottom: $spacer * 1.25;
 
       .badge {
         font-size: 0.8rem;
-        color: $color-primary;
+        color: #00b399;
         padding: 4px 12px;
         border-radius: 4px;
         font-weight: 700;
-        transition: $transition;
+        transition: all 0.3s ease;
 
         &:hover {
-          color: $color-accent;
+          color: #e4d233;
         }
       }
     }
 
     h3 {
-      color: $color-text;
+      color: $white;
       font-size: 1.8rem;
       margin-bottom: 15px;
     }
 
     p {
-      color: $color-muted;
+      color: $casper;
       font-size: 0.95rem;
       line-height: 1.6;
       margin-bottom: 30px;
@@ -111,20 +111,20 @@
     .card-meta {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
-      gap: $space-5;
+      gap: $spacer * 1.25;
       margin-bottom: 30px;
-      padding-top: $space-5;
+      padding-top: $spacer * 1.25;
 
       .meta-item {
         span {
           display: block;
           font-size: 0.9rem;
-          color: rgba($color-text, 0.45);
+          color: rgba($white, 0.45);
           margin-bottom: 5px;
         }
 
         strong {
-          color: $color-text;
+          color: $white;
           font-size: 0.85rem;
         }
       }
@@ -132,37 +132,37 @@
 
     .card-actions {
       display: flex;
-      gap: $space-4;
+      gap: $spacer;
 
       .demo-btn-primary {
-        background: $color-primary;
-        color: $color-text;
+        background: #00b399;
+        color: $white;
         padding: 12px 24px;
         border-radius: 8px;
         text-decoration: none;
         font-weight: 700;
-        transition: $transition;
+        transition: all 0.3s ease;
 
         i {
-          padding-right: $space-2;
+          padding-right: $spacer * .5;
         }
 
         &:hover {
-          background: lighten($color-primary, 10%);
+          background: lighten(#00b399, 10%);
           transform: translateY(-2px);
         }
       }
 
       .btn-outline {
-        border: 1px solid rgba($color-text, 0.1);
-        color: $color-text;
+        border: 1px solid rgba($white, 0.1);
+        color: $white;
         padding: 12px 24px;
         border-radius: 8px;
         text-decoration: none;
-        transition: $transition;
+        transition: all 0.3s ease;
 
         &:hover {
-          background: rgba($color-text, 0.05);
+          background: rgba($white, 0.05);
         }
       }
     }
@@ -178,27 +178,27 @@
 
     .persona-card {
       background: rgba(35, 38, 26, 0.4);
-      border: 1px solid rgba($color-text, 0.05);
+      border: 1px solid rgba($white, 0.05);
       padding: 30px;
-      border-radius: $radius-md;
+      border-radius: 8px;
       text-align: center;
-      transition: $transition;
+      transition: all 0.3s ease;
 
       &:hover {
         background: rgba(35, 38, 26, 0.6);
-        border-color: rgba($color-primary, 0.3);
+        border-color: rgba(#00b399, 0.3);
         transform: translateY(-5px);
       }
 
       h3 {
-        color: $color-text;
+        color: $white;
         font-size: 1.25rem;
-        margin-bottom: $space-3;
+        margin-bottom: $spacer * 0.75;
         font-weight: 700;
       }
 
       p {
-        color: $color-muted;
+        color: $casper;
         font-size: 0.9rem;
         line-height: 1.5;
         margin: 0;

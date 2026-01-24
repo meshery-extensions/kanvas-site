@@ -62,6 +62,14 @@ const initMarquee = () => {
 document.addEventListener("DOMContentLoaded", () => {
     animateCounters();
     initMarquee(); 
+    const header = document.querySelector(".site-header");
+    if (header) {
+    ScrollTrigger.create({
+        start: "top -10", // when scroll > 10px
+        onEnter: () => header.classList.add("scrolled"),
+        onLeaveBack: () => header.classList.remove("scrolled"),
+    });
+    }
 });
 
 document.addEventListener("visibilitychange", () => {

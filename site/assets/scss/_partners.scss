@@ -3,6 +3,11 @@
     text-align: center;
     background-color: #2a2e20;
     overflow: hidden;
+    .partners-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0;
+    }
 
     .partners-title {
         color: $casper;
@@ -15,9 +20,8 @@
     .marquee-viewport {
         overflow: hidden;
         width: 100%;
-        mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent);
+        mask-image: linear-gradient(to right, transparent, $black 15%, $black 85%, transparent);
     }
-
     .partners-logos {
         display: flex;
         align-items: center;
@@ -27,24 +31,10 @@
         img {
             height: 35px;
             width: auto;
-            filter: brightness(0) invert(1); 
-            opacity: 0.8; 
-            transition: all 0.3s ease;
-
-            &:hover {
-                filter: none; 
-                opacity: 1;   
-            }
-        }
-
-        img.citixLogo {
-            filter: invert(0.8); 
-            opacity: 0.8; 
-
-            &:hover {
-                filter: invert(0);
-                opacity: 1;
-            }
+            filter: invert(0.6);
+            // Force filter rendering
+            transform: translateZ(0);
+            backface-visibility: hidden;
         }
     }
 }

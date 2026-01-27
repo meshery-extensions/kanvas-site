@@ -1,0 +1,208 @@
+.demo-section {
+  padding: 100px 20px;
+  background-color: #2a2e20;
+  text-align: center;
+
+  .demo-header {
+    margin-bottom: 50px;
+
+    .demo-badge {
+      color: $casper;
+      font-size: 0.8rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: $spacer * 0.75;
+      margin-bottom: 15px;
+
+      .dot {
+        width: 6px;
+        height: 6px;
+        background: #00b399;
+        border-radius: 50%;
+      }
+    }
+
+    .demo-title {
+      margin-top: $spacer;
+      font-size: $font-size-base * 1.5;
+      color: $white;
+      margin-bottom: $spacer;
+      font-weight: 800;
+    }
+
+    .demo-subtitle {
+      color: $casper;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+  }
+
+  .demo-container {
+    max-width: 1000px;
+    margin: 0 auto;
+    background: rgba(49, 54, 36, 0.8);
+    backdrop-filter: blur(8px);
+    border-radius: 24px;
+    overflow: hidden;
+    border: 1px solid rgba($white, 0.1);
+  }
+
+  .video-wrapper {
+    position: relative;
+    aspect-ratio: 16 / 9;
+    width: 100%;
+
+    iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+
+    .video-label {
+      position: absolute;
+      top: $spacer * 1.25;
+      right: $spacer * 1.25;
+      background: rgba(0, 0, 0, 0.6);
+      color: $white;
+      padding: 5px 12px;
+      border-radius: 20px;
+      font-size: 0.7rem;
+      backdrop-filter: blur(4px);
+    }
+  }
+
+  .demo-card {
+    padding: 40px;
+    text-align: left;
+
+    .card-badges {
+      display: flex;
+      gap: $spacer * 0.75;
+      margin-bottom: $spacer * 1.25;
+
+      .badge {
+        font-size: 0.8rem;
+        color: #00b399;
+        padding: 4px 12px;
+        border-radius: 4px;
+        font-weight: 700;
+        transition: all 0.3s ease;
+
+        &:hover {
+          color: #e4d233;
+        }
+      }
+    }
+
+    h3 {
+      color: $white;
+      font-size: 1.8rem;
+      margin-bottom: 15px;
+    }
+
+    p {
+      color: $casper;
+      font-size: 0.95rem;
+      line-height: 1.6;
+      margin-bottom: 30px;
+    }
+
+    .card-meta {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: $spacer * 1.25;
+      margin-bottom: 30px;
+      padding-top: $spacer * 1.25;
+
+      .meta-item {
+        span {
+          display: block;
+          font-size: 0.9rem;
+          color: rgba($white, 0.45);
+          margin-bottom: 5px;
+        }
+
+        strong {
+          color: $white;
+          font-size: 0.85rem;
+        }
+      }
+    }
+
+    .card-actions {
+      display: flex;
+      gap: $spacer;
+
+      .demo-btn-primary {
+        background: #00b399;
+        color: $white;
+        padding: 12px 24px;
+        border-radius: 8px;
+        text-decoration: none;
+        font-weight: 700;
+        transition: all 0.3s ease;
+
+        i {
+          padding-right: $spacer * .5;
+        }
+
+        &:hover {
+          background: lighten(#00b399, 10%);
+          transform: translateY(-2px);
+        }
+      }
+
+      .btn-outline {
+        border: 1px solid rgba($white, 0.1);
+        color: $white;
+        padding: 12px 24px;
+        border-radius: 8px;
+        text-decoration: none;
+        transition: all 0.3s ease;
+
+        &:hover {
+          background: rgba($white, 0.05);
+        }
+      }
+    }
+  }
+
+  .demo-personas {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    max-width: 1000px;
+    margin: 40px auto 0;
+    padding: 0;
+
+    .persona-card {
+      background: rgba(35, 38, 26, 0.4);
+      border: 1px solid rgba($white, 0.05);
+      padding: 30px;
+      border-radius: 8px;
+      text-align: center;
+      transition: all 0.3s ease;
+
+      &:hover {
+        background: rgba(35, 38, 26, 0.6);
+        border-color: rgba(#00b399, 0.3);
+        transform: translateY(-5px);
+      }
+
+      h3 {
+        color: $white;
+        font-size: 1.25rem;
+        margin-bottom: $spacer * 0.75;
+        font-weight: 700;
+      }
+
+      p {
+        color: $casper;
+        font-size: 0.9rem;
+        line-height: 1.5;
+        margin: 0;
+      }
+    }
+  }
+}

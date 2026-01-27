@@ -77,14 +77,6 @@ jobs:
           umbrella-dir: pr-preview
           action: auto
 
-      - name: Cleanup PR Preview on Close
-        if: github.event.action == 'closed'
-        uses: rossjrw/pr-preview-action@v1.6.3
-        with:
-          preview-branch: gh-pages
-          umbrella-dir: pr-preview
-          action: remove
-          
       - name: Comment PR with Preview URL
         uses: marocchino/sticky-pull-request-comment@v2
         if: github.event_name == 'pull_request_target'
@@ -96,3 +88,12 @@ jobs:
             🌐 **Preview URL**: ${{ steps.deploy-preview.outputs.preview-url }}
             
             _This preview will be updated automatically when you push new commits to this PR._
+
+      - name: Cleanup PR Preview on Close
+        if: github.event.action == 'closed'
+        uses: rossjrw/pr-preview-action@v1.6.3
+        with:
+          preview-branch: gh-pages
+          umbrella-dir: pr-preview
+          action: remove
+          

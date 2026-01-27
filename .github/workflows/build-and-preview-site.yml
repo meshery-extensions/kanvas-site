@@ -82,6 +82,7 @@ jobs:
           preview-branch: gh-pages
           umbrella-dir: pr-preview
           action: auto
+          comment: false
 
       - name: Comment PR with Preview URL
         if: github.event.action != 'closed'

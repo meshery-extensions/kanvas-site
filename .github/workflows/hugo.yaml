@@ -7,18 +7,18 @@ on:
     branches:
       - master
     paths-ignore:
-      - '.github/**'
-      - 'archive/**'
+      - ".github/**"
+      - "archive/**"
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
 # Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
 permissions:
-  contents: write  # Required for pushing to gh-pages branch
+  contents: write # Required for pushing to gh-pages branch
 
 concurrency:
   group: "pages-deployment"
-  cancel-in-progress: true  # Only latest deployment runs
+  cancel-in-progress: true # Only latest deployment runs
 
 # Default to bash
 defaults:
@@ -35,7 +35,7 @@ jobs:
       - name: Install Hugo CLI
         run: |
           wget -O ${{ runner.temp }}/hugo.deb https://github.com/gohugoio/hugo/releases/download/v${HUGO_VERSION}/hugo_extended_${HUGO_VERSION}_linux-amd64.deb \
-          && sudo dpkg -i ${{ runner.temp }}/hugo.deb          
+          && sudo dpkg -i ${{ runner.temp }}/hugo.deb
       - name: Install Dart Sass
         run: sudo snap install dart-sass
       - name: Checkout
@@ -54,7 +54,7 @@ jobs:
           REPO_NAME=$(echo "${{ github.repository }}" | cut -d'/' -f2)
           OWNER_NAME=$(echo "${{ github.repository }}" | cut -d'/' -f1)
           BASE_URL="https://${OWNER_NAME}.github.io/${REPO_NAME}/"
-          
+
           echo "Building for BaseURL: ${BASE_URL}"
           hugo \
             --gc \
@@ -66,7 +66,7 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./public
           publish_branch: gh-pages
-          keep_files: true  # IMPORTANT: Preserves /pr-preview/ folders
-          user_name: 'github-actions[bot]'
-          user_email: 'github-actions[bot]@users.noreply.github.com'
-          commit_message: 'Deploy site from ${{ github.sha }}'
+          keep_files: true # IMPORTANT: Preserves /pr-preview/ folders
+          user_name: "github-actions[bot]"
+          user_email: "github-actions[bot]@users.noreply.github.com"
+          commit_message: "Deploy site from ${{ github.sha }}"

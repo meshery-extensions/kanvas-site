@@ -17,7 +17,7 @@
   const ANIMATION_DURATION = 3000; // 3 seconds
   const ANIMATION_INTERVAL = 6000; // 6 seconds between movements
   const CURSOR_SIZE = 50; // Default cursor size in pixels
-  const EDGE_PADDING = 500; // Padding from container edges
+  const EDGE_PADDING = 50; // Padding from container edges
 
   /**
    * Initialize cursors in a container
@@ -26,18 +26,18 @@
     if (!container) return;
 
     const cursors = [];
-    
+
     cursorIndices.forEach((index, i) => {
       if (index >= CURSORS.length) return;
-      
+
       const cursorData = CURSORS[index];
       const cursorElement = createCursorElement(cursorData);
       container.appendChild(cursorElement);
       cursors.push(cursorElement);
-      
+
       // Set initial random position
       setInitialRandomPosition(container, cursorElement);
-      
+
       // Start animation with stagger
       setTimeout(() => {
         animateCursor(container, cursorElement);
@@ -51,11 +51,11 @@
         clearInterval(intervalId);
         return;
       }
-      
+
       cursors.forEach((cursor, i) => {
         // Check if cursor still exists
         if (!document.body.contains(cursor)) return;
-        
+
         setTimeout(() => {
           animateCursor(container, cursor);
         }, i * ANIMATION_DURATION);
@@ -69,13 +69,13 @@
   function createCursorElement(cursorData) {
     const wrapper = document.createElement('div');
     wrapper.className = 'multi-cursor';
-    
+
     const img = document.createElement('img');
     img.src = cursorData.src;
     img.alt = cursorData.name;
-    
+
     wrapper.appendChild(img);
-    
+
     return wrapper;
   }
 
@@ -84,11 +84,15 @@
    */
   function getRandomPosition(container) {
     const rect = container.getBoundingClientRect();
-    const maxX = Math.max(10, rect.width - CURSOR_SIZE - EDGE_PADDING);
-    const maxY = Math.max(0, rect.height - CURSOR_SIZE - EDGE_PADDING);
+    const width = rect.width;
+    const height = rect.height;
+
+    const maxX = Math.max(10, width - CURSOR_SIZE - EDGE_PADDING);
+    const maxY = Math.max(10, height - CURSOR_SIZE - EDGE_PADDING);
+
     const randomX = Math.floor(Math.random() * maxX);
-    const randomY = Math.floor(Math.random() * maxY)+600;
-    
+    const randomY = Math.floor(Math.random() * maxY);
+
     return { x: randomX, y: randomY };
   }
 
@@ -105,10 +109,10 @@
    */
   function animateCursor(container, element) {
     const pos = getRandomPosition(container);
-    
+
     element.style.transition = `transform ${ANIMATION_DURATION}ms ease`;
     element.style.transform = `translate(${pos.x}px, ${pos.y}px)`;
-    
+
     // Clear transition after animation completes
     setTimeout(() => {
       element.style.transition = '';
@@ -121,13 +125,13 @@
   function init() {
     // Find all containers with data-cursors attribute
     const containers = document.querySelectorAll('[data-cursors]');
-    
+
     containers.forEach(container => {
       const cursorIndices = container.getAttribute('data-cursors')
         .split(',')
         .map(i => parseInt(i.trim(), 10))
         .filter(i => !isNaN(i));
-      
+
       if (cursorIndices.length > 0) {
         initCursors(container, cursorIndices);
       }

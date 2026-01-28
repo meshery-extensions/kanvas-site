@@ -2,7 +2,7 @@ name: Build and Preview Site
 
 on:
   pull_request_target:
-    branches: [ master ]
+    branches: [master]
     types: [opened, synchronize, reopened, closed]
 
   workflow_dispatch:
@@ -40,7 +40,7 @@ jobs:
         if: github.event.action != 'closed'
         uses: peaceiris/actions-hugo@v3
         with:
-          hugo-version: '0.154.5'
+          hugo-version: "0.154.5"
           extended: true
 
       - name: Setup Node.js
@@ -60,7 +60,7 @@ jobs:
           HUGO_ENVIRONMENT: production
           HUGO_ENV: production
         run: |
-          PR_BASE_URL="/pr-preview/pr-${{ github.event.pull_request.number }}/"
+          PR_BASE_URL="https://www.kanvas.new/pr-preview/pr-${{ github.event.pull_request.number }}/"
 
           echo "Building for BaseURL: ${PR_BASE_URL}"
           hugo \
@@ -88,9 +88,9 @@ jobs:
           header: pr-preview
           message: |
             🚀 **Preview deployment for PR #${{ github.event.pull_request.number }}**
-            
-            🌐 **Preview URL**: ${{ steps.deploy-preview.outputs.preview-url }}
-            
+
+            🌐 **Preview URL**: https://www.kanvas.new/pr-preview/pr-${{ github.event.pull_request.number }}/
+
             _This preview will be updated automatically when you push new commits to this PR._
 
       - name: Cleanup PR Preview on Close

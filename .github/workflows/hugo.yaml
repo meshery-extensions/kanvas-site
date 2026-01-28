@@ -7,20 +7,18 @@ on:
     branches:
       - master
     paths-ignore:
-      - '.github/**'
-      - 'archive/**'
+      - ".github/**"
+      - "archive/**"
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
 # Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
 permissions:
-  contents: read
-  pages: write
-  id-token: write
+  contents: write # Required for pushing to gh-pages branch
 
 concurrency:
   group: "pages-deployment"
-  cancel-in-progress: true  # Only latest deployment runs
+  cancel-in-progress: true # Only latest deployment runs
 
 # Default to bash
 defaults:
@@ -28,8 +26,8 @@ defaults:
     shell: bash
 
 jobs:
-  # Build job
-  build:
+  # Build and Deploy job
+  build-and-deploy:
     runs-on: ubuntu-24.04
     env:
       HUGO_VERSION: 0.154.5
@@ -37,7 +35,7 @@ jobs:
       - name: Install Hugo CLI
         run: |
           wget -O ${{ runner.temp }}/hugo.deb https://github.com/gohugoio/hugo/releases/download/v${HUGO_VERSION}/hugo_extended_${HUGO_VERSION}_linux-amd64.deb \
-          && sudo dpkg -i ${{ runner.temp }}/hugo.deb          
+          && sudo dpkg -i ${{ runner.temp }}/hugo.deb
       - name: Install Dart Sass
         run: sudo snap install dart-sass
       - name: Checkout
@@ -45,9 +43,6 @@ jobs:
         with:
           submodules: recursive
           fetch-depth: 0
-      - name: Setup Pages
-        id: pages
-        uses: actions/configure-pages@v5
       - name: Install Node.js dependencies
         run: "[[ -f package-lock.json || -f npm-shrinkwrap.json ]] && npm ci || true"
       - name: Build with Hugo
@@ -59,20 +54,15 @@ jobs:
           hugo \
             --gc \
             --minify \
-            --baseURL "${{ steps.pages.outputs.base_url }}/"          
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
+            --baseURL "https://www.kanvas.new/"
+      - name: Deploy to gh-pages branch
+        uses: peaceiris/actions-gh-pages@v4
         with:
-          path: ./public
-
-  # Deployment job
-  deploy:
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    runs-on: ubuntu-24.04
-    needs: build
-    steps:
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./public
+          publish_branch: gh-pages
+          cname: www.kanvas.new
+          keep_files: true # Preserves PR preview folders in /pr-preview/
+          user_name: "github-actions[bot]"
+          user_email: "github-actions[bot]@users.noreply.github.com"
+          commit_message: "Deploy site from ${{ github.sha }}"

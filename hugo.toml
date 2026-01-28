@@ -31,18 +31,3 @@ enableMissingTranslationPlaceholders = true
   logo_light = "images/kanvas-logo-light.svg"
   logo_dark = "images/kanvas-logo-dark.svg"
   description = "Collaborative cloud native management for Kubernetes"
-
-
-[module]
-  # uncomment line below for temporary local development of module
-  # replacements = "github.com/google/docsy -> ../../docsy"
-  [module.hugoVersion]
-    extended = true
-    min = "0.110.0"
-  [[module.imports]]
-    path = "github.com/google/docsy"
-    disable = false
-  [[module.imports]]
-    path = "github.com/google/docsy/dependencies"
-    disable = false
-

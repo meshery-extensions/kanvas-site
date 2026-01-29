@@ -2,58 +2,54 @@ name: Build and Preview Site
 
 on:
   pull_request_target:
-    branches:
-      - master
+    branches: [master]
     types: [opened, synchronize, reopened, closed]
-
-  workflow_dispatch:
 
 permissions:
   contents: write
   pull-requests: write
 
 concurrency:
-  group: "preview-${{ github.event.pull_request.number || github.run_id }}"
+  group: "preview-${{ github.event.pull_request.number }}"
   cancel-in-progress: true
 
 jobs:
-  build-and-deploy-preview:
+  preview:
     if: github.event.action != 'closed'
     runs-on: ubuntu-24.04
     env:
       HUGO_VERSION: 0.154.5
 
     steps:
-      - name: Checkout
+      - name: Checkout PR
         uses: actions/checkout@v6
         with:
           ref: ${{ github.event.pull_request.head.sha }}
           submodules: recursive
           fetch-depth: 0
 
-      - name: Install Hugo CLI
+      - name: Install Hugo
         run: |
-          wget -O ${{ runner.temp }}/hugo.deb https://github.com/gohugoio/hugo/releases/download/v${HUGO_VERSION}/hugo_extended_${HUGO_VERSION}_linux-amd64.deb \
-          && sudo dpkg -i ${{ runner.temp }}/hugo.deb
+          wget -O ${{ runner.temp }}/hugo.deb https://github.com/gohugoio/hugo/releases/download/v${HUGO_VERSION}/hugo_extended_${HUGO_VERSION}_linux-amd64.deb
+          sudo dpkg -i ${{ runner.temp }}/hugo.deb
 
       - name: Install Dart Sass
         run: sudo snap install dart-sass
 
-      - name: Setup Node.js
+      - name: Setup Node
         uses: actions/setup-node@v4
         with:
           node-version: "20"
 
-      - name: Install Node.js dependencies
+      - name: Install deps
         run: "[[ -f package-lock.json || -f npm-shrinkwrap.json ]] && npm ci || true"
 
-      - name: Build site with preview BaseURL
+      - name: Build PR preview
         env:
           HUGO_ENVIRONMENT: production
-          HUGO_ENV: production
         run: |
-          PR_BASE_URL="https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/pr-preview/pr-${{ github.event.pull_request.number }}/"
-          echo "Building for BaseURL: ${PR_BASE_URL}"
+          PR_BASE_URL="/pr-preview/pr-${{ github.event.pull_request.number }}/"
+
           hugo \
             --gc \
             --minify \
@@ -61,48 +57,38 @@ jobs:
             --buildFuture \
             --baseURL "${PR_BASE_URL}"
 
-      - name: Deploy PR Preview to gh-pages
+          touch public/.nojekyll
+          echo "www.kanvas.new" > public/CNAME
+
+      - name: Deploy PR preview
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./public
+          publish_dir: public
           publish_branch: gh-pages
           destination_dir: pr-preview/pr-${{ github.event.pull_request.number }}
-          user_name: "github-actions[bot]"
-          user_email: "github-actions[bot]@users.noreply.github.com"
-          commit_message: "Deploy PR #${{ github.event.pull_request.number }} preview"
+          keep_files: true
 
-      - name: Comment PR with Preview URL
+      - name: Comment PR
         uses: marocchino/sticky-pull-request-comment@v2
         with:
           header: pr-preview
           message: |
-            🚀 **Preview deployment for PR #${{ github.event.pull_request.number }}**
+            🚀 **PR Preview Ready**
+            🌐 https://www.kanvas.new/pr-preview/pr-${{ github.event.pull_request.number }}/
 
-            🌐 **Preview URL**: https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/pr-preview/pr-${{ github.event.pull_request.number }}/
-
-            _This preview will be updated automatically when you push new commits to this PR._
-
-  cleanup-preview:
+  cleanup:
     if: github.event.action == 'closed'
     runs-on: ubuntu-24.04
-
     steps:
-      - name: Checkout gh-pages branch
-        uses: actions/checkout@v6
+      - uses: actions/checkout@v6
         with:
           ref: gh-pages
-          fetch-depth: 0
 
-      - name: Delete PR preview folder
-        run: |
-          if [ -d "pr-preview/pr-${{ github.event.pull_request.number }}" ]; then
-            rm -rf "pr-preview/pr-${{ github.event.pull_request.number }}"
-            git config user.name 'github-actions[bot]'
-            git config user.email 'github-actions[bot]@users.noreply.github.com'
-            git add -A
-            git commit -m "Remove PR #${{ github.event.pull_request.number }} preview" || echo "Nothing to commit"
-            git push origin gh-pages
-          else
-            echo "PR preview folder does not exist, nothing to clean up"
-          fi
+      - run: |
+          rm -rf pr-preview/pr-${{ github.event.pull_request.number }}
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -m "Remove PR preview" || true
+          git push

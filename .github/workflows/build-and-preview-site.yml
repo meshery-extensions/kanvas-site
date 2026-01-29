@@ -58,7 +58,11 @@ jobs:
             --baseURL "${PR_BASE_URL}"
 
           touch public/.nojekyll
-          echo "www.kanvas.new" > public/CNAME
+
+          cat <<EOF > public/robots.txt
+          User-agent: *
+          Disallow: /
+          EOF
 
       - name: Deploy PR preview
         uses: peaceiris/actions-gh-pages@v4
@@ -75,7 +79,7 @@ jobs:
           header: pr-preview
           message: |
             🚀 **PR Preview Ready**
-            🌐 https://www.kanvas.new/pr-preview/pr-${{ github.event.pull_request.number }}/
+            🌐 https://meshery-extensions.github.io/kanvas-site/pr-preview/pr-${{ github.event.pull_request.number }}/
 
   cleanup:
     if: github.event.action == 'closed'
@@ -85,10 +89,10 @@ jobs:
         with:
           ref: gh-pages
 
-      - run: |
-          rm -rf pr-preview/pr-${{ github.event.pull_request.number }}
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add -A
-          git commit -m "Remove PR preview" || true
-          git push
+      - name: Remove PR preview folder
+        run: rm -rf pr-preview/pr-${{ github.event.pull_request.number }}
+
+      - uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "Remove PR #${{ github.event.pull_request.number }} preview"
+          branch: gh-pages

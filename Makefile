@@ -27,16 +27,22 @@ site: check-go
 site-fast:
 	gatsby develop
 
-## Build docs.layer5.io on your local machine.
+## Build site on your local machine.
 build:
-	hugo
+	hugo --gc --minify
 
-## Empty build cache and run docs.layer5.io on your local machine.
+## Build site for production deployment.
+build-prod:
+	hugo --gc --minify --baseURL "/"
+	touch public/.nojekyll
+	echo "www.kanvas.new" > public/CNAME
+
+## Empty build cache and run site on your local machine.
 clean: 
 	hugo --cleanDestinationDir 
 	make site
 
-.PHONY: setup build site clean site-fast check-go docker
+.PHONY: setup build build-prod site clean site-fast check-go docker
 
 check-go:
 	@echo "Checking if Go is installed..."

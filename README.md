@@ -1,8 +1,5 @@
 # Kanvas Site
-This repository contains the website for **Kanvas** (Meshery extension).
-
-## Temporary deployment
-- https://kanvas.meshery.io
+This repository contains the website for the Meshery extension Kanvas - https://www.kanvas.new
 
 ### Prerequisites
 - Hugo (extended version)

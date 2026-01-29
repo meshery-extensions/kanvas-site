@@ -70,7 +70,7 @@
    */
   function getRandomPosition(container) {
     const rect = container.getBoundingClientRect();
-    const width = rect.width
+    const width = rect.width;
     const height = rect.height;
 
     const minX = EDGE_PADDING;

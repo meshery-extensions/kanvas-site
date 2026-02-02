@@ -1,6 +1,24 @@
 <div class="hero-scroll-track">
   <section class="hero glass tilt" id="hero">
-    {{ partial "section/hero/header-hands.html" . }}
+    <a id="Feature" class="header-scroll-down-wrapper w-inline-block w--current">
+      <div class="header-text">Scroll down</div>
+        <div class="header-scroll-line-wrapper">
+            <div style="transform: translate3d(0px, 2.54987px, 0px) scale3d(1, 1, 1) rotateX(0deg) rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg); transform-style: preserve-3d; will-change: transform;" class="hover-line"></div>
+        </div>
+        <div class="header-scroll-icon">
+            <div class="line"></div>
+        </div>
+    </a>
+    <div class="header-hand-image-wrapper top" id="left-hand" style="will-change: transform;
+        transform: translate3d(0px, 0px, 0px) scale3d(1, 1, 1) rotateX(0deg) rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg);
+        transform-style: preserve-3d;">
+      <div class="hand-overlay top"></div>
+    </div>
+    <div class="header-hand-image-wrapper right" id="right-hand" style="will-change: transform;
+        transform: translate3d(0px, 0px, 0px) scale3d(1, 1, 1) rotateX(0deg) rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg);
+        transform-style: preserve-3d;">
+      <div class="hand-overlay _02"></div>
+    </div>
     <div class="header-content-wrapper">
       <div class="hero-content" style="will-change: opacity, transform;
       opacity: 1;

@@ -98,6 +98,10 @@
       color: $white;
       font-size: 1.8rem;
       margin-bottom: 15px;
+
+      @media (max-width: 768px) {
+        font-size: 1.5rem;
+      }
     }
 
     p {
@@ -113,6 +117,15 @@
       gap: $spacer * 1.25;
       margin-bottom: 30px;
       padding-top: $spacer * 1.25;
+
+      @media (max-width: 768px) {
+        grid-template-columns: repeat(2, 1fr);
+        gap: $spacer;
+      }
+
+      @media (max-width: 480px) {
+        grid-template-columns: 1fr;
+      }
 
       .meta-item {
         span {
@@ -174,6 +187,15 @@
     max-width: 1000px;
     margin: 40px auto 0;
     padding: 0;
+
+    @media (max-width: 992px) {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    @media (max-width: 768px) {
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
 
     .persona-card {
       background: rgba(35, 38, 26, 0.2);

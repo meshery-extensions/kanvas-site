@@ -67,7 +67,7 @@ document.addEventListener("DOMContentLoaded", function () {
     // -------------------------
     // HERO CONTENT DISAPPEAR
     // -------------------------
-    const fadeStart = 0;
+    const fadeStart = 0.2;
     const fadeEnd = 0.4;
 
     let p = (progress - fadeStart) / (fadeEnd - fadeStart);

@@ -117,7 +117,7 @@
     );
 
     // Outer cube with icons
-    const outerGeometry = new THREE.BoxGeometry(2, 2, 2);
+    const outerGeometry = new THREE.BoxGeometry(1.5, 1.5, 1.5);
     const outerCube = new THREE.Mesh(outerGeometry, centerMaterials);
     group.add(outerCube);
 
@@ -126,7 +126,7 @@
     group.add(outerEdges);
 
     // Inner cube
-    const innerGeometry = new THREE.BoxGeometry(1.2, 1.2, 1.2);
+    const innerGeometry = new THREE.BoxGeometry(1, 1, 1);
     const innerMaterial = new THREE.MeshBasicMaterial({
       transparent: true,
       opacity: 0.1,
@@ -283,7 +283,7 @@
 
     // Create orbiting positions
     const orbitingPositions = Array.from({ length: 12 }, (_, i) => ({
-      radius: 3.5 + (i % 3) * 0.8,
+      radius: 3.5 + (i % 3) * 0.4,
       speed: 0.3 + (i % 4) * 0.1,
       offset: (i / 12) * Math.PI * 2,
       vertical: 0.5 + (i % 2) * 0.5,

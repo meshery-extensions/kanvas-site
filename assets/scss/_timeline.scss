@@ -1,7 +1,6 @@
 // Timeline DVR Component Styles
 
 .timeline-section {
-    padding: 100px 0;
     position: relative;
     overflow: hidden;
 
@@ -12,79 +11,6 @@
         display: grid;
         gap: 60px;
         align-items: center;
-
-        @media (min-width: 992px) {
-            grid-template-columns: 1.2fr 1fr; // Reversed: visual first, then content
-        }
-    }
-
-    .timeline-content {
-        .icon-box {
-            width: 48px;
-            height: 48px;
-            border-radius: 12px;
-            background: rgba(0, 179, 159, 0.1); // Teal background matching website
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 24px;
-            border: 1px solid rgba(0, 179, 159, 0.2);
-
-            svg {
-                color: #00D3A9; // Teal accent matching website
-                width: 24px;
-                height: 24px;
-            }
-        }
-
-        h2 {
-            font-size: clamp(2rem, 3vw, 2.8rem);
-            margin-bottom: 20px;
-            line-height: 1.2;
-            background: linear-gradient(to right, #ffffff, #9EFFEC); // White to Pale Teal matching website
-            background-clip: text;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        p {
-            color: var(--muted);
-            font-size: 1.1rem;
-            line-height: 1.6;
-            margin-bottom: 32px;
-        }
-
-        .feature-list {
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
-
-            li {
-                display: flex;
-                align-items: flex-start;
-                gap: 12px;
-                color: #e2e8f0;
-                font-size: 1rem;
-
-                .check-icon {
-                    flex-shrink: 0;
-                    width: 20px;
-                    height: 20px;
-                    border-radius: 50%;
-                    background: #00B39F; // Teal check bg matching website
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                    margin-top: 2px;
-
-                    svg {
-                        width: 12px;
-                        height: 12px;
-                        color: #041018;
-                    }
-                }
-            }
-        }
     }
 
     .timeline-visual {
@@ -97,8 +23,13 @@
 
     // Timeline DVR Card Styles
     .timeline-card {
-        background: linear-gradient(135deg, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.82));
-        border: 1px solid rgba(0, 211, 169, 0.2); // Teal glow border
+        background: linear-gradient(
+            145deg,
+            #0f1a20,
+            #0c1117
+        );
+        border: 1px solid rgba(255,255,255,0.06);
+        box-shadow: 0 20px 50px rgba(0,0,0,0.7);
         border-radius: 32px; // Larger rounded corners like Lovable
         overflow: hidden;
         box-shadow:

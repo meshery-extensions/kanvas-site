@@ -26,18 +26,18 @@
         align-items: flex-start;
         justify-content: center;
         flex-wrap: nowrap;
-        // Padding bottom ensures the last card's height is accounted for
         padding-bottom: 1rem; 
 
         .card-container {
             position: relative;
             flex-shrink: 0;
-            width: 17rem;
+            width: 19rem;
             height: 13rem;
-            background-color: $dark;
+            background: linear-gradient(145deg, #0f1a20,#0c1117);
             border: 2px solid rgba(0,0,0,0.1);
-            border-radius: 5px;
-            padding: 0.5rem;
+            border-radius: 10px;
+            padding: 0.7rem;
+            overflow: hidden;
             
             // Horizontal Overlap (80% width logic)
             &:not(:first-child) {
@@ -58,7 +58,6 @@
             &:hover {
                 z-index: 5;
                 box-shadow: 0 20px 40px rgba(0,0,0,0.4);
-                cursor: pointer;
                 background: linear-gradient(95deg, $dark, $secondary);
             }
             
@@ -77,5 +76,41 @@
                 }
             }
         }
-    }
+        @media (max-width: 1132px) {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            grid-gap: 2rem;
+            justify-items: center;
+
+            .card-container {
+                width: 100%;
+                &:not(:first-child) {
+                    margin-left: 0; 
+                }
+                @for $i from 1 through 4 {
+                    &:nth-child(#{$i}) {
+                        margin-top: 0;
+                        z-index: 0; 
+                    }
+                }
+                &:hover {
+                    z-index: 0;
+                }
+            } 
+        }
+        @media (max-width: 775px) {
+            grid-template-columns: repeat(1, 1fr); 
+             .card-container{
+                box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+                background: linear-gradient(95deg, $dark, $secondary);
+             }
+        }
+    } 
+    @media (max-width: 445px) {
+        padding: 1rem 0.5rem;
+        h2 {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+    } 
 }

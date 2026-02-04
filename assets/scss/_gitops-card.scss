@@ -10,20 +10,21 @@ $gitops-blue: #3b82f6;
 }
 
 .gitops-card-wrapper {
-    width: 100%;
+    width: 110%;
 }
 
 .gitops-card {
     position: relative;
     border-radius: 16px;
-    border: 1px solid rgba($secondary, 0.25);
-    background: rgba($dark, 0.6);
+    background: linear-gradient(
+        145deg,
+        #0f1a20,
+        #0c1117
+    );
+    border: 1px solid rgba(255,255,255,0.06);
+    box-shadow: 0 20px 50px rgba(0,0,0,0.7);
     /* overflow: hidden; Removed to allow tooltips to show */
     transition: box-shadow 0.3s ease;
-
-    &:hover {
-        box-shadow: 0 4px 24px rgba($primary, 0.08);
-    }
 }
 
 .gitops-card-gradient {
@@ -37,7 +38,7 @@ $gitops-blue: #3b82f6;
 
 .gitops-card-header {
     position: relative;
-    padding: $spacer * 1.5 $spacer * 1.5 $spacer;
+    padding: 0 $spacer * 1.5 $spacer;
 }
 
 .gitops-card-header-inner {
@@ -48,7 +49,7 @@ $gitops-blue: #3b82f6;
 }
 
 .gitops-card-icon-wrap {
-    padding: $spacer * 0.5;
+    padding: $spacer * 0.8;
     border-radius: 8px;
     background: rgba($primary, 0.15);
     color: $primary;
@@ -57,12 +58,12 @@ $gitops-blue: #3b82f6;
     justify-content: center;
 
     i {
-        font-size: 1.25rem;
+        font-size: 2rem;
     }
 }
 
 .gitops-card-title {
-    font-size: 1.25rem;
+    font-size: 2rem;
     font-weight: 600;
     color: $white;
     margin: 0;
@@ -70,22 +71,22 @@ $gitops-blue: #3b82f6;
 
 .gitops-card-desc {
     color: $casper;
-    font-size: 0.875rem;
+    font-size: 1.2rem;
     line-height: 1.5;
     margin: 0;
-    max-width: 36rem;
+    max-width: 46rem;
 }
 
 // Pipeline area
 .gitops-pipeline-wrap {
     position: relative;
-    padding: 0 $spacer * 1.5 $spacer * 1.5;
+    padding:$spacer * 2.5 $spacer * 1.5;
 }
 
 .gitops-pipeline-inner {
     position: relative;
     background: rgba($white, 0.03);
-    border: 1px solid rgba($secondary, 0.15);
+    border: 1px solid rgba(255,255,255,0.06);
     border-radius: 12px;
     padding: $spacer * 1.5;
 }
@@ -95,7 +96,7 @@ $gitops-blue: #3b82f6;
     align-items: stretch;
     justify-content: space-between;
     gap: $spacer * 0.5;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
 
     @media (max-width: 768px) {
         flex-direction: column;
@@ -108,7 +109,7 @@ $gitops-blue: #3b82f6;
     /* Added for tooltip positioning */
     display: flex;
     align-items: center;
-    flex: 1;
+    flex: 0 0 auto;
     min-width: 0;
 
     @media (max-width: 768px) {
@@ -181,8 +182,12 @@ $gitops-blue: #3b82f6;
     transition: all 0.3s ease;
 
     i {
-        font-size: 1.1rem;
+        font-size: 1.9rem;
     }
+}
+
+.gitops-node-label{
+    font-size: 1rem;
 }
 
 // Node color variants (matching React HSL)
@@ -313,6 +318,7 @@ $gitops-blue: #3b82f6;
 
 // Connector line between nodes
 .gitops-connector {
+    width: 60px;
     flex: 1;
     height: 2px;
     margin: 0 $spacer * 0.5;
@@ -387,7 +393,7 @@ $gitops-blue: #3b82f6;
     border-radius: 9999px;
     background: rgba($primary, 0.15);
     color: $primary;
-    font-size: 0.875rem;
+    font-size: 1rem;
     font-weight: 500;
     animation: gitops-pulse 2s ease-in-out infinite;
 }
@@ -410,7 +416,7 @@ $gitops-blue: #3b82f6;
     background: rgba($white, 0.06);
     border: 1px solid rgba($secondary, 0.2);
     color: $casper;
-    font-size: 0.75rem;
+    font-size: 1rem;
     font-family: inherit;
     cursor: pointer;
     transition: background 0.2s ease, color 0.2s ease;

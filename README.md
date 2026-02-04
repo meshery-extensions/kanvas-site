@@ -1,5 +1,5 @@
 <a href="https://meshery.io/kanvas">
-  <img src="https://raw.githubusercontent.com/meshery/meshery/master/docs/assets/img/meshery-logo/meshery-logo-light-text-side.png" width="200px" align="right" />
+  <img src="https://raw.githubusercontent.com/meshery/meshery/master/.github/assets/images/readme/meshery-logo-dark-text-side.svg" width="200px" align="right" />
 </a>
 
 # Kanvas Site

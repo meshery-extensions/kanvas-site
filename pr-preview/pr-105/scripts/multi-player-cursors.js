@@ -210,13 +210,24 @@
   function scheduleSocialProofUpdates(state) {
     if (!state) return;
 
-    window.setInterval(() => {
+    // Clear any existing interval to avoid multiple timers and potential leaks.
+    if (state.socialProofIntervalId) {
+      window.clearInterval(state.socialProofIntervalId);
+      state.socialProofIntervalId = null;
+    }
+
+    state.socialProofIntervalId = window.setInterval(() => {
       const onlineDelta = Math.floor(Math.random() * 5) - 2;
 
       updateSocialProofMetric(state, 'online', clamp(state.metrics.online + onlineDelta, 8, 99));
     }, SOCIAL_PROOF_INTERVAL);
   }
 
+  function clearSocialProofUpdates(state) {
+    if (!state || !state.socialProofIntervalId) return;
+    window.clearInterval(state.socialProofIntervalId);
+    state.socialProofIntervalId = null;
+  }
   function showCursorActivity(cursorElement, message) {
     if (!cursorElement || !message) return;
 

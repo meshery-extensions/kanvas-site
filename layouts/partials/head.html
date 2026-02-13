@@ -10,6 +10,12 @@
   <meta name="msapplication-config" content="/favicons/browserconfig.xml">
   <meta name="theme-color" content="#ffffff">
   <title>{{ if .IsHome }}{{ .Site.Title }}{{ else }}{{ .Title }} | {{ .Site.Title }}{{ end }}</title>
+  {{- with site.Params.canonicalBaseURL }}
+  <link rel="canonical" href="{{ . | strings.TrimRight "/" }}{{ $.RelPermalink }}">
+  {{- end }}
+  {{- if eq (getenv "HUGO_PREVIEW") "true" }}
+  <meta name="robots" content="noindex, nofollow">
+  {{- end }}
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">

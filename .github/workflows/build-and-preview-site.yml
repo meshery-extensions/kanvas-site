@@ -42,7 +42,7 @@ jobs:
           node-version: "20"
 
       - name: Install deps
-        run: "[[ -f package-lock.json || -f npm-shrinkwrap.json ]] && npm ci || true"
+        run: make setup
 
       - name: Build PR preview
         env:

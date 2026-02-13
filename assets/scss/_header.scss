@@ -1,9 +1,10 @@
 .site-header {
-  position: sticky;
+  position: fixed;
   top: 0;
+  left: 0;
+  width: 100%;
   z-index: 1000;
-  background: $dark;
-  padding: 0.75rem 2rem;
+  padding: 0.75rem 0 0;
   backdrop-filter: none;
   -webkit-backdrop-filter: none;
   transition: background 0.3s ease, backdrop-filter 0.3s ease;
@@ -13,59 +14,128 @@
     -webkit-backdrop-filter: blur(12px) saturate(180%);
   }
   .container {
-    display: flex;
-    justify-content: space-between;
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
     align-items: center;
-    max-width: 1200px;
-    margin: 0 auto;
+    width: 100%;
+    max-width: none;
+    padding: 0 40px; 
+    box-sizing: border-box;
+  }
+  .action-button {
+    display: flex;
+    gap: 20px;
+    justify-content: flex-start; // Keeps these on the far left
   }
 
   .logo {
     display: flex;
-    align-items: center;
+    justify-content: center; // Forces logo to the exact center of its column
+    grid-column: 2;
 
     .logo-img {
       height: 40px;
       width: auto;
     }
   }
-
-  .main-nav ul {
-    display: flex;
-    list-style: none;
-    gap: 2rem;
-    margin: 0;
-    padding: 0;
-
-    a {
-      color: $white;
-      text-decoration: none;
-      font-size: 0.95rem;
-      transition: color 0.3s ease;
-
-      &:hover {
-        color: #00b399;
-      }
-    }
-  }
-
-  .btn-secondary {
-    color: $white;
-    font-size: 1.6rem;
-    margin: 0 15px;
-    display: inline-block;
-    vertical-align: middle;
-    transition: color 0.3s ease;
-
-    &:hover {
-      color: #00b399;
-      transform: translateY(-2px);
-    }
-  }
-
-  .btn-primary {
-    color: #050505;
-    transition: background-color 0.3s ease, box-shadow 0.3s ease;
-  }
 }
 
+.nav-button-wrapper {
+  display: flex;
+  justify-content: flex-end; // Keeps this on the far right
+  grid-column: 3;
+}
+
+.button {
+    color: white;
+    text-transform: capitalize;
+    background-color: #0000;
+    background-image: radial-gradient(circle, #033e36, #00000a);
+    border-radius: .75rem;
+    flex-flow: row;
+    flex: none;
+    justify-content: center;
+    align-items: center;
+    height: 20px;
+    margin-bottom: 0;
+    padding: .875rem 1.5rem;
+    font-weight: 500;
+    text-decoration: none;
+    display: flex;
+    position: relative;
+    overflow: hidden;
+    box-shadow: inset 0 1px 1px #00b399, inset 0 -1px 1px #00b39f;
+    transition: box-shadow 0.3s ease;
+  }
+.button::after {
+  content: "";
+  position: absolute;
+  bottom: -25px; /* Start below the button */
+  left: 50%;
+  transform: translateX(-50%);
+  width: 120%; /* Wide flare */
+  height: 40px;
+  /* Keppel Gradient: White core to Keppel outer */
+  background: radial-gradient(
+    ellipse at center, 
+    #ffffff 0%, 
+    #3AB09E 35%, 
+    rgba(58, 176, 158, 0) 70%
+  );
+  filter: blur(8px);
+  opacity: 0;
+  transition: opacity 0.4s ease, bottom 0.4s ease;
+  pointer-events: none;
+}
+
+/* Trigger on Hover */
+.button:hover::after {
+  opacity: 1;
+  bottom: -28px; /* Moves the light up into view */
+}
+
+.secondary-button {
+    color: white;
+    text-transform: capitalize;
+    font-size: 0.8rem;
+    border-radius: .75rem;
+    flex-flow: row;
+    flex: none;
+    justify-content: center;
+    align-items: center;
+    height: 10px;
+    margin-bottom: 0;
+    padding: .75rem 0.75rem;
+    text-decoration: none;
+    display: flex;
+    position: relative;
+    overflow: hidden;
+    box-shadow: inset 0 1px 1px #00b399, inset 0 -1px 1px #ffffff;
+    transition: box-shadow 0.3s ease;
+  }
+.secondary-button::after {
+  content: "";
+  position: absolute;
+  bottom: -25px; /* Start below the secondary-button */
+  left: 50%;
+  transform: translateX(-50%);
+  width: 120%; /* Wide flare */
+  height: 40px;
+  /* Keppel Gradient: White core to Keppel outer */
+  background: radial-gradient(
+    ellipse at center, 
+    #ffffff 0%, 
+    #3AB09E 35%, 
+    rgba(58, 176, 158, 0) 70%
+  );
+  filter: blur(8px);
+  opacity: 0;
+  transition: opacity 0.4s ease, bottom 0.4s ease;
+  pointer-events: none;
+}
+
+/* Trigger on Hover */
+.secondary-button:hover::after {
+  opacity: 1;
+  bottom: -28px; /* Moves the light up into view */
+}

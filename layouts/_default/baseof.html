@@ -3,12 +3,9 @@
 <head>
   {{ partial "head.html" . }}
 </head>
-
-  {{ partial "navbar.html" . }}
-
   <main>
     {{ block "main" . }}{{ end }}
   </main>
   {{ partial "footer.html" . }}
-
+  <script src="/scripts/main.js"></script>
 </html>

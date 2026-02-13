@@ -1,0 +1,20 @@
+<div id="cube-scene-{{ .Ordinal }}"
+     class="relative w-full h-[520px] overflow-hidden">
+  <canvas class="absolute inset-0"></canvas>
+
+  <!-- overlay gradient -->
+  <div class="pointer-events-none absolute inset-0
+              bg-gradient-to-b from-transparent via-black/20 to-black/60">
+  </div>
+
+  <!-- scanlines -->
+  <div class="pointer-events-none absolute inset-0 opacity-[0.08]
+              bg-[linear-gradient(to_bottom,transparent_50%,rgba(255,255,255,0.04)_50%)]
+              bg-[length:100%_4px]">
+  </div>
+</div>
+
+<script type="module">
+  import initCubeScene from "/js/cube-scene.js";
+  initCubeScene("cube-scene-{{ .Ordinal }}");
+</script>

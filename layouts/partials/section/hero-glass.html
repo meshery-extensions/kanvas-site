@@ -1,82 +1,57 @@
-
-
-
-<section class="hero glass tilt" id="hero">
-  <div class="liquid-strip"></div>
-  <div class="hero-content">
-    <a href="https://docs.layer5.io/cloud/tutorials/gitops-snapshots/" target="_blank" class="pill">
-      New: Kanvas Snapshots
-    </a> 
-    <h1>Infrastructure as Design</h1>
-    <p>
-      Collaborate in real time on architecture maps, Kubernetes cloud patterns, and topologies while Kanvas auto-documents every intent.
-    </p>
-    <div class="cta">
-      <a class="button primary" href="https://kanvas.new">
-        <span>Launch Kanvas</span>
-      </a>
-      <a class="button ghost" href="https://docs.layer5.io/kanvas">
-        <span>Read the Docs</span>
-      </a>
-      <a class="button ghost subtle" href="https://docs.layer5.io/videos">
-        <span>Watch Videos</span>
-      </a>
-    </div>
-    <div class="stats">
-      <a class="ghost subtle" href="https://cloud.layer5.io/catalog">
-        <div class="stat glass-mini">
-          <span class="stat-value">500+</span>
-          <span class="stat-label">Patterns</span>
+<div class="hero-scroll-track">
+  <section class="hero glass tilt" id="hero">
+    <a id="Feature" class="header-scroll-down-wrapper w-inline-block w--current">
+      <div class="header-text">Scroll down</div>
+        <div class="header-scroll-line-wrapper">
+            <div style="transform: translate3d(0px, 2.54987px, 0px) scale3d(1, 1, 1) rotateX(0deg) rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg); transform-style: preserve-3d; will-change: transform;" class="hover-line"></div>
         </div>
-      </a>
-      <div class="stat glass-mini">
-        <span class="stat-value">1-click</span>
-        <span class="stat-label">Topology capture</span>
-      </div>
-      <div class="stat glass-mini">
-        <span class="stat-value">Live</span>
-        <span class="stat-label">Collaborative design</span>
-      </div>
+        <div class="header-scroll-icon">
+            <div class="line"></div>
+        </div>
+    </a>
+    <div class="header-hand-image-wrapper top" id="left-hand" style="will-change: transform;
+        transform: translate3d(0px, 0px, 0px) scale3d(1, 1, 1) rotateX(0deg) rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg);
+        transform-style: preserve-3d;">
+      <div class="hand-overlay top"></div>
     </div>
-  </div>
+    <div class="header-hand-image-wrapper right" id="right-hand" style="will-change: transform;
+        transform: translate3d(0px, 0px, 0px) scale3d(1, 1, 1) rotateX(0deg) rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg);
+        transform-style: preserve-3d;">
+      <div class="hand-overlay _02"></div>
+    </div>
+    <div class="header-content-wrapper">
+      <div class="hero-content" style="will-change: opacity, transform;
+      opacity: 1;
+      transform: translate3d(0px, 0px, 0px) scale3d(1, 1, 1) rotateX(0deg) rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg);
+      transform-style: preserve-3d;">
+        <h1 class="heading-style-h1 linnear-color">Simplifying complexity enabling your growth</h1>
+        <div class="hero-section-button">
+          <a href="https://kanvas.new/extension/meshmap" class="button w-inline-block"><div class="button-text">Started Now</div></a>
+          <!-- <a href="https://docs.layer5.io/kanvas/" class="secondary-button w-inline-block"><div class="button-text">Read the Docs</div></a> -->
+          <!-- <a href="https://docs.layer5.io/videos/#category-0-subcategory-0" class="secondary-button w-inline-block"><div class="button-text">Watch Videos</div></a> -->
+        </div>
+      </div>
+      <div class="header-image-wrapper" style="will-change: transform, opacity; transform: translate3d(-63.4735px, -36.519px, 0px) scale3d(0.48695, 0.48695, 1) rotateX(0deg) rotateY(0deg) rotateZ(24deg) skew(0deg, 0deg); transform-style: preserve-3d; opacity: 0;">
+        <div id="cube-scene" style="height: 105vh; width: 100%; position: relative; overflow: hidden; padding-left:2rem;">
+          <canvas class="absolute inset-0 w-full h-full"></canvas>
 
-  <div class="hero-visual">
-    <div class="canvas-preview glass--dark" data-float>
-      <div class="cursor-layer" data-cursors="0,1,2,3,4" data-social-proof="online=36"
-        style="position:absolute; inset:0; z-index:15; pointer-events:none;"></div>
-      <div class="cursor-social-proof" aria-live="polite"></div>
-      <div class="canvas-header">
-        <span>Production</span>
-        <span class="cloud">
-        <svg id="Layer_1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="0 0 19.8 10.3" xml:space="preserve" enable-background="new 0 0 19.8 10.3" width="20px" height="20px" fill="#aaa" style="height: 24px; width: 24px;"><path d="M6.6 7.6c-.2-.2-.2-.5 0-.7.2-.2.5-.2.7 0l1.4 1.4 3.5-3.5c.2-.2.5-.2.7 0 .2.2.2.5 0 .7L8.7 9.7 6.6 7.6zM3.2 6c.3-.1.4-.3.4-.5v-.1c-.1-.3-.1-.5 0-.8 0-.6.4-1.1 1-1.3.2-.1.4-.1.5-.1.3 0 .7.1 1 .3l.1.1c.2.2.5.1.6-.1l.1-.1c.8-1.6 2.5-2.5 4.2-2.3 1.8.2 3.3 1.6 3.6 3.4.1.6.1 1.2-.1 1.8v.2c-.1.3.2.6.5.5h.2c.4-.1.8-.1 1.2-.1 1.2.1 2.1 1.1 2.3 2.3.1.8-.2 1.6-.7 2.2-.5.6-1.3.8-2 .8H4.4c-1.8 0-3.2-1.3-3.3-3C1 7.7 1.9 6.4 3.2 6zM0 9.2c.1 2.3 2 4 4.3 4h11.8c1 0 2-.4 2.7-1.2.7-.7 1.1-1.7 1-2.7-.1-1.9-1.6-3.4-3.5-3.6h-.6c.1-.5 0-1 0-1.5-.4-2.3-2.3-4-4.6-4.3-2-.2-3.9.7-5 2.4-.5-.2-1-.3-1.5-.2-1.1.2-2 1-2.2 2.1-.1.3-.1.6 0 .9C.9 5.9-.1 7.5 0 9.2z"></path></svg></span>
-        <!-- <span class="status">Collaboration</span> -->
-      </div>
-      <div class="canvas-grid">
-        <div class="connector connector--one"></div>
-        <div class="connector connector--two"></div>
-        <div class="connector connector--three"></div>
-        <div class="node node--a"></div>
-        <div class="node node--b"></div>
-        <div class="node node--c"></div>
-        <div class="node node--d"></div>
-        <div class="node node--e"></div>
+          <!-- Overlay gradient (radial fade) -->
+          <div class="pointer-events-none absolute inset-0 
+                      bg-[radial-gradient(ellipse_at_center,transparent_0%,transparent_50%,rgba(0,0,0,0.5)_100%)]">
+          </div>
+
+          <!-- Scanlines effect -->
+          <div class="pointer-events-none absolute inset-0 opacity-[0.03]
+                      bg-[repeating-linear-gradient(0deg,transparent,transparent_2px,rgba(255,255,255,0.03)_2px,rgba(255,255,255,0.03)_4px)]">
+          </div>
+        </div>
       </div>
     </div>
-    <!-- <div class="glass-panel glass" data-float>
-      <h3>Instant Docs</h3>
-      <p>
-        Every drag, link, and annotation becomes living documentation
-        shared across teams.
-      </p>
-      <ul>
-        <li>Export to Markdown</li>
-        <li>Sync to Layer5 Catalog</li>
-        <li>Versioned design history</li>
-      </ul>
-      <a class="text-link" href="https://docs.layer5.io/kanvas">
-        Open Docs
-      </a>
-    </div> -->
-  </div>
-</section>
-<script src="/scripts/hero-glass.js"></script>
+  </section>
+</div>
+    <!-- <script src="/scripts/hero-glass.js"></script> -->
+<script src="/scripts/hero-hand-animation.js"></script>
+<script type="module">
+  import initCubeScene from "/js/cube-scene.js";
+  initCubeScene("cube-scene");
+</script>

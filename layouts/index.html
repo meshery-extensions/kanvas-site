@@ -1,10 +1,8 @@
 {{ define "main" }}
+  {{ partial "header.html" . }}
   {{ partial "section/hero-glass.html" . }}
   {{ partial "section/customers.html" . }}
-  {{ partial "section/hero.html" . }}
-  <!-- {{ partial "section/mode.html" . }} -->
-  {{ partial "section/demo.html" . }}
-  {{ partial "section/capabilities.html" . }}
-  {{ partial "section/community.html" . }}
-  {{ partial "section/browser.html" . }}
+  <!-- {{ partial "section/browser.html" . }} -->
+  <!-- {{ partial "section/capabilities.html" . }} -->
+  {{ partial "section/feature.html" .}}
 {{ end }}

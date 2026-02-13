@@ -1,0 +1,224 @@
+.all-feature-top-content-wrapper {
+    text-align: center;
+    max-width: 36.125rem;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.heading-style-h2.linnear-color {
+    font-size: 3rem;
+    margin-bottom: 4rem;
+    background-image: linear-gradient(261deg, #272736, #fff 50%, #272736);
+    
+    /* 2. Clip the background to the text */
+    -webkit-background-clip: text;
+    background-clip: text;
+
+    /* 3. Make the actual text transparent so the background shows through */
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+
+    /* Optional: Ensure the text looks crisp */
+    display: inline-block;
+    font-weight: bold;
+}
+
+.feature-section {
+  justify-content: center;
+  padding: 80px 0;
+}
+
+.all-feature-bottom-content-wrapper {
+  max-width: 1100px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  column-gap: 40px;  
+  row-gap: 40px;    
+  margin: 0 auto;   
+  padding: 0 20px;   
+  align-items: stretch;
+}
+
+.all-feature-card-icon {
+  width: 50px;
+  height: 50px;
+  object-fit: contain;
+
+  filter:
+    brightness(0)
+    saturate(100%)
+    invert(53%)
+    sepia(85%)
+    saturate(748%)
+    hue-rotate(122deg)
+    brightness(95%)
+    contrast(96%);
+
+  transition: all 0.4s ease;
+}
+
+.all-feature-card {
+  position: relative;
+  padding-top: 120px;  
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  transition: transform 0.4s ease;
+}
+
+.all-feature-card-icon-wrapper {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 90px;
+  height: 80px;
+  border-radius: 12px;
+  background: linear-gradient(
+    145deg,
+    #0f1a20,
+    #0c1117
+  );
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(255,255,255,0.06);
+  box-shadow: 0 20px 50px rgba(0,0,0,0.7);
+  z-index: 2;
+}
+
+.all-feature-card-icon {
+  width: 50px;  
+  height: 50px;
+  object-fit: contain;
+}
+
+.heading-style-h6 {
+  font-size: 22px;  
+  font-weight: 600;
+  color: #ffffff;
+  margin-bottom: 10px; 
+  margin-top: 0px;     
+}
+
+.text-size-small {
+  font-size: 16px;  
+  line-height: 1.6; 
+  color: rgba(255,255,255,0.7);
+  margin-bottom: 0;  
+}
+
+.all-feature-card-content-wrapper {
+  background: linear-gradient(
+    145deg,
+    $card-dark-1,
+    $card-dark-2
+  );
+  border-radius: 15px;
+  padding: 30px 10px;  
+  text-align: center;
+  box-shadow:
+    inset 0 1px 2px rgba(0, 211, 169, 0.08),
+    0 10px 40px rgba(0, 0, 0, 0.6);
+  transition: all 0.4s ease;
+  height: 40%; 
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  z-index:2;
+}
+
+.all-feature-card-light-image {
+  display: none;
+}
+
+.more-feature-card-bg-image,
+.all-feature-card-light-image {
+  display: none;
+}
+
+.all-feature-card-light-image {
+  position: absolute;
+  bottom: -40px;
+  left: 50%;
+  transform: translateX(-50%) translateY(50px);
+  opacity: 0;
+  width: 150%;
+  pointer-events: none;
+  transition: all 0.6s ease;
+}
+
+.all-feature-card::after {
+  content: "";
+  position: absolute;
+  bottom: 20%;
+  width: 350px;
+  height: 350px;
+  background: radial-gradient(
+    circle at center,
+    #3AB09E 0%,
+    rgba(58, 176, 158, 0.8) 55%,
+    rgba(58, 176, 158, 0.4) 45%,
+    rgba(58, 176, 158, 0) 70%
+  );
+  opacity: 0;
+  filter: blur(70px);
+  transform: scale(0.7);
+  transition: opacity 0.4s ease, transform 0.4s ease;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.all-feature-card:hover::after {
+  opacity: 0.8;
+}
+
+.all-feature-card:hover .all-feature-card-icon {
+  transform: scale(1.1);
+}
+
+
+@media (max-width: 991px) {
+  .all-feature-bottom-content-wrapper {
+    grid-template-columns: repeat(2, 1fr);
+    column-gap: 30px;
+    row-gap: 80px;
+    max-width: 700px;
+  }
+  
+  .feature-section {
+    padding: 60px 0;
+  }
+}
+
+@media (max-width: 768px) {
+  .all-feature-bottom-content-wrapper {
+    column-gap: 20px;
+    row-gap: 60px;
+    padding: 0 15px;
+  }
+  
+  .heading-style-h6 {
+    font-size: 20px;
+  }
+  
+  .text-size-small {
+    font-size: 15px;
+  }
+}
+
+@media (max-width: 600px) {
+  .all-feature-bottom-content-wrapper {
+    grid-template-columns: 1fr;
+    max-width: 400px;
+    row-gap: 60px;
+  }
+  
+  .feature-section {
+    padding: 40px 0;
+  }
+  
+  .all-feature-card-content-wrapper {
+    padding: 25px 25px 35px;
+  }
+}

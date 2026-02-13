@@ -1,0 +1,402 @@
+// Timeline DVR Component Styles
+
+.timeline-section {
+    position: relative;
+    overflow: hidden;
+
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 24px;
+        display: grid;
+        gap: 60px;
+        align-items: center;
+    }
+
+    .timeline-visual {
+        position: relative;
+
+        .visual-inner {
+            background: transparent;
+        }
+    }
+
+    // Timeline DVR Card Styles
+    .timeline-card {
+        background: linear-gradient(145deg,
+                #0f1a20,
+                #0c1117);
+        border: 1px solid rgba(255, 255, 255, 0.06);
+        box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7);
+        border-radius: 32px; // Larger rounded corners like Lovable
+        overflow: hidden;
+        box-shadow:
+            0 28px 70px rgba(2, 8, 20, 0.7),
+            0 0 40px rgba(0, 179, 159, 0.15); // Outer teal glow
+        backdrop-filter: blur(28px) saturate(160%);
+        -webkit-backdrop-filter: blur(28px) saturate(160%);
+        font-family: 'Inter', sans-serif;
+        position: relative;
+
+        // Header
+        .card-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 24px 28px; // Slightly more padding
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+
+            .header-left {
+                display: flex;
+                align-items: center;
+                gap: 16px;
+
+                .icon-box {
+                    width: 40px;
+                    height: 40px;
+                    background: rgba(0, 179, 159, 0.15);
+                    border-radius: 12px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    color: #00D3A9;
+                    border: 1px solid rgba(0, 179, 159, 0.25);
+
+                    svg {
+                        width: 20px;
+                        height: 20px;
+                    }
+                }
+
+                .titles {
+                    h3 {
+                        font-size: 1.1rem; // Slightly larger
+                        font-weight: 700; // Bolder
+                        margin: 0;
+                        line-height: 1.2;
+                        // Teal gradient matching website
+                        background: linear-gradient(90deg, #00B39F 0%, #00D3A9 100%);
+                        -webkit-background-clip: text;
+                        -webkit-text-fill-color: transparent;
+                        background-clip: text;
+                    }
+
+                    p {
+                        font-size: 0.8rem;
+                        color: #94a3b8;
+                        margin: 0;
+                        line-height: 1.2;
+                    }
+                }
+            }
+
+            .header-right {
+                display: flex;
+                align-items: center;
+                gap: 12px;
+
+                .live-badge {
+                    display: flex;
+                    align-items: center;
+                    gap: 6px;
+                    padding: 4px 10px;
+                    background: rgba(239, 68, 68, 0.1);
+                    border: 1px solid rgba(239, 68, 68, 0.3);
+                    border-radius: 12px;
+                    font-size: 0.75rem;
+                    font-weight: 600;
+                    color: #FCA5A5;
+                    letter-spacing: 0.05em;
+
+                    .dot {
+                        width: 6px;
+                        height: 6px;
+                        background: #EF4444;
+                        border-radius: 50%;
+                        animation: pulse-live 2s ease-in-out infinite;
+                    }
+                }
+
+                .segments-badge {
+                    display: flex;
+                    align-items: center;
+                    gap: 6px;
+                    padding: 4px 10px;
+                    background: rgba(0, 179, 159, 0.1); // Teal background matching website
+                    border: 1px solid rgba(0, 179, 159, 0.25); // Teal border matching website
+                    border-radius: 12px;
+                    font-size: 0.75rem;
+                    font-weight: 500;
+                    color: #9EFFEC; // Pale Teal matching website
+
+                    svg {
+                        color: #00D3A9; // Teal matching website
+                    }
+                }
+            }
+        }
+
+        // Timeline Track
+        .timeline-track {
+            position: relative;
+            height: 200px; // Slightly taller
+            padding: 40px 28px;
+            background: rgba(15, 23, 42, 0.4);
+
+            .segments {
+                position: relative;
+                width: 100%;
+                height: 120px; // Taller segments
+                background: rgba(30, 41, 59, 0.5);
+                border-radius: 16px; // More rounded
+                overflow: hidden;
+                box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.3); // Inset shadow
+
+                .segment {
+                    position: absolute;
+                    height: 100%;
+                    border-radius: 12px; // More rounded segments
+                    transition: all 0.3s ease;
+                    box-shadow:
+                        inset 0 1px 2px rgba(255, 255, 255, 0.1),
+                        0 2px 8px rgba(0, 0, 0, 0.2); // Inner glow effect
+
+                    &:hover {
+                        filter: brightness(1.2);
+                        transform: scaleY(1.05);
+                    }
+
+                    &.recording {
+                        background: linear-gradient(135deg, #7C3AED 0%, #5B21B6 100%);
+                    }
+
+                    &.recording-alt {
+                        background: linear-gradient(135deg, #8B5CF6 0%, #6D28D9 100%);
+                    }
+
+                    &.motion {
+                        background: linear-gradient(135deg, #00D3A9 0%, #00B39F 100%); // Teal gradient
+                    }
+
+                    &.event {
+                        background: linear-gradient(135deg, #DB2777 0%, #BE185D 100%);
+                    }
+                }
+            }
+
+            .playhead {
+                position: absolute;
+                top: 40px;
+                width: 3px;
+                height: 120px;
+                background: linear-gradient(180deg, #00B39F 0%, #00D3A9 100%); // Teal gradient
+                box-shadow: 0 0 16px rgba(0, 211, 169, 0.8); // Teal glow
+                border-radius: 2px;
+                z-index: 10;
+
+                &::before {
+                    content: '';
+                    position: absolute;
+                    top: -6px;
+                    left: 50%;
+                    transform: translateX(-50%);
+                    width: 12px;
+                    height: 12px;
+                    background: #00D3A9; // Teal
+                    border-radius: 50%;
+                    border: 2px solid white;
+                    box-shadow: 0 0 12px rgba(0, 211, 169, 0.9); // Teal glow
+                }
+
+                &::after {
+                    content: '';
+                    position: absolute;
+                    bottom: -6px;
+                    left: 50%;
+                    transform: translateX(-50%);
+                    width: 12px;
+                    height: 12px;
+                    background: #00D3A9; // Teal
+                    border-radius: 50%;
+                    border: 2px solid white;
+                    box-shadow: 0 0 12px rgba(0, 211, 169, 0.9); // Teal glow
+                }
+            }
+        }
+
+        // Controls
+        .card-controls {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 24px 28px; // More padding
+            background: rgba(5, 10, 20, 0.6);
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+
+            .playback-controls {
+                display: flex;
+                gap: 10px;
+
+                .control-btn {
+                    width: 40px;
+                    height: 40px;
+                    border-radius: 12px; // More rounded
+                    background: rgba(255, 255, 255, 0.03);
+                    border: 1px solid rgba(255, 255, 255, 0.06);
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    color: #cbd5e1;
+                    cursor: pointer;
+                    transition: all 0.2s;
+
+                    svg {
+                        width: 18px;
+                        height: 18px;
+                    }
+
+                    &:hover {
+                        background: rgba(255, 255, 255, 0.08);
+                        color: white;
+                        transform: scale(1.05);
+                    }
+
+                    &.pause-btn {
+                        // Teal gradient matching website
+                        background: linear-gradient(135deg, #00B39F 0%, #00D3A9 100%);
+                        border: none;
+                        color: white;
+                        box-shadow: 0 4px 12px rgba(0, 179, 159, 0.3);
+
+                        &:hover {
+                            background: linear-gradient(135deg, #00D3A9 0%, #9EFFEC 100%);
+                            box-shadow: 0 6px 16px rgba(0, 211, 169, 0.4);
+                            transform: scale(1.08);
+                        }
+                    }
+                }
+            }
+
+            .time-display {
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                padding: 10px 18px;
+                background: rgba(15, 23, 42, 0.6);
+                border-radius: 14px;
+                font-size: 0.95rem;
+                font-weight: 500;
+                border: 1px solid rgba(255, 255, 255, 0.05);
+
+                svg {
+                    color: #00D3A9; // Teal matching website
+                }
+
+                .current-time {
+                    font-weight: 700;
+                    // Teal gradient matching website
+                    background: linear-gradient(90deg, #00B39F 0%, #9EFFEC 100%);
+                    -webkit-background-clip: text;
+                    -webkit-text-fill-color: transparent;
+                    background-clip: text;
+                }
+
+                .separator {
+                    color: #64748b;
+                }
+
+                .total-time {
+                    color: #94a3b8;
+                }
+            }
+
+            .speed-control {
+                display: flex;
+                align-items: center;
+                gap: 8px;
+                padding: 10px 14px;
+                background: rgba(255, 255, 255, 0.03);
+                border: 1px solid rgba(255, 255, 255, 0.06);
+                border-radius: 12px;
+                font-size: 0.9rem;
+                font-weight: 600;
+                color: #cbd5e1;
+                cursor: pointer;
+                transition: all 0.2s;
+
+                svg:first-child {
+                    color: #F59E0B;
+                }
+
+                &:hover {
+                    background: rgba(255, 255, 255, 0.08);
+                    color: white;
+                    transform: scale(1.02);
+                }
+            }
+        }
+
+        // Legend
+        .card-legend {
+            display: flex;
+            gap: 24px;
+            padding: 16px 24px;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+
+            .legend-item {
+                display: flex;
+                align-items: center;
+                gap: 8px;
+                font-size: 0.8rem;
+                color: #94a3b8;
+
+                .legend-dot {
+                    width: 12px;
+                    height: 12px;
+                    border-radius: 50%;
+
+                    &.recording {
+                        background: #7C3AED;
+                    }
+
+                    &.motion {
+                        background: #0891B2;
+                    }
+
+                    &.event {
+                        background: #DB2777;
+                    }
+                }
+            }
+        }
+    }
+
+    // Ambient glow
+    &::before {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 80%;
+        height: 80%;
+        background: radial-gradient(circle, rgba(0, 179, 159, 0.15) 0%, transparent 70%); // Teal glow matching website
+        filter: blur(100px);
+        z-index: -1;
+        opacity: 0.5;
+    }
+}
+
+@keyframes pulse-live {
+
+    0%,
+    100% {
+        opacity: 1;
+        box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7);
+    }
+
+    50% {
+        opacity: 0.7;
+        box-shadow: 0 0 0 6px rgba(239, 68, 68, 0);
+    }
+}

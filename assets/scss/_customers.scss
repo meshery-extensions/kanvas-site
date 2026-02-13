@@ -26,6 +26,7 @@
         align-items: center;
         gap: $spacer * 2;
         width: max-content; 
+        height: 8rem;
 
         img {
             height: 35px;
@@ -34,6 +35,58 @@
             // Force filter rendering
             transform: translateZ(0);
             backface-visibility: hidden;
+        }
+        .logo{
+            position: relative;
+
+            img {
+                height: 35px;
+                width: auto;
+                filter: invert(0.6);
+                // Force filter rendering
+                transform: translateZ(0);
+                backface-visibility: hidden;
+            }
+            .hovered-glass{
+                display: none;
+                position: absolute;
+                top: -2.5rem;
+                left: 0;
+                min-width: 100%;
+                width: auto;
+                height: 8rem;
+                background: linear-gradient(145deg, color-mix(in srgb,#000 88%,#fff),rgba(170, 204, 172, 0.9));
+                z-index: 4;
+                pointer-events: none;
+                border-radius: 10px;
+                padding: 0.75rem 1rem;
+
+                img {
+                    height: 25px;
+                }
+                .hovered-glass-text{
+                    width: 15rem;
+                }
+                p{
+                    text-align: right;
+                }
+                .quote{
+                    font-weight: bold;
+                    margin-bottom: 0.5rem;
+                    text-align: center;
+                }
+            }
+            
+            &:hover .hovered-glass {
+                display: flex;
+                align-items: center;
+                gap: 0.5rem;
+            }
+            @media (max-width: 600px){
+                &:hover .hovered-glass {
+                display: none;
+                }
+            }
         }
     }
 }

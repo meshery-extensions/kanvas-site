@@ -60,6 +60,7 @@ jobs:
         env:
           HUGO_ENVIRONMENT: production
           HUGO_ENV: production
+          HUGO_PREVIEW: "true"
         run: |
           hugo \
             --gc \
@@ -67,6 +68,12 @@ jobs:
             --buildDrafts \
             --buildFuture \
             --baseURL "/"
+
+          # Block all crawlers from indexing PR previews
+          cat > public/robots.txt <<'EOF'
+          User-agent: *
+          Disallow: /
+          EOF
 
       - name: Deploy PR preview
         if: github.event.action != 'closed'

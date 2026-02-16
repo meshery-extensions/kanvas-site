@@ -32,3 +32,5 @@ enableMissingTranslationPlaceholders = true
   logo_light = "images/kanvas-logo-light.svg"
   logo_dark = "images/kanvas-logo-dark.svg"
   description = "Collaborative cloud native management for Kubernetes"
+
+  canonicalBaseURL = "https://www.kanvas.new"

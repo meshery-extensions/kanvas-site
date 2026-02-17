@@ -55,6 +55,13 @@
     gap: 4rem;
     padding-top: 3rem;
 
+
+    @media (max-width: 48rem ) {
+      gap: 2rem;
+      margin: 0 1rem;
+      
+    }
+
     .stat-item {
       display: flex;
       gap: $spacer * .5;
@@ -62,6 +69,7 @@
       i {
         color: #00b399;
         padding-top: 0.5rem;
+        
       }
 
       strong {
@@ -74,6 +82,7 @@
         color: $white;
         font-size: 0.7rem;
       }
+
     }
   }
 

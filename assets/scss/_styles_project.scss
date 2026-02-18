@@ -3,10 +3,7 @@
 @import "variables_project";
 @import "fonts_project";
 @import "content_project";
-@import "modes";
-@import "demo";
 @import "header";
-@import "hero";
 @import "capabilities";
 @import "community";
 @import "footer";
@@ -14,11 +11,12 @@
 @import "hero-glass";
 @import "floating-logo";
 @import "browser";
+@import "feature";
 @import "cursors";
 
 
 body {
-  background-color: $dark;      
+  background-color: #060c0c;      
   color: $white;                
   margin: 0;
   -webkit-font-smoothing: antialiased;
@@ -31,18 +29,4 @@ body {
   display: block;
 }
 
-.btn-primary {
-  background-color: $primary;   
-  color: $white;                
-  padding: 0.5rem 1.25rem;
-  border-radius: 4px;
-  text-decoration: none;
-  font-weight: 600;
-  font-size: 0.9rem;
-  transition: all 0.2s ease;
 
-  &:hover {
-    filter: brightness(1.1);
-    box-shadow: 0 0 15px rgba($primary, 0.3); 
-  }
-}

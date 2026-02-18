@@ -9,11 +9,9 @@
     }
 
     .customers-title {
-        color: $casper;
+        color: $white;
         font-family: $font-qanelas;
-        font-size: $font-size-base * .875;
         margin-bottom: $spacer * 2;
-        text-transform: uppercase; 
     }
 
     .marquee-viewport {
@@ -36,4 +34,123 @@
             backface-visibility: hidden;
         }
     }
+}
+
+.header-bottom-content-wrp {
+  width: 95%;
+  margin-bottom: 0;   
+  padding-left: 3rem;
+}
+
+.header-bottom-left-content-wrapper {
+    grid-column-gap: 1.875rem;
+    grid-row-gap: 1.875rem;
+    flex-flow: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    max-width: 38%;
+    display: flex;
+}
+
+.number-item {
+    -webkit-backdrop-filter: blur(5px);
+    backdrop-filter: blur(5px);
+    background-color: #0101011a;
+    border: 1px solid #ffffff1a;
+    border-radius: .75rem;
+    padding: 1.0625rem 4rem 1.0625rem 1.875rem;
+    position: relative;
+    overflow: hidden;
+    max-width: 70px;
+
+    &::after {
+        content: "";
+        position: absolute;
+        bottom: -220%;
+        width: 300px;
+        height: 300px;
+        background: radial-gradient(
+            circle,
+            rgba(0, 179, 159, 0.6) 40%,
+            rgba(0, 179, 159, 0.35) 40%,
+            rgba(0, 179, 159, 0.15) 55%,
+            transparent 70%
+        );
+        pointer-events: none;
+        z-index: 0;
+    }
+}
+
+.number-content {
+    grid-column-gap: .875rem;
+    grid-row-gap: .875rem;
+    flex-flow: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    display: flex;
+}
+
+.heading-style-h3 {
+    background-clip: text;
+    margin-top: 0;
+    margin-bottom: 0;
+    font-weight: 600;
+    font-size: 2rem;
+}
+
+.text-size-small.text-color-white {
+    background-image: linear-gradient(180deg, var(#ffffff));
+    -webkit-background-clip: text;
+    background-clip: text;
+    font-weight: 400;
+}
+
+.bg-coloer-image {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+}
+
+.number-line {
+    background-color: #00b39f;
+    width: 2px;
+    height: 48px;
+    position: absolute;
+    top: 6px;
+    left: 0;
+    border-start-end-radius: 2px;
+}
+
+.text-size-regular.text-color-white-200 {
+    color: $casper;
+}
+
+.stat-animate-out {
+  animation: floatOut 0.4s ease forwards;
+}
+
+.stat-animate-in {
+  animation: floatIn 0.6s ease forwards;
+}
+
+@keyframes floatOut {
+  0% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+}
+
+@keyframes floatIn {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }

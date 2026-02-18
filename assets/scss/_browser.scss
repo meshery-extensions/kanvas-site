@@ -11,6 +11,7 @@
 .browser-shell {
   position: relative;
   max-width: 980px;
+  height:600px;
   margin: 48px auto 0;
   border-radius: 22px;
   overflow: hidden;
@@ -75,7 +76,7 @@
 
 .browser-body {
   position: relative;
-  min-height: 440px;
+  min-height: 540px;
   padding: 64px 32px;
   display: grid;
   place-items: center;
@@ -281,4 +282,107 @@
   // box-shadow: inset 0 0 10px rgba(250, 250, 250, 0.45);
   background: linear-gradient(to right,rgba(170, 204, 172, 0.082),color-mix(in srgb,#000 88%,#fff),rgba(170, 204, 172, 0.082));
   
+}
+
+.hero-visual {
+  display: grid;
+  gap: 24px;
+}
+
+.canvas-preview {
+  padding: 22px;
+  display: grid;
+  gap: 16px;
+}
+
+.canvas-header {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.95rem;
+  color: var(--muted);
+}
+
+.status {
+  padding: 4px 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: rgba(0, 211, 169, 0.15);
+  color: var(--accent-3);
+  font-size: 0.75rem;
+}
+
+.canvas-grid {
+  position: relative;
+  height: 450px;
+  border-radius: 16px;
+  background-image: linear-gradient(rgba(255, 255, 255, 0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.06) 1px, transparent 1px);
+  background-size: 48px 48px;
+  overflow: hidden;
+}
+
+.node {
+  position: absolute;
+  width: 34px;
+  height: 34px;
+  border-radius: 12px;
+  background: linear-gradient(120deg, rgba(0, 179, 159, 0.9), rgba(0, 211, 169, 0.9));
+  box-shadow: 0 12px 28px rgba(0, 22, 24, 0.5);
+}
+
+.node--a {
+  top: 24px;
+  left: 32px;
+}
+
+.node--b {
+  top: 48px;
+  right: 168px;
+  background: linear-gradient(120deg, rgba(158, 255, 236, 0.9), rgba(0, 179, 159, 0.9));
+}
+
+.node--c {
+  bottom: 36px;
+  left: 64px;
+  background: radial-gradient( circle at 30% 130%, rgba(23, 36, 33, 0.9), rgba(91, 24, 1, 0.9));
+}
+
+.node--d {
+  bottom: 68px;
+  right: 106px;
+}
+
+.node--e {
+  top: 96px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: linear-gradient(120deg, rgba(0, 179, 159, 0.9), rgba(158, 255, 236, 0.9));
+}
+
+.connector {
+  position: absolute;
+  height: 2px;
+  background: linear-gradient(90deg, rgba(0, 179, 159, 0.8), rgba(0, 211, 169, 0.2));
+  opacity: 0.8;
+}
+
+.connector--one {
+  top: 52px;
+  left: 60px;
+  width: 180px;
+  transform: rotate(6deg);
+}
+
+.connector--two {
+  top: 138px;
+  left: 90px;
+  width: 140px;
+  transform: rotate(-24deg);
+}
+
+.connector--three {
+  bottom: 62px;
+  left: 80px;
+  width: 220px;
+  transform: rotate(-10deg);
 }

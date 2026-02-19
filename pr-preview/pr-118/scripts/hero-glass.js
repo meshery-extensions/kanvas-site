@@ -1,5 +1,5 @@
 const root = document.documentElement;
-const hero = document.querySelector(".hero");
+const hero = document.querySelector(".hero-tilt");
 const tiltTargets = document.querySelectorAll("[data-tilt]");
 const floaters = document.querySelectorAll("[data-float]");
 

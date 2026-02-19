@@ -1,21 +1,22 @@
 .site-header {
   position: fixed;
-  top: 0;
+  top: 24px;
   z-index: 1000;
   background: $dark;
   padding: 0.75rem 2rem;
   backdrop-filter: none;
   -webkit-backdrop-filter: none;
   transition: background 0.1s ease, backdrop-filter 0.3s ease;
-  width: 100vw;
-  max-width: 1200px;
   display: flex;
   align-items: center;
   gap: 24px;
   border-radius: 999px;
-  top: 24px;
-  left: 50%;
-  transform: translateX(-50%);
+  left: 0;
+  right: 0;  
+  margin: 0 auto;
+  max-width: 1200px;
+  width: calc(100% - 48px);
+
 
   &.scrolled {
     background: rgba(0, 0, 0, 0.05);

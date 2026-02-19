@@ -159,12 +159,16 @@ main {
 .hero {
   margin-top: 40px;
   padding: 72px;
+  transform: none !important;
+}
+.hero-tilt {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 48px;
   align-items: center;
   transform: perspective(1200px) rotateX(var(--tilt-x)) rotateY(var(--tilt-y));
   transition: transform 0.35s ease;
+  transform-style: preserve-3d;
 }
 
 .liquid-strip {

@@ -248,62 +248,20 @@
         .card-canvas {
             height: 340px;
             position: relative;
-            // Exact match for .canvas-grid grid lines
-            background-image:
-                linear-gradient(rgba(255, 255, 255, 0.06) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(255, 255, 255, 0.06) 1px, transparent 1px);
-            background-size: 40px 40px;
             overflow: hidden;
 
-            .central-content {
+            .canvas-grid {
                 position: absolute;
-                top: 45%;
+                top: 0;
+                bottom: 0;
                 left: 50%;
-                transform: translate(-50%, -50%);
-                text-align: center;
-                z-index: 10;
-                width: 100%;
-                padding: 0 20px;
-
-                .collab-badge {
-                    display: inline-flex;
-                    align-items: center;
-                    gap: 8px;
-                    padding: 6px 12px;
-                    background: rgba(12, 19, 33, 0.7);
-                    border: 1px solid rgba(0, 179, 159, 0.3); // Teal border
-                    border-radius: 999px;
-                    margin-bottom: 20px;
-                    font-size: 0.8rem;
-                    color: #9EFFEC; // Pale Teal text
-                    backdrop-filter: blur(4px);
-
-                    svg {
-                        color: #00D3A9; // Teal icon
-                        width: 14px;
-                        height: 14px;
-                    }
-                }
-
-                h2 {
-                    font-size: 2.5rem;
-                    font-weight: 700;
-                    // Teal to Pale Green gradient
-                    background: linear-gradient(135deg, #ffffff 0%, #00D3A9 100%);
-                    -webkit-background-clip: text;
-                    -webkit-text-fill-color: transparent;
-                    margin-bottom: 12px;
-                    letter-spacing: -0.02em;
-                }
-
-                p {
-                    font-size: 1rem;
-                    color: #94a3b8;
-                    max-width: 380px;
-                    line-height: 1.6;
-                    margin: 0 auto;
-                }
+                transform: translateX(-50%);
+                width: 440px;
+                height: 100%;
+                border-radius: 0;
+                background-size: 48px 48px;
             }
+
 
             .multi-cursor {
                 position: absolute;

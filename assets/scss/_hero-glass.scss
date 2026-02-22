@@ -112,19 +112,6 @@ ul {
   opacity: 0.15;
 }
 
-.site-header {
-  max-width: 1200px;
-  margin: 26px auto 0;
-  padding: 16px 28px;
-  display: flex;
-  align-items: center;
-  gap: 24px;
-  border-radius: 999px;
-  position: sticky;
-  top: 24px;
-  z-index: 5;
-}
-
 .brand {
   display: flex;
   align-items: center;
@@ -172,12 +159,16 @@ main {
 .hero {
   margin-top: 40px;
   padding: 72px;
+  transform: none !important;
+}
+.hero-tilt {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 48px;
   align-items: center;
   transform: perspective(1200px) rotateX(var(--tilt-x)) rotateY(var(--tilt-y));
   transition: transform 0.35s ease;
+  transform-style: preserve-3d;
 }
 
 .liquid-strip {
@@ -755,11 +746,6 @@ main {
 
 
 @media (max-width: 960px) {
-  .site-header {
-    flex-wrap: wrap;
-    border-radius: 28px;
-  }
-
   .nav-links {
     display: none;
   }

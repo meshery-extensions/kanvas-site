@@ -257,12 +257,15 @@
 
             const now = performance.now();
             const elapsed = now - start;
-            const newPos = startPos + (elapsed / 80);
+            let newPos = startPos + (elapsed / 80);
 
             if (newPos >= 100) {
-                setScrubPosition(100);
-                setIsPlaying(false);
-                setActiveEvent(events[events.length - 1]);
+                // Loop back to start instead of stopping
+                const wrapStart = performance.now();
+                const wrapPos = 0;
+                setScrubPosition(0);
+                setActiveEvent(events[0]);
+                animRef = requestAnimationFrame(() => playTick(wrapStart, wrapPos));
                 return;
             }
 
@@ -321,5 +324,7 @@
         // Initial render
         setActiveEvent(events[0]);
         setScrubPosition(0);
+        setIsPlaying(true);
+        animRef = requestAnimationFrame(() => playTick(performance.now(), 0));
     });
 </script>

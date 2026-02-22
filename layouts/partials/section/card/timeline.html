@@ -11,11 +11,7 @@
                     <div class="card-header">
                         <div class="header-left">
                             <div class="icon-box">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                    stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
-                                </svg>
+                                <i class="fas fa-play-circle"></i>
                             </div>
                             <div class="titles">
                                 <h3>Deployment Playback</h3>
@@ -72,36 +68,18 @@
                     <div class="card-controls">
                         <div class="playback-controls">
                             <button class="control-btn" id="tmdvr-btn-prev">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                    stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M11 19l-7-7 7-7m8 14l-7-7 7-7" />
-                                </svg>
+                                <i class="fas fa-backward-step"></i>
                             </button>
                             <button class="control-btn pause-btn" id="tmdvr-btn-play">
-                                <svg id="tmdvr-icon-play" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
-                                    viewBox="0 0 24 24">
-                                    <path d="M8 5v14l11-7z" />
-                                </svg>
-                                <svg id="tmdvr-icon-pause" style="display: none;" xmlns="http://www.w3.org/2000/svg"
-                                    fill="currentColor" viewBox="0 0 24 24">
-                                    <path d="M6 4h4v16H6V4zm8 0h4v16h-4V4z" />
-                                </svg>
+                                <i id="tmdvr-icon-play" class="fas fa-play"></i>
+                                <i id="tmdvr-icon-pause" class="fas fa-pause" style="display: none;"></i>
                             </button>
                             <button class="control-btn" id="tmdvr-btn-next">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                    stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M13 5l7 7-7 7M5 5l7 7-7 7" />
-                                </svg>
+                                <i class="fas fa-forward-step"></i>
                             </button>
                         </div>
                         <div class="time-display">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                stroke="currentColor" width="16" height="16">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                            </svg>
+                            <i class="fas fa-clock" style="font-size: 14px;"></i>
                             <span class="current-time" id="tmdvr-time-display">09:00:12</span>
                             <span class="separator">/</span>
                             <span class="total-time">17:30:00</span>
@@ -129,11 +107,11 @@
         ];
 
         const typeIcons = {
-            deploy: '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>',
-            rollback: '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 15L3 9m0 0l6-6M3 9h12a6 6 0 010 12h-3"/></svg>',
-            config: '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>',
-            scale: '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4"/></svg>',
-            security: '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>',
+            deploy: '<i class="fas fa-bolt"></i>',
+            rollback: '<i class="fas fa-undo"></i>',
+            config: '<i class="fas fa-cog"></i>',
+            scale: '<i class="fas fa-arrows-alt"></i>',
+            security: '<i class="fas fa-shield-alt"></i>',
         };
 
         let activeEvent = events[0];

@@ -15,14 +15,15 @@
 @import "floating-logo";
 @import "browser";
 @import "cursors";
+@import "kanvas-corner-popup";
 
 
 body {
-  background-color: $dark;      
-  color: $white;                
+  background-color: $dark;
+  color: $white;
   margin: 0;
   -webkit-font-smoothing: antialiased;
-  font-family: $font-family-base; 
+  font-family: $font-family-base;
   padding-top: 90px; // navbar height
 }
 
@@ -33,8 +34,8 @@ body {
 }
 
 .btn-primary {
-  background-color: $primary;   
-  color: $white;                
+  background-color: $primary;
+  color: $white;
   padding: 0.5rem 1.25rem;
   border-radius: 4px;
   text-decoration: none;
@@ -44,6 +45,6 @@ body {
 
   &:hover {
     filter: brightness(1.1);
-    box-shadow: 0 0 15px rgba($primary, 0.3); 
+    box-shadow: 0 0 15px rgba($primary, 0.3);
   }
 }

@@ -1,0 +1,16 @@
+{{/*
+  kanvas-corner-popup.html
+  ─────────────────────────────────────────────────────────────────────────────
+  Hugo partial – drops the Kanvas corner popup onto the page.
+
+  Usage (in any layout file, just before </body>):
+    {{ partial "section/kanvas-corner-popup.html" . }}
+
+  The popup is built and injected by the JS below.  The architectural
+  transition animation is handled by kanvas-architectural-transition.js.
+  Both scripts must be loaded in order (transition first, popup second).
+*/}}
+
+{{/* Load the architectural-transition helper first so the popup can call it */}}
+<script src="/scripts/kanvas-architectural-transition.js" defer></script>
+<script src="/scripts/kanvas-corner-popup.js" defer></script>

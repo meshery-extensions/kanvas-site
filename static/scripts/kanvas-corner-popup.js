@@ -25,13 +25,13 @@
       '<div class="popup-text"><h4>Build solutions together</h4><h1>Collaborate with the team</h1></div>' +
       '<div class="kanvas-transition-container">' +
       '<div class="canvas-grid"></div>' +
-      '<img class="kanvas-canvas-bg" src="' + CANVAS_SRC + '" alt="" />' +
-      '<div class="kanvas-layer">' + img("kanvas-service-interface", "service-interface-partial-colorMode.svg") + "</div>" +
-      '<div class="kanvas-layer">' + img("kanvas-ingress-gateway", "ingress-gateway-partial-colorMode.svg") + "</div>" +
-      '<div class="kanvas-layer">' + img("kanvas-kubernetes", "kubernetes-partial-colorMode.svg") + "</div>" +
-      '<div class="kanvas-layer">' + img("kanvas-pod", "pod-partial-colorMode.svg") + "</div>" +
-      '<div class="kanvas-layer">' + img("kanvas-prometheus", "prometheus-partial-colorMode.svg") + "</div>" +
-      img("kanvas-supporting-arrows", "supporting-arrows.svg") +
+      '<img class="kanvas-canvas-bg" src="/images/banner-transitions/empty-dark.svg" alt="" />' +
+      '<div class="kanvas-layer"><img class="kanvas-service-interface" src="/images/banner-transitions/service-interface-partial-colorMode.svg" alt="" /></div>' +
+      '<div class="kanvas-layer"><img class="kanvas-ingress-gateway" src="/images/banner-transitions/ingress-gateway-partial-colorMode.svg" alt="" /></div>' +
+      '<div class="kanvas-layer"><img class="kanvas-kubernetes" src="/images/banner-transitions/kubernetes-partial-colorMode.svg" alt="" /></div>' +
+      '<div class="kanvas-layer"><img class="kanvas-pod" src="/images/banner-transitions/pod-partial-colorMode.svg" alt="" /></div>' +
+      '<div class="kanvas-layer"><img class="kanvas-prometheus" src="/images/banner-transitions/prometheus-partial-colorMode.svg" alt="" /></div>' +
+      '<img class="kanvas-supporting-arrows" src="/images/banner-transitions/supporting-arrows.svg" alt="" />' +
       "</div>" +
       '<div class="try-it-text"><span>Try it now at </span><strong>kanvas.new</strong></div>' +
       "</a>" +

@@ -8,18 +8,6 @@
   }
 }
 
-@keyframes glowPulse {
-
-  0%,
-  100% {
-    box-shadow: 0 0 18px rgba(0, 211, 169, 0.35);
-  }
-
-  50% {
-    box-shadow: 0 0 42px rgba(0, 211, 169, 0.85), 0 0 80px rgba(0, 211, 169, 0.25);
-  }
-}
-
 .kanvas-corner-popup {
   font-family: inherit;
 }
@@ -69,8 +57,7 @@
   padding: 1rem;
   border: 1px solid #00d3a9;
   border-radius: 5%;
-  box-shadow: 0 0 18px rgba(0, 211, 169, 0.35);
-  animation: glowPulse 3s ease-in-out infinite;
+  box-shadow: 0 0 42px rgba(0, 211, 169, 0.85), 0 0 80px rgba(0, 211, 169, 0.25);
 
   @media (max-width: 640px) {
     padding: 0.8rem;

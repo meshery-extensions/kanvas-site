@@ -253,19 +253,9 @@ main {
 
 .canvas-preview {
   padding: 22px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 400px;
+  display: grid;
   gap: 16px;
 }
-
-.canvas-preview img {
-  max-width: 100%;
-  height: auto;
-  filter: drop-shadow(0 12px 28px rgba(0, 22, 24, 0.5));
-}
-
 
 .canvas-header {
   display: flex;
@@ -504,7 +494,7 @@ main {
 
 .glass {
   position: relative;
-  background: linear-gradient(135deg, rgba(4, 24, 32, 0.6), rgba(10, 21, 28, 0.8));
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.14), rgba(255, 255, 255, 0.02));
   border: 1px solid var(--border);
   border-radius: 28px;
   box-shadow: 0 28px 70px rgba(2, 8, 20, 0.7);
@@ -512,7 +502,6 @@ main {
   -webkit-backdrop-filter: blur(28px) saturate(160%);
   overflow: hidden;
 }
-
 
 .glass--dark {
   position: relative;

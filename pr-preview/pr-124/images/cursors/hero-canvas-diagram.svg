@@ -1,0 +1,97 @@
+<svg viewBox="0 0 600 400" xmlns="http://www.w3.org/2000/svg" style="max-width: 100%; height: auto;">
+  <!-- Background grid -->
+  <defs>
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="rgba(0, 211, 169, 0.1)" stroke-width="0.5"/>
+    </pattern>
+    earGradient id="designGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#00B39F;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#00D3A9;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Grid background -->
+  <rect width="600" height="400" fill="url(#grid)"/>
+  
+  <!-- Title section -->
+  <text x="300" y="30" font-size="24" font-weight="bold" text-anchor="middle" fill="#f5f7ff">
+    Real-time Infrastructure Collaboration
+  </text>
+  
+  <!-- Designer Section (Left) -->
+  <g>
+    <!-- Designer label -->
+    <text x="100" y="65" font-size="14" font-weight="bold" fill="#00D3A9">Designer</text>
+    
+    <!-- Components -->
+    <!-- Ingress -->
+    <rect x="30" y="100" width="50" height="40" rx="4" fill="#0066CC" opacity="0.8"/>
+    <text x="55" y="125" font-size="11" text-anchor="middle" fill="white" font-weight="bold">Ingress</text>
+    
+    <!-- Service A -->
+    <rect x="110" y="100" width="50" height="40" rx="4" fill="#00B39F" opacity="0.8"/>
+    <text x="135" y="125" font-size="11" text-anchor="middle" fill="white" font-weight="bold">Service A</text>
+    
+    <!-- Pod -->
+    <rect x="30" y="160" width="50" height="40" rx="4" fill="#9EFFEC" opacity="0.8"/>
+    <text x="55" y="185" font-size="11" text-anchor="middle" fill="#041018" font-weight="bold">Pod</text>
+    
+    <!-- Database -->
+    <rect x="110" y="160" width="50" height="40" rx="4" fill="#FFB84D" opacity="0.8"/>
+    <text x="135" y="185" font-size="11" text-anchor="middle" fill="#041018" font-weight="bold">Database</text>
+    
+    <!-- Connections -->
+    e x1="80" y1="120" x2="110" y2="120" stroke="#00D3A9" stroke-width="2"/>
+    e x1="55" y1="100" x2="55" y2="160" stroke="#00D3A9" stroke-width="2"/>
+    e x1="135" y1="100" x2="135" y2="160" stroke="#00D3A9" stroke-width="2"/>
+  </g>
+  
+  <!-- Collaboration Arrow -->
+  <g>
+    <path d="M 190 180 Q 210 160 230 180" stroke="#00D3A9" stroke-width="3" fill="none" stroke-dasharray="5,5"/>
+    <polygon points="235,180 225,175 225,185" fill="#00D3A9"/>
+    <text x="210" y="165" font-size="12" text-anchor="middle" fill="#00D3A9" font-weight="bold">Real-time</text>
+    <text x="210" y="180" font-size="12" text-anchor="middle" fill="#00D3A9" font-weight="bold">Sync</text>
+  </g>
+  
+  <!-- Operator Section (Right) -->
+  <g>
+    <!-- Operator label -->
+    <text x="500" y="65" font-size="14" font-weight="bold" fill="#00D3A9">Operator</text>
+    
+    <!-- Running Components -->
+    <!-- Ingress Running -->
+    <rect x="430" y="100" width="50" height="40" rx="4" fill="#0066CC" opacity="0.8"/>
+    <text x="455" y="120" font-size="11" text-anchor="middle" fill="white" font-weight="bold">Ingress</text>
+    ircle cx="470" cy="140" r="4" fill="#00FF00"/>
+    
+    <!-- Service A Running -->
+    <rect x="510" y="100" width="50" height="40" rx="4" fill="#00B39F" opacity="0.8"/>
+    <text x="535" y="120" font-size="11" text-anchor="middle" fill="white" font-weight="bold">Service</text>
+    ircle cx="550" cy="140" r="4" fill="#00FF00"/>
+    
+    <!-- Pod Running -->
+    <rect x="430" y="160" width="50" height="40" rx="4" fill="#9EFFEC" opacity="0.8"/>
+    <text x="455" y="180" font-size="11" text-anchor="middle" fill="#041018" font-weight="bold">Pod</text>
+    ircle cx="470" cy="200" r="4" fill="#00FF00"/>
+    
+    <!-- Database Running -->
+    <rect x="510" y="160" width="50" height="40" rx="4" fill="#FFB84D" opacity="0.8"/>
+    <text x="535" y="180" font-size="11" text-anchor="middle" fill="#041018" font-weight="bold">DB</text>
+    ircle cx="550" cy="200" r="4" fill="#00FF00"/>
+    
+    <!-- Status indicators -->
+    <text x="545" y="220" font-size="10" text-anchor="middle" fill="#00FF00">Online: 4</text>
+  </g>
+  
+  <!-- Features section at bottom -->
+  <g>
+    <text x="100" y="280" font-size="13" font-weight="bold" fill="#f5f7ff">✓ Drag-and-drop design</text>
+    <text x="100" y="305" font-size="13" font-weight="bold" fill="#f5f7ff">✓ Real-time collaboration</text>
+    <text x="100" y="330" font-size="13" font-weight="bold" fill="#f5f7ff">✓ Live operational sync</text>
+    
+    <text x="350" y="280" font-size="13" font-weight="bold" fill="#f5f7ff">✓ Component library</text>
+    <text x="350" y="305" font-size="13" font-weight="bold" fill="#f5f7ff">✓ Multi-cluster management</text>
+    <text x="350" y="330" font-size="13" font-weight="bold" fill="#f5f7ff">✓ Kubernetes native</text>
+  </g>
+</svg>

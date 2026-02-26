@@ -145,7 +145,11 @@
     .card-actions {
       display: flex;
       gap: $spacer;
+      flex-direction: column; 
 
+      @media (min-width: 768px) {
+        flex-direction: row; 
+      }
       .demo-btn-primary {
         background: #00b399;
         color: $white;

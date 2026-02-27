@@ -1,0 +1,146 @@
+<section class="gitops-card-section">
+  <div class="gitops-card-wrapper">
+    <div class="gitops-card">
+      <!-- Gradient overlay -->
+      <div class="gitops-card-gradient" aria-hidden="true"></div>
+
+      <!-- Pipeline visualization -->
+      <div class="gitops-pipeline-wrap">
+        <div class="gitops-pipeline-inner">
+          <div class="gitops-pipeline-nodes">
+            <!-- Git Commit -->
+            <div class="gitops-node-wrap">
+              <button type="button" class="gitops-node gitops-node--commit" data-tooltip="Push code changes to your repository" aria-label="Git Commit">
+                <span class="gitops-node-glow gitops-node-glow--commit"></span>
+                <span class="gitops-node-icon-wrap gitops-node-icon-wrap--commit">
+                  <i class="fas fa-code-commit" aria-hidden="true"></i>
+                </span>
+                <span class="gitops-node-label">Git Commit</span>
+              </button>
+              <div class="gitops-tooltip" role="tooltip"></div>
+              <div class="gitops-connector">
+                <span class="gitops-connector-line"></span>
+                <span class="gitops-connector-flow gitops-connector-flow--1"></span>
+              </div>
+            </div>
+
+            <!-- Pull Request -->
+            <div class="gitops-node-wrap">
+              <button type="button" class="gitops-node gitops-node--pr" data-tooltip="Review and merge code changes" aria-label="Pull Request">
+                <span class="gitops-node-glow gitops-node-glow--pr"></span>
+                <span class="gitops-node-icon-wrap gitops-node-icon-wrap--pr">
+                  <i class="fas fa-code-pull-request" aria-hidden="true"></i>
+                </span>
+                <span class="gitops-node-label">Pull Request</span>
+              </button>
+              <div class="gitops-tooltip" role="tooltip">Review and merge code changes</div>
+              <div class="gitops-connector">
+                <span class="gitops-connector-line"></span>
+                <span class="gitops-connector-flow gitops-connector-flow--2"></span>
+              </div>
+            </div>
+
+            <!-- CI Pipeline -->
+            <div class="gitops-node-wrap">
+              <button type="button" class="gitops-node gitops-node--ci" data-tooltip="Build, test, and validate your code" aria-label="CI Pipeline">
+                <span class="gitops-node-glow gitops-node-glow--ci"></span>
+                <span class="gitops-node-icon-wrap gitops-node-icon-wrap--ci">
+                  <i class="fas fa-bolt" aria-hidden="true"></i>
+                </span>
+                <span class="gitops-node-label">CI Pipeline</span>
+              </button>
+              <div class="gitops-tooltip" role="tooltip">Build, test, and validate your code</div>
+              <div class="gitops-connector">
+                <span class="gitops-connector-line"></span>
+                <span class="gitops-connector-flow gitops-connector-flow--3"></span>
+              </div>
+            </div>
+
+            <!-- ArgoCD -->
+            <div class="gitops-node-wrap">
+              <button type="button" class="gitops-node gitops-node--deploy" data-tooltip="Sync desired state with cluster" aria-label="ArgoCD">
+                <span class="gitops-node-glow gitops-node-glow--deploy"></span>
+                <span class="gitops-node-icon-wrap gitops-node-icon-wrap--deploy">
+                  <i class="fas fa-server" aria-hidden="true"></i>
+                </span>
+                <span class="gitops-node-label">ArgoCD</span>
+              </button>
+              <div class="gitops-tooltip" role="tooltip">Sync desired state with cluster</div>
+              <div class="gitops-connector">
+                <span class="gitops-connector-line"></span>
+                <span class="gitops-connector-flow gitops-connector-flow--4"></span>
+              </div>
+            </div>
+
+            <!-- Kubernetes -->
+            <div class="gitops-node-wrap gitops-node-wrap--last">
+              <button type="button" class="gitops-node gitops-node--k8s" data-tooltip="Deploy to production clusters" aria-label="Kubernetes">
+                <span class="gitops-node-glow gitops-node-glow--k8s"></span>
+                <span class="gitops-node-icon-wrap gitops-node-icon-wrap--k8s">
+                  <i class="fas fa-cube" aria-hidden="true"></i>
+                </span>
+                <span class="gitops-node-label">Kubernetes</span>
+              </button>
+              <div class="gitops-tooltip" role="tooltip">Deploy to production clusters</div>
+            </div>
+          </div>
+
+          <!-- Status indicator -->
+          <div class="gitops-status">
+            <span class="gitops-status-badge" aria-live="polite">
+              <i class="fas fa-check" aria-hidden="true"></i>
+              <span>Pipeline synced</span>
+            </span>
+            <button type="button" class="gitops-flow-btn" id="gitops-flow-btn" aria-pressed="true">
+              <span class="gitops-flow-btn-text">Pause</span> flow
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Footer features -->
+      <div class="gitops-card-header">
+        <div class="gitops-card-header-inner">
+          <div class="gitops-card-icon-wrap">
+            <i class="fas fa-code-branch" aria-hidden="true"></i>
+          </div>
+          <h3 class="gitops-card-title">GitOps Integration</h3>
+        </div>
+        <p class="gitops-card-desc">
+          Integrate visual reviews into your CI/CD pipeline. Version control your infrastructure designs alongside your code.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+(function() {
+  var section = document.querySelector('.gitops-card-section');
+  if (!section) return;
+
+  var nodes = section.querySelectorAll('.gitops-node');
+  var flowBtn = section.querySelector('#gitops-flow-btn');
+  var flowText = section.querySelector('.gitops-flow-btn-text');
+  var flowing = true;
+
+  nodes.forEach(function(node) {
+    node.addEventListener('mouseenter', function() {
+      section.querySelectorAll('.gitops-node').forEach(function(n) { n.classList.remove('is-active'); });
+      this.classList.add('is-active');
+    });
+    node.addEventListener('mouseleave', function() {
+      this.classList.remove('is-active');
+    });
+  });
+
+  if (flowBtn) {
+    flowBtn.addEventListener('click', function() {
+      flowing = !flowing;
+      flowBtn.setAttribute('aria-pressed', flowing ? 'true' : 'false');
+      flowText.textContent = flowing ? 'Pause' : 'Resume';
+      section.classList.toggle('gitops-flow-paused', !flowing);
+    });
+  }
+})();
+</script>

@@ -1,0 +1,499 @@
+$gitops-orange: #f59e0b;
+$gitops-teal: #00d3a9;
+$gitops-purple: #a78bfa;
+$gitops-blue: #3b82f6;
+
+.gitops-card-section {
+    max-width: 900px;
+}
+
+.gitops-card-wrapper {
+    width: 121%;
+}
+
+.gitops-card {
+    position: relative;
+    border-radius: 16px;
+    background: linear-gradient(145deg,
+            #0f1a20,
+            #0c1117);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7);
+    transition: box-shadow 0.3s ease;
+}
+
+.gitops-card-gradient {
+    position: absolute;
+    inset: 0;
+    border-radius: 16px;
+    background: linear-gradient(135deg, rgba($primary, 0.05) 0%, transparent 50%, rgba($secondary, 0.05) 100%);
+    pointer-events: none;
+}
+
+.gitops-card-header {
+    position: relative;
+    padding: 0 $spacer * 1.5 $spacer;
+}
+
+.gitops-card-header-inner {
+    display: flex;
+    align-items: center;
+    gap: $spacer * 0.75;
+    margin-bottom: $spacer * 0.5;
+}
+
+.gitops-card-icon-wrap {
+    padding: $spacer * 0.8;
+    border-radius: 8px;
+    background: rgba($primary, 0.15);
+    color: $primary;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    i {
+        font-size: 2rem;
+    }
+}
+
+.gitops-card-title {
+    font-size: 2rem;
+    font-weight: 600;
+    color: $white;
+    margin: 0;
+}
+
+.gitops-card-desc {
+    color: $casper;
+    font-size: 1.2rem;
+    line-height: 1.5;
+    margin: 0;
+    max-width: 46rem;
+}
+
+// Pipeline area
+.gitops-pipeline-wrap {
+    position: relative;
+    padding: $spacer * 2.5 $spacer * 1.5;
+}
+
+.gitops-pipeline-inner {
+    position: relative;
+    background: rgba($white, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 12px;
+    padding: $spacer * 1.5;
+}
+
+.gitops-pipeline-nodes {
+    display: flex;
+    align-items: stretch;
+    justify-content: space-between;
+    gap: $spacer * 0.5;
+    flex-wrap: nowrap;
+
+    @media (max-width: 768px) {
+        flex-direction: column;
+        align-items: center;
+    }
+}
+
+.gitops-node-wrap {
+    position: relative;
+    /* Added for tooltip positioning */
+    display: flex;
+    align-items: center;
+    flex: 0 0 auto;
+    min-width: 0;
+
+    @media (max-width: 768px) {
+        width: 100%;
+        flex: none;
+        flex-direction: column;
+
+        &:not(.gitops-node-wrap--last)::after {
+            content: "";
+            width: 2px;
+            height: 24px;
+            background: rgba($secondary, 0.3);
+            margin: 4px 0;
+        }
+    }
+
+    &.gitops-node-wrap--last .gitops-connector {
+        display: none;
+    }
+}
+
+.gitops-node {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: $spacer * 0.5;
+    padding: $spacer * 0.75;
+    border-radius: 12px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    flex-shrink: 0;
+    background: rgba($white, 0.04);
+    color: $casper;
+    font-family: inherit;
+    font-size: 0.75rem;
+    font-weight: 500;
+    text-align: center;
+
+    &:hover,
+    &.is-active {
+        .gitops-node-label {
+            color: $white;
+        }
+    }
+
+    &.is-active .gitops-node-glow {
+        opacity: 1;
+    }
+}
+
+.gitops-node-glow {
+    position: absolute;
+    inset: 0;
+    border-radius: 12px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+}
+
+.gitops-node-icon-wrap {
+    position: relative;
+    z-index: 1;
+    padding: 0.4rem 0.5rem;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+
+    i {
+        font-size: 1.9rem;
+    }
+}
+
+.gitops-node-label {
+    font-size: 1rem;
+}
+
+// Node color variants (matching React HSL)
+.gitops-node--commit {
+    .gitops-node-glow {
+        background: rgba($gitops-orange, 0.2);
+        box-shadow: 0 0 0 2px $gitops-orange;
+    }
+
+    .gitops-node-icon-wrap {
+        background: rgba($gitops-orange, 0.2);
+        color: $gitops-orange;
+    }
+
+    &.is-active .gitops-node-icon-wrap {
+        background: $gitops-orange;
+        color: $black;
+        box-shadow: 0 0 20px rgba($gitops-orange, 0.5);
+    }
+}
+
+.gitops-node--pr {
+    .gitops-node-glow {
+        background: rgba($gitops-orange, 0.2);
+        box-shadow: 0 0 0 2px $gitops-orange;
+    }
+
+    .gitops-node-icon-wrap {
+        background: rgba($gitops-orange, 0.2);
+        color: $gitops-orange;
+    }
+
+    &.is-active .gitops-node-icon-wrap {
+        background: $gitops-orange;
+        color: $black;
+        box-shadow: 0 0 20px rgba($gitops-orange, 0.5);
+    }
+}
+
+.gitops-node--ci {
+    .gitops-node-glow {
+        background: rgba($gitops-teal, 0.2);
+        box-shadow: 0 0 0 2px $gitops-teal;
+    }
+
+    .gitops-node-icon-wrap {
+        background: rgba($gitops-teal, 0.2);
+        color: $gitops-teal;
+    }
+
+    &.is-active .gitops-node-icon-wrap {
+        background: $gitops-teal;
+        color: $black;
+        box-shadow: 0 0 20px rgba($gitops-teal, 0.5);
+    }
+}
+
+.gitops-node--deploy {
+    .gitops-node-glow {
+        background: rgba($gitops-purple, 0.2);
+        box-shadow: 0 0 0 2px $gitops-purple;
+    }
+
+    .gitops-node-icon-wrap {
+        background: rgba($gitops-purple, 0.2);
+        color: $gitops-purple;
+    }
+
+    &.is-active .gitops-node-icon-wrap {
+        background: $gitops-purple;
+        color: $white;
+        box-shadow: 0 0 20px rgba($gitops-purple, 0.5);
+    }
+}
+
+.gitops-node--k8s {
+    .gitops-node-glow {
+        background: rgba($gitops-blue, 0.2);
+        box-shadow: 0 0 0 2px $gitops-blue;
+    }
+
+    .gitops-node-icon-wrap {
+        background: rgba($gitops-blue, 0.2);
+        color: $gitops-blue;
+    }
+
+    &.is-active .gitops-node-icon-wrap {
+        background: $gitops-blue;
+        color: $white;
+        box-shadow: 0 0 20px rgba($gitops-blue, 0.5);
+    }
+}
+
+.gitops-node-label {
+    position: relative;
+    z-index: 1;
+    transition: color 0.3s ease;
+}
+
+// Tooltip (shown on hover/focus)
+.gitops-tooltip {
+    position: absolute;
+    bottom: -3.5rem;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 20;
+    width: 11rem;
+    padding: $spacer * 0.75;
+    border-radius: 8px;
+    background: rgba($dark, 0.95);
+    border: 1px solid rgba($secondary, 0.2);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+    font-size: 0.75rem;
+    color: $casper;
+    text-align: center;
+    pointer-events: none;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.2s ease, visibility 0.2s ease, transform 0.2s ease;
+}
+
+.gitops-node-wrap:hover .gitops-tooltip,
+.gitops-node:focus-visible+.gitops-tooltip {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) translateY(-4px);
+}
+
+// Connector line between nodes
+.gitops-connector {
+    width: 60px;
+    flex: 1;
+    height: 2px;
+    margin: 0 $spacer * 0.5;
+    position: relative;
+    overflow: hidden;
+    border-radius: 2px;
+    min-width: 6rem;
+
+    @media (max-width: 768px) {
+        display: none;
+    }
+}
+
+.gitops-connector-line {
+    position: absolute;
+    inset: 0;
+    background: rgba($secondary, 0.2);
+}
+
+.gitops-connector-flow {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: 2rem;
+    background: linear-gradient(90deg, transparent, $primary, transparent);
+    opacity: 0;
+    animation: gitops-flow 6s linear infinite;
+}
+
+.gitops-flow-paused .gitops-connector-flow {
+    animation-play-state: paused;
+}
+
+@keyframes gitops-flow {
+    0% {
+        transform: translateX(-100%);
+        opacity: 1;
+    }
+
+    25% {
+        transform: translateX(500%);
+        opacity: 1;
+    }
+
+    25.001% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 0;
+        transform: translateX(-100%);
+    }
+}
+
+.gitops-connector-flow--2 {
+    animation-delay: 1.5s;
+}
+
+.gitops-connector-flow--3 {
+    animation-delay: 3s;
+}
+
+.gitops-connector-flow--4 {
+    animation-delay: 4.5s;
+}
+
+// Status row
+.gitops-status {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: $spacer;
+    margin-top: $spacer * 2;
+    padding-top: $spacer;
+    border-top: 1px solid rgba($secondary, 0.15);
+}
+
+.gitops-status-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: $spacer * 0.5;
+    padding: $spacer * 0.5 $spacer;
+    border-radius: 9999px;
+    background: rgba($primary, 0.15);
+    color: $primary;
+    font-size: 1rem;
+    font-weight: 500;
+    animation: gitops-pulse 2s ease-in-out infinite;
+}
+
+@keyframes gitops-pulse {
+
+    0%,
+    100% {
+        opacity: 0.85;
+    }
+
+    50% {
+        opacity: 1;
+    }
+}
+
+.gitops-flow-btn {
+    padding: $spacer * 0.5 $spacer * 0.75;
+    border-radius: 9999px;
+    background: rgba($white, 0.06);
+    border: 1px solid rgba($secondary, 0.2);
+    color: $casper;
+    font-size: 1rem;
+    font-family: inherit;
+    cursor: pointer;
+    transition: background 0.2s ease, color 0.2s ease;
+
+    &:hover {
+        background: rgba($white, 0.1);
+        color: $white;
+    }
+}
+
+// Footer features
+.gitops-footer {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: $spacer * 0.75;
+    padding: $spacer * 1.5;
+
+    @media (max-width: 600px) {
+        grid-template-columns: 1fr;
+    }
+}
+
+.gitops-footer-item {
+    display: flex;
+    align-items: center;
+    gap: $spacer * 0.5;
+    padding: $spacer * 0.75;
+    border-radius: 8px;
+    background: rgba($white, 0.03);
+    border: 1px solid rgba($secondary, 0.15);
+    font-size: 0.75rem;
+    color: $casper;
+
+    i {
+        color: $primary;
+        font-size: 0.875rem;
+    }
+}
+
+//worflow section 
+.workflow-section {
+    padding: 100px 0;
+}
+
+.workflow-header {
+    text-align: center;
+    margin-bottom: 80px;
+}
+
+.workflow-layout {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.workflow-top {
+    display: flex;
+    justify-content: left;
+    margin-left: 25px;
+    margin-bottom: 20px;
+}
+
+.workflow-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: stretch;
+    gap: 20px;
+    padding: 0 25px;
+}
+
+.workflow-card {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}

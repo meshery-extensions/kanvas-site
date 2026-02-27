@@ -1,0 +1,427 @@
+// Custom Dashboard Component Styles
+
+.collaboration-section {
+    position: relative;
+    overflow: hidden;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+
+    .container {
+        padding: 0 24px;
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .collaboration-content {
+        .icon-box {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            background: rgba(0, 179, 159, 0.1); // Teal background
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 24px;
+            border: 1px solid rgba(0, 179, 159, 0.2); // Teal border
+
+            svg {
+                color: #00D3A9; // Teal accent
+                width: 24px;
+                height: 24px;
+            }
+        }
+
+        h2 {
+            font-size: clamp(2rem, 3vw, 2.8rem);
+            margin-bottom: 20px;
+            line-height: 1.2;
+            background: linear-gradient(to right, #ffffff, #9EFFEC); // White to Pale Teal
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        p {
+            color: var(--muted);
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin-bottom: 32px;
+        }
+
+        .feature-list {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+
+            li {
+                display: flex;
+                align-items: flex-start;
+                gap: 12px;
+                color: #e2e8f0;
+                font-size: 1rem;
+
+                .check-icon {
+                    flex-shrink: 0;
+                    width: 20px;
+                    height: 20px;
+                    border-radius: 50%;
+                    background: #00B39F; // Teal check bg
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    margin-top: 2px;
+
+                    svg {
+                        width: 12px;
+                        height: 12px;
+                        color: #041018; // Dark icon color
+                    }
+                }
+            }
+        }
+    }
+
+    .collaboration-visual {
+        position: relative;
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+
+        .visual-inner {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+
+            img {
+                width: 100%;
+                height: auto;
+                border-radius: 12px;
+                display: block;
+            }
+        }
+    }
+
+    // Team Workspace Card Styles
+    .team-workspace-card {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        background: linear-gradient(145deg,
+                #0f1a20,
+                #0c1117);
+        border: 1px solid rgba(255, 255, 255, 0.06);
+        box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7);
+        border-radius: 24px;
+        overflow: hidden;
+        backdrop-filter: blur(28px) saturate(160%);
+        -webkit-backdrop-filter: blur(28px) saturate(160%);
+        font-family: 'Inter', sans-serif;
+        position: relative;
+
+        // Header
+        .card-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 20px 24px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+
+            .header-left {
+                display: flex;
+                align-items: center;
+                gap: 16px;
+
+                .icon-box {
+                    width: 40px;
+                    height: 40px;
+                    background: rgba(0, 179, 159, 0.15); // Teal tint
+                    border-radius: 12px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    color: #00D3A9; // Teal
+                    border: 1px solid rgba(0, 179, 159, 0.25);
+
+                    svg {
+                        width: 20px;
+                        height: 20px;
+                    }
+                }
+
+                .titles {
+                    h3 {
+                        font-size: 1rem;
+                        font-weight: 600;
+                        color: white;
+                        margin: 0;
+                        line-height: 1.2;
+                    }
+
+                    p {
+                        font-size: 0.8rem;
+                        color: #94a3b8;
+                        margin: 0;
+                        line-height: 1.2;
+                    }
+                }
+            }
+
+            .header-right {
+                display: flex;
+                align-items: center;
+                gap: 16px;
+
+                .avatars {
+                    display: flex;
+                    align-items: center;
+
+                    .initials {
+                        font-size: 0.85rem;
+                        font-weight: 600;
+                        margin-left: 8px;
+                        position: relative;
+
+                        &::after {
+                            content: '';
+                            position: absolute;
+                            bottom: 0;
+                            right: -2px;
+                            width: 6px;
+                            height: 6px;
+                            background: #00D3A9; // Teal online dot
+                            border-radius: 50%;
+                            border: 1px solid #0f172a;
+                            box-shadow: 0 0 6px rgba(0, 211, 169, 0.5);
+                        }
+
+                        &:nth-child(1) {
+                            color: #d946ef; // Sarah - Purple (keeping as is, no cursor-5 shown)
+                        }
+
+                        &:nth-child(2) {
+                            color: #359AC0; // Jorge - Blue from cursor-2.svg
+                        }
+
+                        &:nth-child(3) {
+                            color: #B91C1C; // Suzan - Red from cursor-3.svg
+                        }
+
+                        &:nth-child(4) {
+                            color: #6750A3; // Ryan - Purple from cursor-4.svg
+                        }
+
+                        &:nth-child(5) {
+                            color: $primary;
+                        }
+
+                        // Taylor
+                    }
+
+                    .status-dot {
+                        display: none;
+                    }
+                }
+
+                .add-btn {
+                    width: 32px;
+                    height: 32px;
+                    border: 1px solid rgba(255, 255, 255, 0.1);
+                    border-radius: 50%;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    color: #94a3b8;
+                    cursor: pointer;
+                    transition: all 0.2s;
+
+                    &:hover {
+                        background: rgba(255, 255, 255, 0.05);
+                        color: white;
+                    }
+                }
+            }
+        }
+
+        // Main Canvas
+        .card-canvas {
+            height: 340px;
+            position: relative;
+            overflow: hidden;
+
+            .canvas-grid {
+                position: absolute;
+                top: 0;
+                bottom: 0;
+                left: 50%;
+                transform: translateX(-50%);
+                width: 440px;
+                height: 100%;
+                border-radius: 0;
+                background-size: 48px 48px;
+            }
+
+
+            .multi-cursor {
+                position: absolute;
+                width: 50px;
+                height: 50px;
+                z-index: 20;
+                opacity: 0.9;
+                pointer-events: none;
+                overflow: visible;
+                top: 0;
+                left: 0;
+
+                img {
+                    width: 100%;
+                    height: auto;
+                    display: block;
+                    border-radius: 0; // Remove rounded corners
+                    filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.2));
+                }
+            }
+        }
+
+        // Footer / Toolbar
+        .card-footer {
+            padding: 20px 24px;
+            background: rgba(5, 10, 20, 0.6); // Darker footer
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(10px);
+
+            .toolbar {
+                display: flex;
+                gap: 12px;
+                margin-bottom: 24px;
+                flex-wrap: wrap;
+
+                .tool-btn {
+                    display: flex;
+                    align-items: center;
+                    gap: 8px;
+                    padding: 8px 14px;
+                    background: rgba(255, 255, 255, 0.03);
+                    border: 1px solid rgba(255, 255, 255, 0.06);
+                    border-radius: 8px;
+                    font-size: 0.85rem;
+                    font-weight: 500;
+                    color: #cbd5e1;
+                    cursor: pointer;
+                    transition: all 0.2s;
+
+                    &:hover {
+                        background: rgba(255, 255, 255, 0.08);
+                    }
+
+                    &.active {
+                        background: rgba(0, 179, 159, 0.15); // Teal active bg
+                        border-color: rgba(0, 179, 159, 0.4); // Teal active border
+                        color: #9EFFEC; // Pale Teal text
+                    }
+
+                    svg {
+                        width: 16px;
+                        height: 16px;
+                    }
+
+                    .icon-blue {
+                        color: #3b82f6;
+                    }
+
+                    .icon-purple {
+                        color: #d946ef;
+                    }
+
+                    .icon-green {
+                        color: #22c55e;
+                    }
+
+                    .icon-orange {
+                        color: #f97316;
+                    }
+                }
+            }
+
+            .live-activity {
+                h4 {
+                    font-size: 0.7rem;
+                    text-transform: uppercase;
+                    letter-spacing: 0.08em;
+                    color: #64748b;
+                    margin-bottom: 16px;
+                    font-weight: 600;
+                }
+
+                .activity-item {
+                    display: flex;
+                    justify-content: space-between;
+                    font-size: 0.85rem;
+                    margin-bottom: 10px;
+                    align-items: center;
+
+                    &:last-child {
+                        margin-bottom: 0;
+                    }
+
+                    .left {
+                        display: flex;
+                        align-items: center;
+                        gap: 10px;
+                        color: #94a3b8;
+
+                        .dot {
+                            width: 6px;
+                            height: 6px;
+                            border-radius: 50%;
+                            box-shadow: 0 0 8px currentColor;
+                        }
+
+                        strong {
+                            color: #e2e8f0;
+                            font-weight: 600;
+                        }
+
+                        .target {
+                            color: #f8fafc;
+                            font-weight: 600;
+                        }
+                    }
+
+                    .time {
+                        color: #475569;
+                        font-size: 0.8rem;
+                    }
+                }
+            }
+        }
+    }
+
+    // Updated Ambient glow
+    &::before {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 80%;
+        height: 80%;
+        background: radial-gradient(circle, rgba(0, 179, 159, 0.15) 0%, transparent 70%);
+        filter: blur(100px);
+        z-index: -1;
+        opacity: 0.5;
+    }
+}
+
+@keyframes pulse-glow {
+    0% {
+        opacity: 0.4;
+        transform: scale(0.95);
+    }
+
+    100% {
+        opacity: 0.7;
+        transform: scale(1.05);
+    }
+}

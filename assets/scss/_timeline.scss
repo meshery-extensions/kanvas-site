@@ -1,0 +1,546 @@
+.timeline-section {
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+
+    .container {
+        padding: 0 24px;
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .timeline-visual {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+
+        .visual-inner {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            background: transparent;
+        }
+    }
+
+    // Timeline DVR Card Styles
+    .timeline-card {
+        background: linear-gradient(145deg, #0f1a20, #0c1117);
+        border: 1px solid rgba(255, 255, 255, 0.06);
+        border-radius: 16px;
+        overflow: hidden;
+        box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7);
+        backdrop-filter: blur(28px) saturate(160%);
+        -webkit-backdrop-filter: blur(28px) saturate(160%);
+        font-family: $font-serif;
+        flex: 1;
+
+        .timeline-card-gradient {
+            position: absolute;
+            inset: 0;
+            border-radius: 16px;
+            background: linear-gradient(135deg, rgba($primary, 0.05) 0%, transparent 50%, rgba($secondary, 0.05) 100%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        // Card Header
+        .card-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 20px 24px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            flex-shrink: 0;
+
+            .header-left {
+                display: flex;
+                align-items: center;
+                gap: 16px;
+
+                .icon-box {
+                    width: 40px;
+                    height: 40px;
+                    background: rgba($primary, 0.15);
+                    border-radius: 12px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    color: $secondary;
+                    border: 1px solid rgba($primary, 0.25);
+
+                    svg {
+                        width: 20px;
+                        height: 20px;
+                    }
+                }
+
+                .titles {
+                    h3 {
+                        font-size: 1rem;
+                        font-weight: 600;
+                        color: white;
+                        margin: 0;
+                        line-height: 1.2;
+                    }
+
+                    p {
+                        font-size: 0.8rem;
+                        color: $casper;
+                        margin: 0;
+                        line-height: 1.2;
+                    }
+                }
+            }
+
+            .header-right {
+                display: flex;
+                align-items: center;
+                gap: 12px;
+
+                .live-badge {
+                    display: flex;
+                    align-items: center;
+                    gap: 6px;
+                    padding: 4px 10px;
+                    background: rgba($danger, 0.1);
+                    border: 1px solid rgba($danger, 0.3);
+                    border-radius: 12px;
+                    font-size: 0.75rem;
+                    font-weight: 600;
+                    color: $light;
+                    letter-spacing: 0.05em;
+
+                    .dot {
+                        width: 6px;
+                        height: 6px;
+                        background: $danger;
+                        border-radius: 50%;
+                        animation: pulse-live 2s ease-in-out infinite;
+                    }
+                }
+            }
+        }
+
+        // Active Event Display — fixed height prevents width/layout jitter
+        .active-event-display {
+            display: flex;
+            align-items: flex-start;
+            gap: 16px;
+            padding: 20px 24px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            background: rgba($dark, 0.4);
+            height: 108px;
+            overflow: hidden;
+            flex-shrink: 0;
+
+            .event-icon-box {
+                width: 44px;
+                height: 44px;
+                flex-shrink: 0;
+                border-radius: 12px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                transition: all 0.3s ease;
+
+                &.success {
+                    background: rgba($primary, 0.15);
+                    color: $secondary;
+                    border: 1px solid rgba($primary, 0.25);
+                }
+
+                &.warning {
+                    background: rgba($warning, 0.15);
+                    color: $warning;
+                    border: 1px solid rgba($warning, 0.25);
+                }
+
+                &.error {
+                    background: rgba($danger, 0.15);
+                    color: $danger;
+                    border: 1px solid rgba($danger, 0.25);
+                }
+
+                svg {
+                    width: 24px;
+                    height: 24px;
+                }
+            }
+
+            .event-details {
+                flex: 1;
+                min-width: 0;
+                display: flex;
+                flex-direction: column;
+                gap: 6px;
+
+                .event-header {
+                    display: flex;
+                    align-items: center;
+                    gap: 10px;
+                    flex-wrap: nowrap;
+                    overflow: hidden;
+
+                    h4 {
+                        font-size: 1.15rem;
+                        font-weight: 600;
+                        margin: 0;
+                        color: white;
+                        white-space: nowrap;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                        min-width: 0;
+                    }
+
+                    .status-badge {
+                        padding: 4px 10px;
+                        border-radius: 12px;
+                        font-size: 0.75rem;
+                        font-weight: 600;
+                        display: flex;
+                        align-items: center;
+                        gap: 6px;
+                        flex-shrink: 0;
+
+                        .dot {
+                            width: 6px;
+                            height: 6px;
+                            border-radius: 50%;
+                        }
+
+                        &.success {
+                            background: rgba($primary, 0.1);
+                            color: $secondary;
+                            border: 1px solid rgba($primary, 0.25);
+
+                            .dot {
+                                background: $secondary;
+                            }
+                        }
+
+                        &.warning {
+                            background: rgba($warning, 0.1);
+                            color: $warning;
+                            border: 1px solid rgba($warning, 0.25);
+
+                            .dot {
+                                background: $warning;
+                            }
+                        }
+
+                        &.error {
+                            background: rgba($danger, 0.1);
+                            color: $danger;
+                            border: 1px solid rgba($danger, 0.25);
+
+                            .dot {
+                                background: $danger;
+                            }
+                        }
+                    }
+                }
+
+                p {
+                    margin: 0;
+                    font-size: 0.9rem;
+                    color: $casper;
+                    white-space: nowrap;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                }
+
+                .event-meta {
+                    display: flex;
+                    align-items: center;
+                    gap: 12px;
+                    font-size: 0.8rem;
+                    color: rgba($casper, 0.7);
+                    font-family: $font-family-monospace;
+
+                    .service-tag {
+                        background: rgba(255, 255, 255, 0.08);
+                        padding: 2px 8px;
+                        border-radius: 4px;
+                        border: 1px solid rgba(255, 255, 255, 0.1);
+                    }
+                }
+            }
+        }
+
+        // Canvas area — equivalent to collaboration's .card-canvas
+        // Flex:1 means it absorbs all remaining height automatically
+        .timeline-track {
+            position: relative;
+            padding: 28px 24px 16px;
+            background: transparent;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+
+            .segments {
+                position: relative;
+                width: 100%;
+                height: 90px;
+                background: rgba(255, 255, 255, 0.03);
+                border-radius: 12px;
+                box-shadow:
+                    inset 0 1px 0 rgba(255, 255, 255, 0.04),
+                    inset 0 2px 8px rgba(0, 0, 0, 0.4);
+                border: 1px solid rgba(255, 255, 255, 0.06);
+                cursor: pointer;
+                overflow: visible;
+
+                .tmdvr-track-progress {
+                    position: absolute;
+                    left: 0;
+                    top: 0;
+                    height: 100%;
+                    width: 0%;
+                    background: linear-gradient(90deg, rgba($primary, 0.06), rgba($secondary, 0.2));
+                    border-radius: 11px;
+                    pointer-events: none;
+                    transition: none;
+                }
+
+                .tmdvr-marker {
+                    position: absolute;
+                    top: 50%;
+                    transform: translate(-50%, -50%);
+                    width: 10px;
+                    height: 10px;
+                    border-radius: 50%;
+                    padding: 0;
+                    border: 1.5px solid rgba(255, 255, 255, 0.2);
+                    cursor: pointer;
+                    transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+                    z-index: 5;
+                    opacity: 0.65;
+
+                    &:hover {
+                        opacity: 1;
+                        transform: translate(-50%, -50%) scale(1.5);
+                        border-color: rgba(255, 255, 255, 0.5);
+                    }
+
+                    &.active {
+                        width: 14px;
+                        height: 14px;
+                        opacity: 1;
+                        z-index: 10;
+                        border-color: rgba(255, 255, 255, 0.6);
+                    }
+
+                    &.success {
+                        background: $primary;
+                        box-shadow: 0 0 6px rgba($primary, 0.5);
+                    }
+
+                    &.warning {
+                        background: $warning;
+                        box-shadow: 0 0 6px rgba($warning, 0.5);
+                    }
+
+                    &.error {
+                        background: $danger;
+                        box-shadow: 0 0 6px rgba($danger, 0.5);
+                    }
+
+                    &.active.success {
+                        box-shadow: 0 0 16px rgba($primary, 0.9);
+                    }
+
+                    &.active.warning {
+                        box-shadow: 0 0 16px rgba($warning, 0.9);
+                    }
+
+                    &.active.error {
+                        box-shadow: 0 0 16px rgba($danger, 0.9);
+                    }
+                }
+
+                // Playhead — child of .segments so % coords align exactly with markers
+                .playhead {
+                    position: absolute;
+                    top: 0;
+                    height: 100%;
+                    width: 2px;
+                    background: linear-gradient(180deg,
+                            rgba($primary, 0.1) 0%,
+                            $primary 20%,
+                            $secondary 80%,
+                            rgba($secondary, 0.1) 100%);
+                    box-shadow: 0 0 14px rgba($secondary, 0.7);
+                    border-radius: 2px;
+                    z-index: 15;
+                    pointer-events: none;
+                    transform: translateX(-50%);
+                    will-change: left;
+
+                    &::before {
+                        content: '';
+                        position: absolute;
+                        top: -5px;
+                        left: 50%;
+                        transform: translateX(-50%);
+                        width: 11px;
+                        height: 11px;
+                        background: $secondary;
+                        border-radius: 50%;
+                        border: 2px solid #0c1117;
+                        box-shadow: 0 0 10px $secondary;
+                    }
+
+                    &::after {
+                        content: '';
+                        position: absolute;
+                        bottom: -5px;
+                        left: 50%;
+                        transform: translateX(-50%);
+                        width: 11px;
+                        height: 11px;
+                        background: $secondary;
+                        border-radius: 50%;
+                        border: 2px solid #0c1117;
+                        box-shadow: 0 0 10px $secondary;
+                    }
+                }
+            }
+
+            // Time labels below the track
+            .time-labels {
+                display: flex;
+                justify-content: space-between;
+                padding: 0 1px;
+                margin-top: 10px;
+
+                span {
+                    font-size: 0.7rem;
+                    color: rgba($casper, 0.5);
+                    font-family: $font-family-monospace;
+                    letter-spacing: 0.03em;
+                }
+            }
+        }
+
+        // Controls Bar — matching collaboration .card-footer bg
+        .card-controls {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 20px 24px;
+            background: rgba(5, 10, 20, 0.6);
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            flex-shrink: 0;
+
+            .playback-controls {
+                display: flex;
+                gap: 10px;
+                align-items: center;
+
+                .control-btn {
+                    width: 40px;
+                    height: 40px;
+                    border-radius: 12px;
+                    background: rgba(255, 255, 255, 0.03);
+                    border: 1px solid rgba(255, 255, 255, 0.06);
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    color: $casper;
+                    cursor: pointer;
+                    transition: all 0.2s;
+
+                    svg {
+                        width: 18px;
+                        height: 18px;
+                    }
+
+                    &:hover {
+                        background: rgba(255, 255, 255, 0.08);
+                        color: white;
+                        transform: scale(1.05);
+                    }
+
+                    &.pause-btn {
+                        background: linear-gradient(135deg, $primary 0%, $secondary 100%);
+                        border: none;
+                        color: $dark;
+                        box-shadow: 0 4px 12px rgba($primary, 0.3);
+
+                        &:hover {
+                            background: linear-gradient(135deg, $secondary 0%, $light 100%);
+                            box-shadow: 0 6px 16px rgba($secondary, 0.4);
+                            transform: scale(1.08);
+                        }
+                    }
+                }
+            }
+
+            .time-display {
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                padding: 10px 18px;
+                background: rgba(15, 23, 42, 0.6);
+                border-radius: 14px;
+                font-size: 0.95rem;
+                font-weight: 500;
+                border: 1px solid rgba(255, 255, 255, 0.05);
+                font-family: $font-family-monospace;
+
+                svg {
+                    color: $secondary;
+                }
+
+                .current-time {
+                    font-weight: 700;
+                    background: linear-gradient(90deg, $primary 0%, $light 100%);
+                    -webkit-background-clip: text;
+                    -webkit-text-fill-color: transparent;
+                    background-clip: text;
+                }
+
+                .separator {
+                    color: rgba($casper, 0.3);
+                }
+
+                .total-time {
+                    color: rgba($casper, 0.5);
+                }
+            }
+        }
+    }
+
+    // Ambient glow
+    &::before {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 80%;
+        height: 80%;
+        background: radial-gradient(circle, rgba($primary, 0.15) 0%, transparent 70%);
+        filter: blur(100px);
+        z-index: -1;
+        opacity: 0.5;
+        pointer-events: none;
+    }
+}
+
+@keyframes pulse-live {
+
+    0%,
+    100% {
+        opacity: 1;
+        box-shadow: 0 0 0 0 rgba($danger, 0.7);
+    }
+
+    50% {
+        opacity: 0.7;
+        box-shadow: 0 0 0 6px rgba($danger, 0);
+    }
+}

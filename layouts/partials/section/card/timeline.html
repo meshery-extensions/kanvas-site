@@ -1,0 +1,308 @@
+<section class="timeline-section" id="timeline">
+    <div class="container">
+        <div class="timeline-visual">
+            <div class="visual-inner">
+                <!-- Timeline DVR Card -->
+                <div class="timeline-card">
+                    <!-- Gradient overlay -->
+                    <div class="timeline-card-gradient" aria-hidden="true"></div>
+
+                    <!-- Header -->
+                    <div class="card-header">
+                        <div class="header-left">
+                            <div class="icon-box">
+                                <i class="fas fa-play-circle"></i>
+                            </div>
+                            <div class="titles">
+                                <h3>Deployment Playback</h3>
+                                <p>Timeline DVR</p>
+                            </div>
+                        </div>
+                        <div class="header-right">
+                            <span class="live-badge">
+                                <span class="dot"></span>
+                                LIVE
+                            </span>
+                        </div>
+                    </div>
+
+                    <!-- Active Event -->
+                    <div class="active-event-display">
+                        <div class="event-icon-box success" id="tmdvr-active-icon-box">
+                            <!-- Icon injected by JS -->
+                        </div>
+                        <div class="event-details">
+                            <div class="event-header">
+                                <h4 id="tmdvr-active-title">Loading...</h4>
+                                <span class="status-badge success" id="tmdvr-active-status-badge">
+                                    <span class="dot"></span>
+                                    <span id="tmdvr-active-status-text">success</span>
+                                </span>
+                            </div>
+                            <p id="tmdvr-active-desc">---</p>
+                            <div class="event-meta">
+                                <span id="tmdvr-active-time">00:00:00</span>
+                                <span class="service-tag" id="tmdvr-active-service">---</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Timeline Track -->
+                    <div class="timeline-track">
+                        <div class="segments" id="tmdvr-track" style="cursor: pointer;">
+                            <div class="tmdvr-track-progress" id="tmdvr-track-progress"></div>
+                            <div id="tmdvr-event-markers"></div>
+                            <!-- Playhead lives inside segments so % coords are aligned -->
+                            <div class="playhead" id="tmdvr-scrub-head"></div>
+                        </div>
+                        <div class="time-labels">
+                            <span>09:00</span>
+                            <span>11:00</span>
+                            <span>13:00</span>
+                            <span>15:00</span>
+                            <span>17:30</span>
+                        </div>
+                    </div>
+
+                    <!-- Controls -->
+                    <div class="card-controls">
+                        <div class="playback-controls">
+                            <button class="control-btn" id="tmdvr-btn-prev">
+                                <i class="fas fa-backward-step"></i>
+                            </button>
+                            <button class="control-btn pause-btn" id="tmdvr-btn-play">
+                                <i id="tmdvr-icon-play" class="fas fa-play"></i>
+                                <i id="tmdvr-icon-pause" class="fas fa-pause" style="display: none;"></i>
+                            </button>
+                            <button class="control-btn" id="tmdvr-btn-next">
+                                <i class="fas fa-forward-step"></i>
+                            </button>
+                        </div>
+                        <div class="time-display">
+                            <i class="fas fa-clock" style="font-size: 14px;"></i>
+                            <span class="current-time" id="tmdvr-time-display">09:00:12</span>
+                            <span class="separator">/</span>
+                            <span class="total-time">17:30:00</span>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const events = [
+            { id: "1", timestamp: "0%", time: "09:00:12", title: "Deploy v2.4.1", description: "Frontend service updated with new auth flow", type: "deploy", service: "frontend", status: "success" },
+            { id: "2", timestamp: "12%", time: "09:15:33", title: "Config Update", description: "Rate limiting rules adjusted for API gateway", type: "config", service: "api-gateway", status: "success" },
+            { id: "3", timestamp: "25%", time: "10:02:45", title: "Scale Up", description: "Auto-scaled payment service to 8 replicas", type: "scale", service: "payments", status: "success" },
+            { id: "4", timestamp: "38%", time: "11:18:02", title: "Deploy v3.0.0", description: "Major backend release with breaking changes", type: "deploy", service: "backend-api", status: "warning" },
+            { id: "5", timestamp: "50%", time: "12:30:00", title: "Security Patch", description: "CVE-2024-1234 patched across all services", type: "security", service: "all-services", status: "success" },
+            { id: "6", timestamp: "62%", time: "13:45:22", title: "Rollback v3.0.0", description: "Reverted backend to v2.9.8 due to latency spike", type: "rollback", service: "backend-api", status: "error" },
+            { id: "7", timestamp: "75%", time: "15:10:55", title: "Deploy v3.0.1", description: "Hotfix for connection pooling issue", type: "deploy", service: "backend-api", status: "success" },
+            { id: "8", timestamp: "88%", time: "16:42:10", title: "Scale Down", description: "Reduced replicas after traffic normalization", type: "scale", service: "payments", status: "success" },
+            { id: "9", timestamp: "96%", time: "17:30:00", title: "Config Update", description: "Updated TLS certificates for all endpoints", type: "config", service: "ingress", status: "success" },
+        ];
+
+        const typeIcons = {
+            deploy: '<i class="fas fa-bolt"></i>',
+            rollback: '<i class="fas fa-undo"></i>',
+            config: '<i class="fas fa-cog"></i>',
+            scale: '<i class="fas fa-arrows-alt"></i>',
+            security: '<i class="fas fa-shield-alt"></i>',
+        };
+
+        let activeEvent = events[0];
+        let scrubPosition = 0;
+        let isPlaying = false;
+        let animRef = null;
+
+        // DOM Elements
+        const track = document.getElementById("tmdvr-track");
+        const trackProgress = document.getElementById("tmdvr-track-progress");
+        const scrubHead = document.getElementById("tmdvr-scrub-head");
+        const eventMarkersContainer = document.getElementById("tmdvr-event-markers");
+        const timeDisplay = document.getElementById("tmdvr-time-display");
+
+        // Header UI
+        const activeIconBox = document.getElementById("tmdvr-active-icon-box");
+        const activeTitle = document.getElementById("tmdvr-active-title");
+        const activeStatusBadge = document.getElementById("tmdvr-active-status-badge");
+        const activeStatusText = document.getElementById("tmdvr-active-status-text");
+        const activeDesc = document.getElementById("tmdvr-active-desc");
+        const activeTime = document.getElementById("tmdvr-active-time");
+        const activeService = document.getElementById("tmdvr-active-service");
+
+        // Buttons
+        const btnPlayPause = document.getElementById("tmdvr-btn-play");
+        const iconPlay = document.getElementById("tmdvr-icon-play");
+        const iconPause = document.getElementById("tmdvr-icon-pause");
+        const btnPrev = document.getElementById("tmdvr-btn-prev");
+        const btnNext = document.getElementById("tmdvr-btn-next");
+
+        function renderMarkers() {
+            eventMarkersContainer.innerHTML = "";
+            events.forEach(ev => {
+                const isActive = ev.id === activeEvent.id;
+                const marker = document.createElement("button");
+
+                let classes = ["tmdvr-marker"];
+                classes.push(ev.status);
+
+                if (isActive) {
+                    classes.push("active");
+                }
+
+                marker.className = classes.join(" ");
+                marker.style.left = ev.timestamp;
+
+                marker.addEventListener("click", (e) => {
+                    e.stopPropagation();
+                    setActiveEvent(ev);
+                    setScrubPosition(parseFloat(ev.timestamp));
+                    setIsPlaying(false);
+                });
+                eventMarkersContainer.appendChild(marker);
+            });
+        }
+
+        function updateActiveEventUI() {
+            activeTitle.textContent = activeEvent.title;
+            activeDesc.textContent = activeEvent.description;
+            activeTime.textContent = activeEvent.time;
+            timeDisplay.textContent = activeEvent.time;
+            activeService.textContent = activeEvent.service;
+
+            activeStatusText.textContent = activeEvent.status;
+
+            // Reset classes
+            activeStatusBadge.className = `status-badge ${activeEvent.status}`;
+            activeIconBox.className = `event-icon-box ${activeEvent.status}`;
+
+            activeIconBox.innerHTML = typeIcons[activeEvent.type] || typeIcons['deploy'];
+        }
+
+        function setScrubPosition(pos) {
+            scrubPosition = Math.max(0, Math.min(100, pos));
+            trackProgress.style.width = `${scrubPosition}%`;
+            scrubHead.style.left = `${scrubPosition}%`;
+        }
+
+        function setActiveEvent(ev) {
+            activeEvent = ev;
+            updateActiveEventUI();
+            renderMarkers();
+        }
+
+        function setIsPlaying(p) {
+            isPlaying = p;
+            if (isPlaying) {
+                iconPlay.style.display = "none";
+                iconPause.style.display = "block";
+            } else {
+                iconPlay.style.display = "block";
+                iconPause.style.display = "none";
+            }
+        }
+
+        function getLastPassedEvent(pos) {
+            let passed = events[0];
+            for (const ev of events) {
+                if (parseFloat(ev.timestamp) <= pos) {
+                    passed = ev;
+                } else {
+                    break;
+                }
+            }
+            return passed;
+        }
+
+        function handleScrub(e) {
+            const rect = track.getBoundingClientRect();
+            const x = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
+            setScrubPosition(x * 100);
+
+            const passed = getLastPassedEvent(scrubPosition);
+            if (passed.id !== activeEvent.id) {
+                setActiveEvent(passed);
+            }
+        }
+
+        function playTick(start, startPos) {
+            if (!isPlaying) return;
+
+            const now = performance.now();
+            const elapsed = now - start;
+            let newPos = startPos + (elapsed / 80);
+
+            if (newPos >= 100) {
+                // Loop back to start instead of stopping
+                const wrapStart = performance.now();
+                const wrapPos = 0;
+                setScrubPosition(0);
+                setActiveEvent(events[0]);
+                animRef = requestAnimationFrame(() => playTick(wrapStart, wrapPos));
+                return;
+            }
+
+            setScrubPosition(newPos);
+
+            const passed = getLastPassedEvent(newPos);
+            if (passed.id !== activeEvent.id) {
+                setActiveEvent(passed);
+            }
+
+            animRef = requestAnimationFrame(() => playTick(start, startPos));
+        }
+
+        // Event Listeners
+        track.addEventListener("mousedown", (e) => {
+            handleScrub(e);
+
+            const onMove = (ev) => handleScrub(ev);
+            const onUp = () => {
+                window.removeEventListener("mousemove", onMove);
+                window.removeEventListener("mouseup", onUp);
+            };
+
+            window.addEventListener("mousemove", onMove);
+            window.addEventListener("mouseup", onUp);
+        });
+
+        btnPlayPause.addEventListener("click", () => {
+            if (isPlaying) {
+                setIsPlaying(false);
+                if (animRef) cancelAnimationFrame(animRef);
+            } else {
+                if (scrubPosition >= 100) {
+                    setScrubPosition(0);
+                    setActiveEvent(events[0]);
+                }
+                setIsPlaying(true);
+                const startStr = performance.now();
+                const posStr = scrubPosition;
+                animRef = requestAnimationFrame(() => playTick(startStr, posStr));
+            }
+        });
+
+        function jumpTo(direction) {
+            const currentIdx = events.findIndex(e => e.id === activeEvent.id);
+            const newIdx = direction === "prev" ? Math.max(0, currentIdx - 1) : Math.min(events.length - 1, currentIdx + 1);
+            setActiveEvent(events[newIdx]);
+            setScrubPosition(parseFloat(events[newIdx].timestamp));
+            setIsPlaying(false);
+            if (animRef) cancelAnimationFrame(animRef);
+        }
+
+        btnPrev.addEventListener("click", () => jumpTo("prev"));
+        btnNext.addEventListener("click", () => jumpTo("next"));
+
+        // Initial render
+        setActiveEvent(events[0]);
+        setScrubPosition(0);
+        setIsPlaying(true);
+        animRef = requestAnimationFrame(() => playTick(performance.now(), 0));
+    });
+</script>

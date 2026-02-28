@@ -161,6 +161,7 @@ main {
   padding: 72px;
   transform: none !important;
 }
+
 .hero-tilt {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -554,7 +555,6 @@ main {
   opacity: 0.7;
 }
 
-
 [data-tilt] {
   transform: perspective(1200px) rotateX(var(--tilt-x)) rotateY(var(--tilt-y));
   transition: transform 0.35s ease;
@@ -685,7 +685,6 @@ main {
   }
 }
 
-
 @keyframes cubeSpin {
   0% {
     transform: rotateX(12deg) rotateY(-20deg);
@@ -744,7 +743,6 @@ main {
   font-size: clamp(2.2rem, 3.6vw, 3.1rem);
 }
 
-
 @media (max-width: 960px) {
   .nav-links {
     display: none;
@@ -767,6 +765,24 @@ main {
 
   .cta-section {
     padding: 40px 28px;
+  }
+
+  /* mobile button layout fix: keep all three CTAs in one horizontal row */
+  .cta {
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    width: 100%;
+  }
+
+  .cta .button {
+    flex: 1 1 0;
+    text-align: center;
+    padding-inline: 8px;
+  }
+
+  .cta .button span {
+    white-space: nowrap;
   }
 }
 

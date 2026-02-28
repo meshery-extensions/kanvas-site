@@ -1,30 +1,36 @@
 <section class="section browser">
   <div class="section-header centered">
-    <!-- <h2>Add the missing dimensions to your software</h2> -->
+   
   </div>
 
   <div class="browser-shell">
     <div class="browser-header">
+      
       <div class="browser-dots">
         <span class="dot dot-red"></span>
         <span class="dot dot-yellow"></span>
         <span class="dot dot-green"></span>
       </div>
+      
       <div class="browser-pill">https://kanvas.new</div>
     </div>
 
     <div class="browser-body">
       <div class="browser-scene">
-        <!-- WEBP Dashboard Image -->
+      
         <div class="dashboard-container dashboard-float">
           <div class="dashboard-content animated">
             <picture>
-              <!-- WEBP format (modern browsers) -->
+
               <source 
                 srcset="/images/kanvas/KanvasDesignerN.webp" 
                 type="image/webp"
               />
-              <!-- Fallback SVG for older browsers -->
+              
+              <!-- 
+                Fallback image for older browsers that don't support WEBP
+                This ensures compatibility with legacy browsers
+              -->
               <img
                 src="/images/kanvas/KanvasDesignerN.webp"
                 alt="Kanvas Designer - Real-time Kubernetes Infrastructure Design"
@@ -37,6 +43,7 @@
         </div>
       </div>
 
+      
       <a class="browser-cta shine" style="margin-top:4rem;" href="https://layer5.io/kanvas">
         <span class="cta-hexagon"></span>
         <span>See Kanvas in action</span>
@@ -47,31 +54,41 @@
 
   <div class="browser-stand"></div>
 
+ 
   <div style="background: radial-gradient(circle at 50% 100%, rgba(0, 179, 159, 0.05), transparent 50%);position:relative;top:-120px;height:130px;"></div>
 </section>
 
+
 <script>
-  // Interactive dashboard image functionality
+  // Initialize interactive dashboard image functionality
   document.addEventListener('DOMContentLoaded', function() {
+    // Select the dashboard image element
     const dashboardImage = document.querySelector('.interactive-image');
     
+    // Check if element exists before binding events
     if (dashboardImage) {
-      // Mouse enter - zoom and brighten
-      dashboardImage.addEventListener('mouseenter', function() {
+      
+      dashboardImage.addEventListener('mouseenter', funct
         this.style.transform = 'scale(1.05) rotateY(2deg)';
+       
         this.style.filter = 'brightness(1.15) contrast(1.1)';
+      
         this.style.cursor = 'pointer';
       });
-      
-      // Mouse leave - reset
+    
       dashboardImage.addEventListener('mouseleave', function() {
+       
         this.style.transform = 'scale(1) rotateY(0deg)';
+        
         this.style.filter = 'brightness(1) contrast(1)';
       });
       
-      // Click - trigger pulse animation
+      // Click event - Trigger pulse animation
       dashboardImage.addEventListener('click', function() {
+       
         this.classList.add('pulse-animation');
+        
+     
         setTimeout(() => this.classList.remove('pulse-animation'), 600);
       });
     }

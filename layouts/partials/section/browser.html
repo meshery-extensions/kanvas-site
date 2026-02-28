@@ -2,6 +2,7 @@
   <div class="section-header centered">
     <!-- <h2>Add the missing dimensions to your software</h2> -->
   </div>
+
   <div class="browser-shell">
     <div class="browser-header">
       <div class="browser-dots">
@@ -11,34 +12,67 @@
       </div>
       <div class="browser-pill">https://kanvas.new</div>
     </div>
+
     <div class="browser-body">
       <div class="browser-scene">
-        <!-- {/* Rotating Logo */} -->
-        <div class="logo-3d-container logo-float">
-            <div class="logo-3d">
-            <img 
-                src="/brand/kanvas/stacked/kanvas-stacked-partial-color.svg" 
-                alt="Kanvas Logo" 
-            />
-            </div>
+        <!-- WEBP Dashboard Image - Replaced old 3D hexagon -->
+        <div class="dashboard-container dashboard-float">
+          <div class="dashboard-content animated">
+            <picture>
+              <!-- WEBP format for modern browsers -->
+              <source 
+                srcset="/images/kanvas/KanvasDesignerN.webp" 
+                type="image/webp"
+              />
+              <!-- Fallback for older browser compatibility -->
+              <img
+                src="/images/kanvas/KanvasDesignerN.webp"
+                alt="Kanvas Designer - Real-time Kubernetes Infrastructure Design"
+                class="dashboard-image interactive-image"
+                data-interactions="enabled"
+                loading="lazy"
+              />
+            </picture>
+          </div>
         </div>
-        <!-- Old cube -->
-        <!-- <div class="cube">
-          <span class="face face-front"></span>
-          <span class="face face-right"></span>
-          <span class="face face-left"></span>
-          <span class="face face-top"></span>
-          <span class="face face-bottom"></span>    
-        </div>
-        <div class="cube-shadow"></div> -->
       </div>
-      <a class="browser-cta shine" style="margin-top:4rem;"href="https://layer5.io/kanvas">
+
+      <a class="browser-cta shine" style="margin-top:4rem;" href="https://layer5.io/kanvas">
         <span class="cta-hexagon"></span>
         <span>See Kanvas in action</span>
         <span class="cta-arrow" aria-hidden="true"></span>
       </a>
     </div>
   </div>
+
   <div class="browser-stand"></div>
+
+  <!-- Gradient background overlay -->
   <div style="background: radial-gradient(circle at 50% 100%, rgba(0, 179, 159, 0.05), transparent 50%);position:relative;top:-120px;height:130px;"></div>
 </section>
+
+<script>
+(function() {
+  document.addEventListener('DOMContentLoaded', function() {
+    var dashboardImage = document.querySelector('.interactive-image');
+    
+    if (dashboardImage) {
+      dashboardImage.addEventListener('mouseenter', function() {
+        this.style.transform = 'scale(1.05) rotateY(2deg)';
+        this.style.filter = 'brightness(1.15) contrast(1.1)';
+        this.style.cursor = 'pointer';
+      });
+      
+      dashboardImage.addEventListener('mouseleave', function() {
+        this.style.transform = 'scale(1) rotateY(0deg)';
+        this.style.filter = 'brightness(1) contrast(1)';
+      });
+      
+      dashboardImage.addEventListener('click', function() {
+        this.classList.add('pulse-animation');
+        setTimeout(() => this.classList.remove('pulse-animation'), 600);
+      });
+    }
+  });
+})();
+</script>

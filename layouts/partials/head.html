@@ -10,7 +10,16 @@
   <meta name="msapplication-config" content="/favicons/browserconfig.xml">
   <meta name="theme-color" content="#ffffff">
   <title>{{ if .IsHome }}{{ .Site.Title }}{{ else }}{{ .Title }} | {{ .Site.Title }}{{ end }}</title>
-  {{- with site.Params.canonicalBaseURL }}
+  <meta name="description" content="{{ with .Description }}{{ . }}{{ else }}{{ .Site.Params.description }}{{ end }}">
+  <meta property="og:title" content="{{ if .IsHome }}{{ .Site.Title }}{{ else }}{{ .Title }} | {{ .Site.Title }}{{ end }}" />
+  <meta property="og:description" content="{{ with .Description }}{{ . }}{{ else }}{{ .Site.Params.description }}{{ end }}" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="{{ .Permalink }}" />
+  <meta property="og:image" content="{{ .Site.BaseURL }}images/brand/kanvas/horizontal/kanvas-horizontal-color.png" />  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:site" content="@mesheryio">
+  <meta name="twitter:title" content="{{ if .IsHome }}{{ .Site.Title }}{{ else }}{{ .Title }} | {{ .Site.Title }}{{ end }}">
+  <meta name="twitter:description" content="{{ with .Description }}{{ . }}{{ else }}{{ .Site.Params.description }}{{ end }}">
+  <meta name="twitter:image" content="{{ .Site.BaseURL }}images/brand/kanvas/horizontal/kanvas-horizontal-color.png" />  {{- with site.Params.canonicalBaseURL }}
   <link rel="canonical" href="{{ . | strings.TrimRight "/" }}{{ $.RelPermalink }}">
   {{- end }}
   {{- if eq (getenv "HUGO_PREVIEW") "true" }}

@@ -1,0 +1,169 @@
+.feedback-section {
+    padding: 1.5rem 2rem;
+    background: radial-gradient(
+      1200px circle at var(--cursor-x) var(--cursor-y),
+      rgba(0, 34, 30, 0.18),
+      transparent 60%
+    ),
+    radial-gradient(900px circle at 85% 15%, rgba(0, 211, 169, 0.2), transparent 60%),
+    radial-gradient(800px circle at 15% 80%, rgba(158, 255, 236, 0.16), transparent 55%),
+    linear-gradient(180deg, #041013 0%, #0a151c 55%, #0b1c24 100%);
+    height: auto;
+    justify-content: center;
+    h2 {
+        text-align: center;
+        font-size: 2.5rem;
+        margin-bottom: 2.5rem;
+        background: linear-gradient(30deg, #ffffff,#ffffff, $secondary, #ffffff,#ffffff);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;        
+    }
+
+    .feedback-wrapper {
+        display: flex;
+        align-items: flex-start;
+        justify-content: center;
+        flex-wrap: nowrap;
+        padding-bottom: 1rem; 
+
+        .card-container {
+            position: relative;
+            flex-shrink: 0;
+            width: 24rem;
+            height: 13rem;
+            background: linear-gradient(145deg, #0f1a20,#0c1117);
+            border: none;
+            border-radius: 10px 35% 10px 10px;
+            padding: 0.7rem 1rem;
+            overflow: hidden;
+            
+            // Horizontal Overlap (80% width logic)
+            &:not(:first-child) {
+                margin-left: -9rem; 
+            }
+
+            // The Escalator & Stacking Logic
+            @for $i from 1 through 4 {
+                &:nth-child(#{$i}) {
+                    // Using margin-top instead of transform so the parent grows
+                    margin-top: calc(#{$i - 1} * 6.5rem);
+                    // Higher index for earlier cards so they stay "on top"
+                    z-index: #{5 - $i}; 
+                }
+            }
+
+            // Hover state: Bring to absolute front
+            &:hover {
+                z-index: 5;
+                // box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+                background: linear-gradient(95deg, $dark, $secondary);
+                & div {
+                    p {
+                        color: $light;
+                    }
+                }
+            }
+            
+            .feedback-details{
+                display: -webkit-box;
+                -webkit-line-clamp: 4;   /* 👈 max number of lines */
+                -webkit-box-orient: vertical;
+                overflow: hidden;
+                font-size: 1.3rem;
+                font-size: larger;
+                margin-top: 0.5rem;
+            }
+            & div {
+                display: flex;
+                padding: 1rem;
+                justify-content: start;
+                align-items: center;
+
+                img {
+                    width: 50px;
+                    height: 50px;
+                    border-radius: 50%;
+                    object-fit: cover;
+                }
+                h3{
+                    width: 55%;
+                    text-align: left;
+                    white-space: nowrap;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    margin-left: 2.5rem;
+                }
+                p {
+                    font-size: 2.5rem;
+                    color: $light;
+                    margin-top: 0.5rem;
+                    color: $secondary;
+                    
+                }
+            }
+        }
+        @media (max-width: 1132px) {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            grid-gap: 2rem;
+            justify-items: center;
+
+            .card-container {
+                width: 100%;
+                border-radius: 10px;
+                padding-left: 5%;
+                padding-right: 5%;
+                &:not(:first-child) {
+                    margin-left: 0; 
+                }
+                @for $i from 1 through 4 {
+                    &:nth-child(#{$i}) {
+                        margin-top: 0;
+                        z-index: 0; 
+                    }
+                }
+                &:hover {
+                    z-index: 0;
+                }
+            } 
+        }
+        @media (max-width: 775px) {
+            grid-template-columns: repeat(1, 1fr); 
+            .card-container{
+                box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+                background: linear-gradient(95deg, $dark, $secondary);
+                & div {
+                    p {
+                        color: $light;
+                    }
+                    h3{
+                        margin-left: 3rem;
+                    }
+                }
+            }
+        }
+    } 
+    @media (max-width: 600px) {
+        padding: 1rem 0;
+        h2 {
+            padding: 1rem;
+        }
+    } 
+    @media (max-width: 445px) {
+        h2 {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        .feedback-wrapper {
+            .card-container{
+                & > div {
+                    h3{
+                        margin-left: 1rem;
+                        width: 60%;
+                    }
+                }
+            }
+        }
+    } 
+}

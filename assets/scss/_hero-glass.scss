@@ -1,3 +1,4 @@
+
 :root {
   color-scheme: dark;
   // --bg: #05060b;
@@ -161,6 +162,7 @@ main {
   padding: 72px;
   transform: none !important;
 }
+
 .hero-tilt {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -554,7 +556,6 @@ main {
   opacity: 0.7;
 }
 
-
 [data-tilt] {
   transform: perspective(1200px) rotateX(var(--tilt-x)) rotateY(var(--tilt-y));
   transition: transform 0.35s ease;
@@ -685,7 +686,6 @@ main {
   }
 }
 
-
 @keyframes cubeSpin {
   0% {
     transform: rotateX(12deg) rotateY(-20deg);
@@ -744,7 +744,6 @@ main {
   font-size: clamp(2.2rem, 3.6vw, 3.1rem);
 }
 
-
 @media (max-width: 960px) {
   .nav-links {
     display: none;
@@ -767,6 +766,40 @@ main {
 
   .cta-section {
     padding: 40px 28px;
+  }
+
+  /* mobile button layout: A B on top, C centered below */
+  .cta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    width: 100%;
+    justify-content: center;
+  }
+
+  /* Row 1: Launch Kanvas (A) and Read the Docs (B) */
+  .cta .button.primary {
+    flex: 1 1 calc(50% - 6px);
+    order: 1;
+  }
+
+  .cta .button.ghost:not(.subtle) {
+    flex: 1 1 calc(50% - 6px);
+    order: 2;
+  }
+
+  /* Row 2: Watch Videos (C) - centered */
+  .cta .button.ghost.subtle {
+    flex: 0 1 auto;
+    order: 3;
+    width: fit-content;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .cta .button span {
+    white-space: nowrap;
+    font-size: 0.85rem;
   }
 }
 

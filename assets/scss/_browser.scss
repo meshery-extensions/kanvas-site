@@ -1,4 +1,3 @@
-
 .browser {
   position: relative;
   --browser-blue: #00B39F;
@@ -95,13 +94,145 @@
 
 .browser-scene {
   position: relative;
-  width: 280px;
-  height: 240px;
+  width: 100%;
+  max-width: 580px;
+  min-height: 320px;
   display: grid;
   place-items: center;
-  perspective: 900px;
-  z-index: 4; 
+  perspective: 1200px;
+  z-index: 4;
 }
+
+/* ============================================
+   DASHBOARD IMAGE STYLES (NEW)
+   ============================================ */
+
+.dashboard-container {
+  perspective: 1200px;
+  width: 100%;
+  max-width: 560px;
+  height: auto;
+  position: relative;
+}
+
+.dashboard-content {
+  position: relative;
+  width: 100%;
+  border-radius: 12px;
+  overflow: hidden;
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(0, 211, 169, 0.3);
+  box-shadow: 0 8px 32px rgba(0, 179, 159, 0.15),
+              inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(4px);
+  animation: dashboardFloat 4s ease-in-out infinite,
+             dashboardGlow 6s ease-in-out infinite;
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.dashboard-content:hover {
+  border-color: rgba(0, 211, 169, 0.6);
+  box-shadow: 0 12px 40px rgba(0, 179, 159, 0.25),
+              inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+
+.dashboard-image {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 10px;
+  transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  filter: drop-shadow(0 0 20px rgba(0, 179, 159, 0.25));
+  will-change: transform, filter;
+  object-fit: cover;
+}
+
+.dashboard-image:hover {
+  filter: drop-shadow(0 0 30px rgba(0, 179, 159, 0.5)) brightness(1.1) contrast(1.05);
+  transform: scale(1.02) translateY(-2px);
+}
+
+.dashboard-image.pulse-animation {
+  animation: imagePulse 0.6s ease-out;
+}
+
+/* ============================================
+   KEYFRAME ANIMATIONS FOR DASHBOARD
+   ============================================ */
+
+@keyframes dashboardFloat {
+  0%, 100% {
+    transform: translateY(0px) rotateX(0deg);
+  }
+  50% {
+    transform: translateY(-15px) rotateX(1deg);
+  }
+}
+
+@keyframes dashboardGlow {
+  0%, 100% {
+    box-shadow: 0 8px 32px rgba(0, 179, 159, 0.15),
+                inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  }
+  50% {
+    box-shadow: 0 12px 40px rgba(0, 179, 159, 0.25),
+                inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  }
+}
+
+@keyframes imagePulse {
+  0% {
+    transform: scale(1);
+    filter: drop-shadow(0 0 20px rgba(0, 211, 169, 0.5));
+  }
+  50% {
+    transform: scale(1.03);
+    filter: drop-shadow(0 0 40px rgba(0, 211, 169, 0.8));
+  }
+  100% {
+    transform: scale(1);
+    filter: drop-shadow(0 0 20px rgba(0, 211, 169, 0.25));
+  }
+}
+
+/* ============================================
+   LOGO FALLBACK STYLES
+   ============================================ */
+
+.logo-fallback-container {
+  perspective: 1000px;
+  width: 280px;
+  height: 280px;
+}
+
+.logo-3d-container {
+  perspective: 1000px;
+  width: 280px;
+  height: 280px;
+}
+
+.logo-3d {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  transform-style: preserve-3d;
+  animation: rotateLogoY 8s ease-in-out infinite;
+}
+
+.logo-3d img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  filter: drop-shadow(0 0 30px rgba(0, 179, 159, 0.2));
+}
+
+.logo-float {
+  animation: floatLogo 6s ease-in-out infinite;
+}
+
+/* ============================================
+   3D CUBE STYLES (OLD - KEPT FOR REFERENCE)
+   ============================================ */
 
 .cube {
   position: relative;
@@ -156,6 +287,10 @@
   animation: shadowPulse 6s ease-in-out infinite;
 }
 
+/* ============================================
+   CTA BUTTON STYLES & ANIMATIONS
+   ============================================ */
+
 .shine::before,
 .shine::after {
   content: "";
@@ -204,6 +339,20 @@
   box-shadow: 0 22px 50px rgba(8, 20, 60, 0.55);
   overflow: hidden;
   backdrop-filter: blur(10px);
+  margin-top: 2rem;
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  cursor: pointer;
+}
+
+.browser-cta:hover {
+  border-color: rgba(0, 211, 169, 0.8);
+  box-shadow: 0 28px 60px rgba(0, 211, 169, 0.2);
+  transform: translateY(-2px);
+  background: rgba(14, 18, 28, 0.95);
+}
+
+.browser-cta:active {
+  transform: translateY(0px);
 }
 
 .browser-cta::after {
@@ -221,7 +370,7 @@
 
 .cta-hexagon {
   width: 18px;
-  height: 18px; /* (width * tan(60deg)) to maintain aspect ratio */
+  height: 18px;
   background: radial-gradient(circle, rgba(158, 255, 236, 0.9), rgba(0, 211, 169, 0.55));
   box-shadow: 0 0 12px rgba(0, 211, 169, 0.6);
   clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
@@ -246,6 +395,12 @@
   display: grid;
   place-items: center;
   position: relative;
+  transition: all 0.3s ease;
+}
+
+.browser-cta:hover .cta-arrow {
+  border-color: rgba(0, 211, 169, 0.6);
+  background: rgba(0, 211, 169, 0.1);
 }
 
 .cta-arrow::before {
@@ -255,7 +410,18 @@
   border-top: 2px solid rgba(158, 255, 236, 0.9);
   border-right: 2px solid rgba(158, 255, 236, 0.9);
   transform: rotate(45deg);
+  transition: all 0.3s ease;
 }
+
+.browser-cta:hover .cta-arrow::before {
+  transform: rotate(45deg) translateX(2px) translateY(-2px);
+}
+
+/* ============================================
+   BROWSER STAND STYLES
+   ============================================ */
+
+
 
 .browser-stand {
   width: 220px;

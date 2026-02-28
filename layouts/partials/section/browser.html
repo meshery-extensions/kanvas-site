@@ -1,36 +1,79 @@
 <section class="section browser">
-<div class="section-header centered">
-<!-- <h2>Add the missing dimensions to your software</h2> -->
-</div>
+  <div class="section-header centered">
+    <!-- <h2>Add the missing dimensions to your software</h2> -->
+  </div>
 
-<div class="browser-shell">
-<div class="browser-header">
-<div class="browser-dots">
-<span class="dot dot-red"></span>
-<span class="dot dot-yellow"></span>
-<span class="dot dot-green"></span>
-</div>
-<div class="browser-pill">https://kanvas.new</div>
-</div>
+  <div class="browser-shell">
+    <div class="browser-header">
+      <div class="browser-dots">
+        <span class="dot dot-red"></span>
+        <span class="dot dot-yellow"></span>
+        <span class="dot dot-green"></span>
+      </div>
+      <div class="browser-pill">https://kanvas.new</div>
+    </div>
 
-<div class="browser-body">
-<div class="browser-scene">
-<!-- Kanvas Stacked Logo -->
-<div class="logo-3d-container logo-float">
-<div class="logo-3d">
-<img
-src="/brand/kanvas/stacked/kanvas-stacked-color.svg"
-alt="Kanvas Logo"
-style="max-width: 300px; height: auto;"
-/>
-</div>
-</div>
-</div>
-</div>
-</div>
+    <div class="browser-body">
+      <div class="browser-scene">
+        <!-- WEBP Dashboard Image -->
+        <div class="dashboard-container dashboard-float">
+          <div class="dashboard-content animated">
+            <picture>
+              <!-- WEBP format (modern browsers) -->
+              <source 
+                srcset="/images/kanvas/kanvas-designer.webp" 
+                type="image/webp"
+              />
+              <!-- Fallback SVG for older browsers -->
+              <img
+                src="/brand/kanvas/stacked/kanvas-stacked-color.svg"
+                alt="Kanvas Designer - Real-time Kubernetes Infrastructure Design"
+                class="dashboard-image interactive-image"
+                data-interactions="enabled"
+                loading="lazy"
+              />
+            </picture>
+          </div>
+        </div>
+      </div>
 
-<div class="browser-stand"></div>
+      <a class="browser-cta shine" style="margin-top:4rem;" href="https://layer5.io/kanvas">
+        <span class="cta-hexagon"></span>
+        <span>See Kanvas in action</span>
+        <span class="cta-arrow" aria-hidden="true"></span>
+      </a>
+    </div>
+  </div>
 
-<!-- Background gradient matching the page theme -->
-<div style="background: linear-gradient(135deg, rgba(0, 51, 51, 0.8) 0%, rgba(0, 102, 102, 0.6) 50%, rgba(0, 51, 51, 0.8) 100%); position: relative; top: -120px; height: 130px;"></div>
+  <div class="browser-stand"></div>
+
+  <div style="background: radial-gradient(circle at 50% 100%, rgba(0, 179, 159, 0.05), transparent 50%);position:relative;top:-120px;height:130px;"></div>
 </section>
+
+<script>
+  // Interactive dashboard image functionality
+  document.addEventListener('DOMContentLoaded', function() {
+    const dashboardImage = document.querySelector('.interactive-image');
+    
+    if (dashboardImage) {
+      // Mouse enter - zoom and brighten
+      dashboardImage.addEventListener('mouseenter', function() {
+        this.style.transform = 'scale(1.05) rotateY(2deg)';
+        this.style.filter = 'brightness(1.15) contrast(1.1)';
+        this.style.cursor = 'pointer';
+      });
+      
+      // Mouse leave - reset
+      dashboardImage.addEventListener('mouseleave', function() {
+        this.style.transform = 'scale(1) rotateY(0deg)';
+        this.style.filter = 'brightness(1) contrast(1)';
+      });
+      
+      // Click - trigger pulse animation
+      dashboardImage.addEventListener('click', function() {
+        this.classList.add('pulse-animation');
+        setTimeout(() => this.classList.remove('pulse-animation'), 600);
+      });
+    }
+  });
+</script>

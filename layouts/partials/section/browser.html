@@ -51,29 +51,28 @@
   <div style="background: radial-gradient(circle at 50% 100%, rgba(0, 179, 159, 0.05), transparent 50%);position:relative;top:-120px;height:130px;"></div>
 </section>
 
-{{- /* Interactive dashboard functionality - Escape Hugo template parsing */ -}}
-{{ `
 <script>
-document.addEventListener('DOMContentLoaded', function() {
-  var dashboardImage = document.querySelector('.interactive-image');
-  
-  if (dashboardImage) {
-    dashboardImage.addEventListener('mouseenter', function() {
-      this.style.transform = 'scale(1.05) rotateY(2deg)';
-      this.style.filter = 'brightness(1.15) contrast(1.1)';
-      this.style.cursor = 'pointer';
-    });
+(function() {
+  document.addEventListener('DOMContentLoaded', function() {
+    var dashboardImage = document.querySelector('.interactive-image');
     
-    dashboardImage.addEventListener('mouseleave', function() {
-      this.style.transform = 'scale(1) rotateY(0deg)';
-      this.style.filter = 'brightness(1) contrast(1)';
-    });
-    
-    dashboardImage.addEventListener('click', function() {
-      this.classList.add('pulse-animation');
-      setTimeout(() => this.classList.remove('pulse-animation'), 600);
-    });
-  }
-});
+    if (dashboardImage) {
+      dashboardImage.addEventListener('mouseenter', function() {
+        this.style.transform = 'scale(1.05) rotateY(2deg)';
+        this.style.filter = 'brightness(1.15) contrast(1.1)';
+        this.style.cursor = 'pointer';
+      });
+      
+      dashboardImage.addEventListener('mouseleave', function() {
+        this.style.transform = 'scale(1) rotateY(0deg)';
+        this.style.filter = 'brightness(1) contrast(1)';
+      });
+      
+      dashboardImage.addEventListener('click', function() {
+        this.classList.add('pulse-animation');
+        setTimeout(() => this.classList.remove('pulse-animation'), 600);
+      });
+    }
+  });
+})();
 </script>
-` -}}

@@ -151,8 +151,8 @@
         flex-direction: row; 
       }
       .demo-btn-primary {
-        background: #00b399;
-        color: $white;
+        background: #003330;
+        color: #ffffff;
         padding: 12px 24px;
         border-radius: 8px;
         text-decoration: none;
@@ -164,7 +164,7 @@
         }
 
         &:hover {
-          background: lighten(#00b399, 10%);
+          background: #002620;
           transform: translateY(-2px);
         }
       }

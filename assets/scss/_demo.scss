@@ -39,8 +39,8 @@
 
   .demo-container {
     max-width: 1000px;
+    width: 100%;
     margin: 0 auto;
-    // background: rgba(49, 54, 36, 0.8);
     backdrop-filter: blur(8px);
     border-radius: 24px;
     overflow: hidden;
@@ -74,6 +74,7 @@
   .demo-card {
     padding: 40px;
     text-align: left;
+    word-break: break-word;
 
     .card-badges {
       display: flex;
@@ -227,6 +228,77 @@
         font-size: 0.9rem;
         line-height: 1.5;
         margin: 0;
+      }
+    }
+  }
+}
+
+@media (max-width: 992px) {
+  .demo-section {
+    .demo-card {
+      padding: 30px;
+
+      .card-meta {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    .demo-personas {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .demo-section {
+    padding: 60px 15px;
+
+    .demo-header {
+      .demo-title {
+        font-size: 1.5rem;
+      }
+    }
+
+    .demo-card {
+      padding: 25px;
+
+      .card-meta {
+        grid-template-columns: 1fr;
+        gap: 15px;
+      }
+
+      .card-actions {
+        flex-direction: column;
+
+        .demo-btn-primary,
+        .btn-outline {
+          width: 100%;
+          text-align: center;
+        }
+      }
+    }
+
+    .demo-personas {
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .demo-section {
+
+    .demo-card {
+      padding: 20px;
+
+      h3 {
+        font-size: 1.4rem;
+      }
+    }
+
+    .demo-header {
+      .demo-subtitle {
+        font-size: 0.9rem;
       }
     }
   }

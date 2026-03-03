@@ -15,17 +15,19 @@
 
     <div class="browser-body">
       <div class="browser-scene">
-        <!-- WEBP Dashboard Image - Replaced old 3D hexagon -->
+
+        <!-- WEBP Dashboard Image - Replaced old 3D hexagon diagram -->
         <div class="dashboard-container dashboard-float">
           <div class="dashboard-content animated">
             <picture>
               <!-- WEBP format for modern browsers -->
               <source 
-                srcset="/images/kanvas/KanvasDesignerN.webp" 
+                srcset="/images/kanvas/KanvasDesignerN.webp"
                 type="image/webp"
               />
+
               <!-- Fallback for older browser compatibility -->
-              <img
+              <img 
                 src="/images/kanvas/KanvasDesignerN.webp"
                 alt="Kanvas Designer - Real-time Kubernetes Infrastructure Design"
                 class="dashboard-image interactive-image"
@@ -35,6 +37,7 @@
             </picture>
           </div>
         </div>
+
       </div>
 
       <a class="browser-cta shine" style="margin-top:4rem;" href="https://layer5.io/kanvas">
@@ -42,37 +45,40 @@
         <span>See Kanvas in action</span>
         <span class="cta-arrow" aria-hidden="true"></span>
       </a>
+
     </div>
   </div>
 
   <div class="browser-stand"></div>
 
-  <!-- Gradient background overlay -->
   <div style="background: radial-gradient(circle at 50% 100%, rgba(0, 179, 159, 0.05), transparent 50%);position:relative;top:-120px;height:130px;"></div>
 </section>
 
 <script>
-(function() {
-  document.addEventListener('DOMContentLoaded', function() {
-    var dashboardImage = document.querySelector('.interactive-image');
-    
-    if (dashboardImage) {
-      dashboardImage.addEventListener('mouseenter', function() {
-        this.style.transform = 'scale(1.05) rotateY(2deg)';
-        this.style.filter = 'brightness(1.15) contrast(1.1)';
-        this.style.cursor = 'pointer';
-      });
-      
-      dashboardImage.addEventListener('mouseleave', function() {
-        this.style.transform = 'scale(1) rotateY(0deg)';
-        this.style.filter = 'brightness(1) contrast(1)';
-      });
-      
-      dashboardImage.addEventListener('click', function() {
-        this.classList.add('pulse-animation');
-        setTimeout(() => this.classList.remove('pulse-animation'), 600);
-      });
-    }
-  });
-})();
+  (function() {
+    document.addEventListener('DOMContentLoaded', function() {
+      var dashboardImage = document.querySelector('.interactive-image');
+
+      if (dashboardImage) {
+        // Hover enter: Scale and rotate effect
+        dashboardImage.addEventListener('mouseenter', function() {
+          this.style.transform = 'scale(1.05) rotateY(2deg)';
+          this.style.filter = 'brightness(1.15) contrast(1.1)';
+          this.style.cursor = 'pointer';
+        });
+
+        // Hover leave: Reset to normal
+        dashboardImage.addEventListener('mouseleave', function() {
+          this.style.transform = 'scale(1) rotateY(0deg)';
+          this.style.filter = 'brightness(1) contrast(1)';
+        });
+
+        // Click: Trigger pulse animation
+        dashboardImage.addEventListener('click', function() {
+          this.classList.add('pulse-animation');
+          setTimeout(() => this.classList.remove('pulse-animation'), 600);
+        });
+      }
+    });
+  })();
 </script>

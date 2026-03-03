@@ -1,16 +1,15 @@
-(function() {
-  const root = document.documentElement;
-  const hero = document.querySelector(".hero-tilt");
-  const tiltTargets = document.querySelectorAll("[data-tilt]");
-  const floaters = document.querySelectorAll("[data-float]");
+const root = document.documentElement;
+const hero = document.querySelector(".hero-tilt");
+const tiltTargets = document.querySelectorAll("[data-tilt]");
+const floaters = document.querySelectorAll("[data-float]");
 
-  let frame;
-  const pointer = {
-    x: window.innerWidth / 2,
-    y: window.innerHeight / 2,
-  };
+let frame;
+const pointer = {
+  x: window.innerWidth / 2,
+  y: window.innerHeight / 2,
+};
 
-  const updateScene = () => {
+const updateScene = () => {
   root.style.setProperty("--cursor-x", `${pointer.x}px`);
   root.style.setProperty("--cursor-y", `${pointer.y}px`);
 
@@ -59,4 +58,4 @@ floaters.forEach((item, index) => {
   item.style.animationDelay = `${index * -2.5}s`;
 });
 
-updateScene();})();
+updateScene();

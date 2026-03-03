@@ -1,3 +1,4 @@
+(() => {
 const root = document.documentElement;
 const hero = document.querySelector(".hero-tilt");
 const tiltTargets = document.querySelectorAll("[data-tilt]");
@@ -59,3 +60,4 @@ floaters.forEach((item, index) => {
 });
 
 updateScene();
+})();

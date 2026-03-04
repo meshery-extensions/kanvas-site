@@ -7,24 +7,24 @@
   'use strict';
 
   const CURSORS = [
-    { src: '/images/cursors/cursor-1.svg', name: 'Aditya', role: 'Platform Team' },
-    { src: '/images/cursors/cursor-2.svg', name: 'Jorge', role: 'SRE' },
-    { src: '/images/cursors/cursor-3.svg', name: 'Suzan', role: 'Cloud Architect' },
-    { src: '/images/cursors/cursor-4.svg', name: 'Ryan', role: 'Developer' },
-    { src: '/images/cursors/cursor-5.svg', name: 'Sara Lin', role: 'Security' }
+    // { src: '/images/cursors/cursor-1.svg', name: 'Aditya', role: 'Platform Team' },
+    { src: '/images/cursors/cursor-2.svg', name: 'Jorge', role: '' },
+    // { src: '/images/cursors/cursor-3.svg', name: 'Sarah', role: 'Cloud Architect' },
+    { src: '/images/cursors/cursor-4.svg', name: 'Ryan', role: '' },
+    { src: '/images/cursors/cursor-5.svg', name: 'Lin', role: '' }
   ];
 
   const ACTIVITY_MESSAGES = [
-    '[John] linked services',
-    '[Scott] added external AI gateway',
-    '[Xi] commented on "zone c" topology',
-    '[Alice] updated labels',
-    '[Carlos] synced changes',
-    '[Zhu] commented on design',
-    '[Lin] allowed 443/tcp in firewall',
-    '[Olivia] deployed to staging',
-    '[Hans] opened pull request with latest changes',
-    '[Jorge] established terminal session on pod/nginx-a3f'
+    'linked services',
+    'added external AI gateway',
+    'commented on "zone c" topology',
+    'updated labels',
+    'synced changes',
+    'commented on design',
+    'allowed 443/tcp in firewall',
+    'deployed to staging',
+    'opened pull request with latest changes',
+    'established terminal session on pod/nginx-a3f'
   ];
 
   const SOCIAL_PROOF_DEFAULTS = {

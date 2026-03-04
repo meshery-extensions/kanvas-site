@@ -14,6 +14,7 @@ tl.from(".btn-primary", { x: 20, opacity: 0, duration: 0.6 }, "<");
 const animateCounters = () => {
     const counters = document.querySelectorAll('.counter');
     const speed = 2000;
+    const formatCounterValue = (value) => value.toLocaleString('en-US');
 
     counters.forEach(counter => {
         const target = +counter.getAttribute('data-target');
@@ -24,17 +25,19 @@ const animateCounters = () => {
             const progress = timestamp - startTime;
             const percentage = Math.min(progress / speed, 1);
             const currentValue = Math.floor(percentage * target);
+            const formattedCurrent = formatCounterValue(currentValue);
+            const formattedTarget = formatCounterValue(target);
 
             if (target === 10) {
-                counter.innerText = currentValue + "M+";
+                counter.innerText = formattedCurrent + "M+";
             } else {
-                counter.innerText = currentValue + "+";
+                counter.innerText = formattedCurrent + "+";
             }
 
             if (progress < speed) {
                 requestAnimationFrame(updateCount);
             } else {
-                counter.innerText = target + (target === 10 ? "M+" : "+");
+                counter.innerText = formattedTarget + (target === 10 ? "M+" : "+");
             }
         };
         requestAnimationFrame(updateCount);
@@ -385,7 +388,7 @@ const initScrollAnimations = () => {
             scale: 0.92, opacity: 1, y: -40,
             scrollTrigger: {
                 trigger: wrapper,
-                start: 'bottom 60%',  // recession begins when bottom of hero reaches 60% viewport
+                start: 'bottom 30%',  // recession begins when bottom of hero reaches 60% viewport
                 end: 'bottom top',
                 scrub: 1,
             }

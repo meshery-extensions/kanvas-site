@@ -96,7 +96,10 @@
       align-items: center;
       gap: $spacer * .5;
       border: 2px solid #00b399;
-      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+                  box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+                  background-color 0.3s ease,
+                  border-color 0.3s ease;
 
       i {
         font-size: 0.9rem;
@@ -106,7 +109,13 @@
         background-color: lighten(#00b399, 10%);
         border-color: lighten(#00b399, 10%);
         transform: translateY(-3px);
-        box-shadow: 0 10px 20px rgba(#00b399, 0.3);
+        box-shadow: 0 12px 28px rgba(#00b399, 0.3),
+                    0 0 16px rgba(#00b399, 0.15);
+      }
+
+      &:active {
+        transform: translateY(-1px);
+        transition-duration: 0.1s;
       }
     }
 
@@ -118,13 +127,26 @@
       font-weight: 500;
       font-size: 0.9rem;
       text-decoration: none;
-      border: 1px solid rgba($white, 0.2);
-      transition: all 0.3s ease;
+      border: 1px solid rgba($white, 0.15);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+                  box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+                  background-color 0.3s ease,
+                  border-color 0.3s ease,
+                  color 0.3s ease;
 
       &:hover {
-        background-color: rgba($white, 0.05);
-        border-color: rgba($white, 0.5);
+        background-color: rgba($white, 0.06);
+        border-color: rgba($primary, 0.3);
         color: #00b399;
+        transform: translateY(-2px);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+      }
+
+      &:active {
+        transform: translateY(0);
+        transition-duration: 0.1s;
       }
     }
   }

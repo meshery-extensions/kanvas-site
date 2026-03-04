@@ -160,7 +160,9 @@ main {
 .hero {
   margin-top: 40px;
   padding: 72px;
-  transform: none !important;
+  transform: perspective(1200px) rotateX(var(--tilt-x)) rotateY(var(--tilt-y));
+  transition: transform 0.35s ease;
+  transform-style: preserve-3d;
 }
 
 .hero-tilt {
@@ -168,9 +170,6 @@ main {
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 48px;
   align-items: center;
-  transform: perspective(1200px) rotateX(var(--tilt-x)) rotateY(var(--tilt-y));
-  transition: transform 0.35s ease;
-  transform-style: preserve-3d;
 }
 
 .liquid-strip {
@@ -496,23 +495,27 @@ main {
 
 .glass {
   position: relative;
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.14), rgba(255, 255, 255, 0.02));
-  border: 1px solid var(--border);
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.02));
+  border: 1px solid rgba(255, 255, 255, 0.12);
   border-radius: 28px;
-  box-shadow: 0 28px 70px rgba(2, 8, 20, 0.7);
-  backdrop-filter: blur(28px) saturate(160%);
-  -webkit-backdrop-filter: blur(28px) saturate(160%);
+  box-shadow:
+    0 28px 70px rgba(2, 8, 20, 0.7),
+    inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(32px) saturate(180%);
+  -webkit-backdrop-filter: blur(32px) saturate(180%);
   overflow: hidden;
 }
 
 .glass--dark {
   position: relative;
-  background: linear-gradient(135deg, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.82));
-  border: 1px solid linear-gradient(135deg, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.82));;
-  border-radius: 12px;
-  box-shadow: 0 28px 70px rgba(2, 8, 20, 0.7);
-  backdrop-filter: blur(28px) saturate(160%);
-  -webkit-backdrop-filter: blur(28px) saturate(160%);
+  background: linear-gradient(135deg, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.78));
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 16px;
+  box-shadow:
+    0 28px 70px rgba(2, 8, 20, 0.7),
+    inset 0 1px 0 rgba(255, 255, 255, 0.04);
+  backdrop-filter: blur(32px) saturate(180%);
+  -webkit-backdrop-filter: blur(32px) saturate(180%);
   overflow: hidden;
 }
 
@@ -574,7 +577,9 @@ main {
   border-radius: 999px;
   font-weight: 600;
   font-size: 0.95rem;
-  transition: transform 0.1s ease, box-shadow 0.15s ease;
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+              background 0.3s ease;
   border: 1px solid transparent;
   overflow: hidden;
 }
@@ -611,8 +616,18 @@ main {
 }
 
 .button:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 12px 30px rgba(5, 14, 30, 0.4);
+  transform: translateY(-3px);
+  box-shadow: 0 16px 40px rgba(5, 14, 30, 0.45);
+}
+
+.button.primary:hover {
+  box-shadow: 0 16px 40px rgba(0, 179, 159, 0.25),
+              0 4px 12px rgba(0, 179, 159, 0.15);
+}
+
+.button:active {
+  transform: translateY(-1px);
+  transition-duration: 0.1s;
 }
 
 [data-float] {

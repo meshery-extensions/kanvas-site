@@ -17,7 +17,7 @@
       .dot {
         width: 6px;
         height: 6px;
-        background: #00b399;
+        background: $primary;
         border-radius: 50%;
       }
     }
@@ -49,36 +49,76 @@
   }
 
   .community-card {
-    display: block;          // Ensures the link takes up the full card area
-    text-decoration: none;   // Removes default underline
-    background: rgba($white, 0.03); 
-    border: 1px solid rgba($primary, 0.2); 
-    border-radius: 8px;
+    position: relative;
+    display: block;
+    text-decoration: none;
+    background: linear-gradient(
+      135deg,
+      rgba($white, 0.06) 0%,
+      rgba($white, 0.02) 100%
+    );
+    border: 1px solid rgba($white, 0.08);
+    border-radius: 16px;
     padding: 35px;
     text-align: left;
-    transition: all 0.3s ease;
+    backdrop-filter: blur(16px) saturate(160%);
+    -webkit-backdrop-filter: blur(16px) saturate(160%);
+    box-shadow:
+      0 4px 16px rgba(0, 0, 0, 0.25),
+      inset 0 1px 0 rgba($white, 0.05);
+    overflow: hidden;
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+                box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+                border-color 0.4s ease,
+                background 0.4s ease;
 
-    i{
-        color:$primary;
-        font-size: 2rem;
+    &::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: linear-gradient(
+        90deg,
+        transparent,
+        rgba($white, 0.12) 30%,
+        rgba($white, 0.18) 50%,
+        rgba($white, 0.12) 70%,
+        transparent
+      );
+      pointer-events: none;
+    }
+
+    i {
+      color: $primary;
+      font-size: 2rem;
     }
 
     h3 {
-        color: $white;
-        margin-bottom: 10px;
+      color: $white;
+      margin-bottom: 10px;
     }
 
     p {
-        color: $casper;
+      color: $casper;
     }
 
     &:hover {
-        border-color: $secondary;
-        background: rgba($secondary, 0.05);
-        transform: translateY(-5px);
-        text-decoration: none;
-        }
+      border-color: rgba($primary, 0.35);
+      background: linear-gradient(
+        135deg,
+        rgba($primary, 0.08) 0%,
+        rgba($white, 0.03) 100%
+      );
+      transform: translateY(-4px);
+      box-shadow:
+        0 12px 40px rgba(0, 0, 0, 0.35),
+        0 0 20px rgba($primary, 0.06),
+        inset 0 1px 0 rgba($white, 0.08);
+      text-decoration: none;
     }
+  }
 
   // The Large CTA Box at the bottom
   .ready-cta {
@@ -142,7 +182,7 @@
     color: $casper;
     font-size: 0.9rem;
     a {
-        color: #00b399;
+        color: $primary;
         text-decoration: none;
         &:hover {
             text-decoration: underline;

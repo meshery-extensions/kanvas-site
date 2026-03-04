@@ -1,48 +1,23 @@
-// Register Plugin
 gsap.registerPlugin(ScrollTrigger);
 
 let tl;
 
-document.addEventListener("DOMContentLoaded", () => {
-    tl = gsap.timeline({
-        defaults: { ease: "power4.out" }
-    });
-
-    tl.from(".logo", { opacity: 0, y: -20, duration: 0.8 });
-
-    animateCounters();
-    initMarquee();
-
-    const header = document.querySelector(".site-header");
-    if (header) {
-        ScrollTrigger.create({
-            start: "top -2",
-            onEnter: () => header.classList.add("scrolled"),
-            onLeaveBack: () => header.classList.remove("scrolled"),
-        });
-    }
-});
-
 const animateCounters = () => {
     const counters = document.querySelectorAll('.counter');
     const speed = 2000;
-
     counters.forEach(counter => {
         const target = +counter.getAttribute('data-target');
         let startTime = null;
-
         const updateCount = (timestamp) => {
             if (!startTime) startTime = timestamp;
             const progress = timestamp - startTime;
             const percentage = Math.min(progress / speed, 1);
             const currentValue = Math.floor(percentage * target);
-
             if (target === 10) {
                 counter.innerText = currentValue + "M+";
             } else {
                 counter.innerText = currentValue + "+";
             }
-
             if (progress < speed) {
                 requestAnimationFrame(updateCount);
             } else {
@@ -64,10 +39,106 @@ const initMarquee = () => {
         ease: "none",
         repeat: -1,
     });
-
     marquee.addEventListener('mouseenter', () => animation.pause());
     marquee.addEventListener('mouseleave', () => animation.play());
 };
+
+const initSectionReveals = () => {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    const sections = document.querySelectorAll(
+        '.customers-section, .hero-section, .demo-section, .capabilities-section, .community-section, .browser'
+    );
+    sections.forEach((section) => {
+        section.classList.add('section-reveal');
+        ScrollTrigger.create({
+            trigger: section,
+            start: "top 85%",
+            once: true,
+            onEnter: () => section.classList.add('is-visible'),
+        });
+    });
+    const grids = document.querySelectorAll(
+        '.capabilities-grid, .community-grid, .demo-personas'
+    );
+    grids.forEach((grid) => {
+        grid.classList.add('section-reveal-children');
+        ScrollTrigger.create({
+            trigger: grid,
+            start: "top 80%",
+            once: true,
+            onEnter: () => grid.classList.add('is-visible'),
+        });
+    });
+    const heroSection = document.querySelector('.hero-section');
+    if (heroSection) {
+        ScrollTrigger.create({
+            trigger: heroSection,
+            start: "top 70%",
+            once: true,
+            onEnter: animateCounters,
+        });
+    }
+    const demoContainer = document.querySelector('.demo-container');
+    if (demoContainer) {
+        demoContainer.classList.add('section-reveal');
+        ScrollTrigger.create({
+            trigger: demoContainer,
+            start: "top 80%",
+            once: true,
+            onEnter: () => demoContainer.classList.add('is-visible'),
+        });
+    }
+    const browserShell = document.querySelector('.browser-shell');
+    if (browserShell) {
+        browserShell.classList.add('section-reveal');
+        ScrollTrigger.create({
+            trigger: browserShell,
+            start: "top 80%",
+            once: true,
+            onEnter: () => browserShell.classList.add('is-visible'),
+        });
+    }
+};
+
+const initSectionDividers = () => {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    const sections = document.querySelectorAll(
+        '.customers-section, .hero-section, .demo-section, .capabilities-section, .community-section'
+    );
+    sections.forEach((section) => {
+        if (section.nextElementSibling && section.nextElementSibling.classList.contains('section-divider')) return;
+        const divider = document.createElement('div');
+        divider.className = 'section-divider';
+        section.after(divider);
+        ScrollTrigger.create({
+            trigger: divider,
+            start: "top 90%",
+            once: true,
+            onEnter: () => divider.classList.add('is-visible'),
+        });
+    });
+};
+
+document.addEventListener("DOMContentLoaded", () => {
+    tl = gsap.timeline({ defaults: { ease: "power4.out" } });
+    tl.from(".logo", { opacity: 0, y: -20, duration: 0.8 });
+    tl.from(".main-nav ul li a", { opacity: 0, y: -50, duration: 1, stagger: 0.2 });
+    tl.from(".btn-secondary", { x: 20, opacity: 0, duration: 0.6 }, "-=0.5");
+    tl.from(".btn-primary", { x: 20, opacity: 0, duration: 0.6 }, "<");
+
+    initMarquee();
+    initSectionDividers();
+    initSectionReveals();
+
+    const header = document.querySelector(".site-header");
+    if (header) {
+        ScrollTrigger.create({
+            start: "top -2",
+            onEnter: () => header.classList.add("scrolled"),
+            onLeaveBack: () => header.classList.remove("scrolled"),
+        });
+    }
+});
 
 document.addEventListener("visibilitychange", () => {
     if (document.visibilityState === "visible" && tl) {

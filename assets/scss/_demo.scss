@@ -17,7 +17,7 @@
       .dot {
         width: 6px;
         height: 6px;
-        background: #00b399;
+        background: $primary;
         border-radius: 50%;
       }
     }
@@ -40,11 +40,17 @@
   .demo-container {
     max-width: 1000px;
     margin: 0 auto;
-    // background: rgba(49, 54, 36, 0.8);
-    backdrop-filter: blur(8px);
+    background: linear-gradient(
+      135deg,
+      rgba($white, 0.05) 0%,
+      rgba($white, 0.01) 100%
+    );
     border-radius: 24px;
     overflow: hidden;
-    border: 1px solid rgba($white, 0.1);
+    border: 1px solid rgba($white, 0.08);
+    box-shadow:
+      0 16px 48px rgba(0, 0, 0, 0.35),
+      inset 0 1px 0 rgba($white, 0.06);
   }
 
   .video-wrapper {
@@ -82,7 +88,7 @@
 
       .badge {
         font-size: 0.8rem;
-        color: #00b399;
+        color: $primary;
         padding: 4px 12px;
         border-radius: 4px;
         font-weight: 700;
@@ -151,7 +157,7 @@
         flex-direction: row; 
       }
       .demo-btn-primary {
-        background: #00b399;
+        background: $primary;
         color: $white;
         padding: 12px 24px;
         border-radius: 8px;
@@ -164,7 +170,7 @@
         }
 
         &:hover {
-          background: lighten(#00b399, 10%);
+          background: lighten($primary, 10%);
           transform: translateY(-2px);
         }
       }
@@ -202,17 +208,51 @@
     }
 
     .persona-card {
-      background: rgba(35, 38, 26, 0.2);
-      border: 1px solid rgba($white, 0.05);
+      position: relative;
+      background: linear-gradient(
+        135deg,
+        rgba($white, 0.06) 0%,
+        rgba($white, 0.02) 100%
+      );
+      border: 1px solid rgba($white, 0.08);
       padding: 30px;
-      border-radius: 8px;
+      border-radius: 16px;
       text-align: center;
-      transition: all 0.3s ease;
+      backdrop-filter: blur(16px) saturate(160%);
+      -webkit-backdrop-filter: blur(16px) saturate(160%);
+      box-shadow:
+        0 4px 16px rgba(0, 0, 0, 0.25),
+        inset 0 1px 0 rgba($white, 0.05);
+      overflow: hidden;
+      transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+                  box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+                  border-color 0.4s ease;
+
+      &::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 1px;
+        background: linear-gradient(
+          90deg,
+          transparent,
+          rgba($white, 0.12) 30%,
+          rgba($white, 0.18) 50%,
+          rgba($white, 0.12) 70%,
+          transparent
+        );
+        pointer-events: none;
+      }
 
       &:hover {
-        background: rgba(35, 38, 26, 0.6);
-        border-color: rgba(#00b399, 0.3);
-        transform: translateY(-5px);
+        border-color: rgba($primary, 0.35);
+        transform: translateY(-4px);
+        box-shadow:
+          0 12px 40px rgba(0, 0, 0, 0.35),
+          0 0 20px rgba($primary, 0.06),
+          inset 0 1px 0 rgba($white, 0.08);
       }
 
       h3 {

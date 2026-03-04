@@ -16,7 +16,9 @@
   overflow: hidden;
   background: #111214;
   border: 1px solid rgba(200, 200, 200, 0.08);
-  box-shadow: 0 40px 90px rgba(0, 0, 0, 0.6);
+  box-shadow:
+    0 40px 90px rgba(0, 0, 0, 0.6),
+    inset 0 1px 0 rgba(255, 255, 255, 0.04);
 }
 
 .browser-shell::after {
@@ -204,6 +206,22 @@
   box-shadow: 0 22px 50px rgba(8, 20, 60, 0.55);
   overflow: hidden;
   backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 0.3s ease;
+
+  &:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 24px 60px rgba(8, 20, 60, 0.6),
+                0 0 20px rgba(0, 211, 169, 0.12);
+    border-color: rgba(0, 211, 169, 0.7);
+  }
+
+  &:active {
+    transform: translateY(-1px);
+    transition-duration: 0.1s;
+  }
 }
 
 .browser-cta::after {

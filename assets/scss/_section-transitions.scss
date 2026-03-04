@@ -1,0 +1,170 @@
+// ─── Section Reveal Animations ───
+// Scroll-triggered fade-in + slide-up for each section.
+// Inspired by stripe.com progressive disclosure and codewiki.google's clean transitions.
+
+// Base state: sections start invisible and shifted down
+.section-reveal {
+  opacity: 0;
+  transform: translateY(60px);
+  transition: opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+
+  &.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// Staggered children within revealed sections
+.section-reveal-children > * {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.section-reveal-children.is-visible > * {
+  opacity: 1;
+  transform: translateY(0);
+
+  @for $i from 1 through 12 {
+    &:nth-child(#{$i}) {
+      transition-delay: #{$i * 0.08}s;
+    }
+  }
+}
+
+// ─── Gradient Section Dividers ───
+.section-divider {
+  height: 1px;
+  max-width: 800px;
+  margin: 0 auto;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba($primary, 0.3) 20%,
+    rgba($secondary, 0.5) 50%,
+    rgba($primary, 0.3) 80%,
+    transparent
+  );
+  opacity: 0;
+  transition: opacity 1.2s ease;
+
+  &.is-visible {
+    opacity: 1;
+  }
+}
+
+// ─── Enhanced Glass Cards (Apple-inspired liquid glass) ───
+.glass-card {
+  position: relative;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.08) 0%,
+    rgba(255, 255, 255, 0.02) 100%
+  );
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  box-shadow:
+    0 8px 32px rgba(0, 0, 0, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  overflow: hidden;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 0.4s ease;
+
+  // Subtle inner light reflection
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(255, 255, 255, 0.15) 30%,
+      rgba(255, 255, 255, 0.2) 50%,
+      rgba(255, 255, 255, 0.15) 70%,
+      transparent
+    );
+    pointer-events: none;
+  }
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow:
+      0 16px 48px rgba(0, 0, 0, 0.4),
+      0 0 24px rgba($primary, 0.08),
+      inset 0 1px 0 rgba(255, 255, 255, 0.08);
+    border-color: rgba(0, 179, 159, 0.25);
+  }
+}
+
+// ─── Elevation System (codewiki.google-inspired surface levels) ───
+.elevation-1 {
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2), 0 1px 2px rgba(0, 0, 0, 0.15);
+}
+
+.elevation-2 {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25), 0 2px 4px rgba(0, 0, 0, 0.15);
+}
+
+.elevation-3 {
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3), 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.elevation-4 {
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.35), 0 8px 16px rgba(0, 0, 0, 0.15);
+}
+
+// ─── Ambient glow behind sections ───
+.section-glow {
+  position: relative;
+
+  &::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    bottom: -60px;
+    transform: translateX(-50%);
+    width: 60%;
+    height: 120px;
+    background: radial-gradient(
+      ellipse at center,
+      rgba($primary, 0.06) 0%,
+      transparent 70%
+    );
+    pointer-events: none;
+    z-index: -1;
+  }
+}
+
+// ─── Smooth scroll behavior ───
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .section-reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
+  .section-reveal-children > * {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
+  .section-divider {
+    opacity: 1;
+    transition: none;
+  }
+}

@@ -52,17 +52,58 @@
   }
 
   .cap-card {
-    background: rgba($white, 0.03); 
-    border: 1px solid rgba($secondary, 0.2); 
-    border-radius: 8px;
+    position: relative;
+    background: linear-gradient(
+      135deg,
+      rgba($white, 0.06) 0%,
+      rgba($white, 0.02) 100%
+    );
+    border: 1px solid rgba($white, 0.08);
+    border-radius: 16px;
     padding: $spacer * 1.5;
     text-align: left;
-    transition: all 0.3s ease;
+    backdrop-filter: blur(16px) saturate(160%);
+    -webkit-backdrop-filter: blur(16px) saturate(160%);
+    box-shadow:
+      0 4px 16px rgba(0, 0, 0, 0.25),
+      inset 0 1px 0 rgba($white, 0.05);
+    overflow: hidden;
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+                box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+                border-color 0.4s ease,
+                background 0.4s ease;
+
+    // Top edge light reflection (Apple liquid glass)
+    &::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: linear-gradient(
+        90deg,
+        transparent,
+        rgba($white, 0.12) 30%,
+        rgba($white, 0.18) 50%,
+        rgba($white, 0.12) 70%,
+        transparent
+      );
+      pointer-events: none;
+    }
 
     &:hover {
-      border-color: $primary;
-      background: rgba($primary, 0.05);
-      transform: translateY(-5px);
+      border-color: rgba($primary, 0.35);
+      background: linear-gradient(
+        135deg,
+        rgba($primary, 0.08) 0%,
+        rgba($white, 0.03) 100%
+      );
+      transform: translateY(-4px);
+      box-shadow:
+        0 12px 40px rgba(0, 0, 0, 0.35),
+        0 0 20px rgba($primary, 0.06),
+        inset 0 1px 0 rgba($white, 0.08);
     }
 
     .icon {
@@ -87,14 +128,43 @@
 
   // The bottom "Existing Stack" box
   .cta-box {
+    position: relative;
     margin-top: $spacer * 2;
-    background: rgba($secondary, 0.05);
-    border: 1px solid rgba($secondary, 0.1);
-    padding:$spacer $spacer * 2 $spacer * 2 $spacer * 2;
-    border-radius: 16px;
+    background: linear-gradient(
+      135deg,
+      rgba($secondary, 0.08) 0%,
+      rgba($secondary, 0.02) 100%
+    );
+    border: 1px solid rgba($white, 0.08);
+    padding: $spacer $spacer * 2 $spacer * 2 $spacer * 2;
+    border-radius: 20px;
     max-width: 650px;
     margin-left: auto;
     margin-right: auto;
+    backdrop-filter: blur(16px) saturate(160%);
+    -webkit-backdrop-filter: blur(16px) saturate(160%);
+    box-shadow:
+      0 8px 32px rgba(0, 0, 0, 0.3),
+      inset 0 1px 0 rgba($white, 0.06);
+    overflow: hidden;
+
+    &::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: linear-gradient(
+        90deg,
+        transparent,
+        rgba($white, 0.12) 30%,
+        rgba($secondary, 0.2) 50%,
+        rgba($white, 0.12) 70%,
+        transparent
+      );
+      pointer-events: none;
+    }
 
     h3 { margin-bottom: $spacer; }
     p { color: $casper; margin-bottom: $spacer * 1.5; font-size: $font-size-base * .75; }

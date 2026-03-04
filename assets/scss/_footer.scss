@@ -24,7 +24,7 @@
       display: flex;
       align-items: center;
       gap: 12px;
-      margin-bottom: 20px;
+      margin-bottom: 16px;
       padding-top: 10px;
       
       img { 
@@ -60,22 +60,20 @@
   }
 
   .footer-col {
-    h4 {
+    h3 {
       font-size: 0.9rem;
       font-weight: 700;
-      margin-bottom: 25px;
       text-transform: uppercase;
       letter-spacing: 1px;
       color: $white;
-      line-height: 1;
+      margin-bottom: .6rem;
     }
 
     ul {
       list-style: none;
-      padding: 0;
-      margin-top:0;
+
       li {
-        margin-bottom: 12px;
+        line-height:1.65rem;
         a {
           color: $casper;
           text-decoration: none;
@@ -93,14 +91,13 @@
   .tech-grid {
     display: flex;
     justify-content: space-between;
-    gap: 40px;
+    
     
     ul{
         flex: 1;
      li {
       color: $casper;
       font-size: 0.9rem;
-      margin-bottom: 8px;
      }
     }
   }

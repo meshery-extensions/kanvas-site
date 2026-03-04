@@ -289,7 +289,8 @@ const initScrollPieces = () => {
 
                     const logoRect = logoEl.getBoundingClientRect();
                     const logoCenterX = logoRect.left + logoRect.width / 2;
-                    const logoCenterY = logoRect.top + logoRect.height / 2;
+                    const finalLogoYOffset = -24;
+                    const logoCenterY = logoRect.top + logoRect.height / 2 + finalLogoYOffset;
 
                     let arrived = 0;
                     introSchedule.forEach(({ pieceIdx }, order) => {
@@ -306,21 +307,31 @@ const initScrollPieces = () => {
                             y: logoCenterY,
                             scale: 5.6,
                             opacity: 1,
-                            duration: 0.7,
-                            delay: order * 0.07,
-                            ease: 'power4.in',
+                            duration: 0.25,
+                            delay: order * 0.045,
+                            ease: 'power2.inOut',
                             overwrite: true,
                             onComplete: () => {
                                 arrived++;
                                 if (arrived === introSchedule.length) {
                                     gsap.to(anchors, {
-                                        scale: 5.85, duration: 0.08, ease: 'power2.out',
+                                        scale: 5.72, duration: 0.14, ease: 'sine.out',
                                         overwrite: true,
                                         onComplete: () => {
                                             gsap.to(anchors, {
-                                                scale: 5.6, duration: 0.12, ease: 'power2.in',
+                                                scale: 5.6, duration: 0.2, ease: 'sine.inOut',
                                                 onComplete: () => {
                                                     gsap.set(reunitedFloat, { opacity: 1 });
+                                                    gsap.fromTo(logoEl,
+                                                        { y: finalLogoYOffset - 40, scale: 0.94 },
+                                                        {
+                                                            y: finalLogoYOffset,
+                                                            scale: 1,
+                                                            duration: 0.9,
+                                                            ease: 'bounce.out',
+                                                            overwrite: true,
+                                                        }
+                                                    );
                                                     anchors.forEach(a => {
                                                         gsap.set(a, { opacity: 0 });
                                                         a.style.zIndex = '-1';
@@ -335,7 +346,7 @@ const initScrollPieces = () => {
 
                         gsap.to(body, {
                             rotateY: 0, rotateX: 0,
-                            duration: 0.7, delay: order * 0.07, ease: 'power3.out',
+                            duration: 0.5, delay: order * 0.045, ease: 'sine.inOut',
                             overwrite: true,
                         });
                     });

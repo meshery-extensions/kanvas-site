@@ -189,7 +189,7 @@ piece.innerHTML = '<svg viewBox="130 30 440 490" xmlns="http://www.w3.org/2000/s
 wrapper.appendChild(piece);
 
 // GSAP animates the wrapper div, not the SVG internals
-gsap.set(piece, { rotateY: Math.random() * 180 - 90, x: '±random', opacity: 0 });
+gsap.set(piece, { rotateY: Math.random() * 180 - 90, x: (Math.random() - 0.5) * 200, opacity: 0 });
 ```
 
 ## Anti-Patterns

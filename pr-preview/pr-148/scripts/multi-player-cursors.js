@@ -44,6 +44,10 @@
   const SOCIAL_PROOF_INTERVAL = 3600;
   const SOCIAL_PROOF_ACTIVITY_INTERVAL = 4200;
   const ACTIVITY_HIDE_DELAY = 1800;
+  const runtimeStateByContainer = new WeakMap();
+  const runtimeStates = new Set();
+  let hasVisibilityListener = false;
+  let visibilityChangeHandler = null;
 
   function clamp(value, min, max) {
     return Math.min(max, Math.max(min, value));
@@ -69,6 +73,16 @@
       x: Math.floor(Math.random() * (maxX - minX + 1)) + minX,
       y: Math.floor(Math.random() * (maxY - minY + 1)) + minY
     };
+  }
+
+  function isElementPartiallyVisible(element) {
+    if (!element || !document.documentElement) return false;
+
+    const rect = element.getBoundingClientRect();
+    const viewWidth = window.innerWidth || document.documentElement.clientWidth;
+    const viewHeight = window.innerHeight || document.documentElement.clientHeight;
+
+    return rect.bottom > 0 && rect.right > 0 && rect.top < viewHeight && rect.left < viewWidth;
   }
 
   function setCursorPosition(element, pos, duration) {
@@ -254,6 +268,18 @@
     }
   }
 
+  function scheduleInitialCursorMovement(state, element) {
+    if (!state || !state.isActive) return;
+
+    const delay = getRandomInterval();
+    const timerId = window.setTimeout(() => {
+      state.cursorTimers.delete(element);
+      scheduleCursorMovement(state, element);
+    }, delay);
+
+    state.cursorTimers.set(element, timerId);
+  }
+
   function scheduleCursorMovement(state, element) {
     if (!state || !state.isActive) return;
 
@@ -285,12 +311,37 @@
     state.socialProofActivityIntervalId = null;
   }
 
+  function maybeRemoveSharedVisibilityListener() {
+    if (!hasVisibilityListener) return;
+    if (runtimeStates.size > 0) return;
+    if (!visibilityChangeHandler) return;
+
+    document.removeEventListener('visibilitychange', visibilityChangeHandler);
+    visibilityChangeHandler = null;
+    hasVisibilityListener = false;
+  }
+
+  function ensureSharedVisibilityListener() {
+    if (hasVisibilityListener) return;
+
+    // This script has a page-level lifecycle, so a single shared listener is sufficient.
+    visibilityChangeHandler = () => {
+      runtimeStates.forEach((state) => {
+        if (state && typeof state.updateLoopState === 'function') {
+          state.updateLoopState();
+        }
+      });
+    };
+    document.addEventListener('visibilitychange', visibilityChangeHandler);
+    hasVisibilityListener = true;
+  }
+
   function startAnimationLoops(state) {
     if (!state || state.isActive) return;
 
     state.isActive = true;
     state.cursors.forEach((cursorElement) => {
-      scheduleCursorMovement(state, cursorElement);
+      scheduleInitialCursorMovement(state, cursorElement);
     });
 
     if (state.socialProofState) {
@@ -316,6 +367,8 @@
 
   function initCursors(container, cursorIndices = [0, 1]) {
     if (!container) return;
+    // Keep init idempotent in case this function is called more than once for the same container.
+    if (runtimeStateByContainer.has(container)) return;
 
     const cursors = [];
     const surface = container.closest('.canvas-preview') || container.parentElement || container;
@@ -325,8 +378,13 @@
       cursorTimers: new Map(),
       socialProofState: null,
       socialProofActivityIntervalId: null,
-      isActive: false
+      isActive: false,
+      intersectionObserver: null,
+      updateLoopState: null
     };
+
+    runtimeStateByContainer.set(container, runtimeState);
+    runtimeStates.add(runtimeState);
 
     cursorIndices.forEach((index) => {
       if (index >= CURSORS.length) return;
@@ -345,8 +403,22 @@
       updateSocialProofActivity(socialProofState, 'Live collaboration is active');
     }
 
-    let containerInView = true;
-    const updateLoopState = () => {
+    const hasIntersectionObserver = 'IntersectionObserver' in window;
+    let containerInView = isElementPartiallyVisible(container);
+    runtimeState.updateLoopState = () => {
+      const containerIsMounted = document.body.contains(container);
+      if (!containerIsMounted) {
+        stopAnimationLoops(runtimeState);
+        if (runtimeState.intersectionObserver) {
+          runtimeState.intersectionObserver.disconnect();
+          runtimeState.intersectionObserver = null;
+        }
+        runtimeStates.delete(runtimeState);
+        runtimeStateByContainer.delete(container);
+        maybeRemoveSharedVisibilityListener();
+        return;
+      }
+
       const shouldRun = containerInView && !document.hidden;
       if (shouldRun) {
         startAnimationLoops(runtimeState);
@@ -355,20 +427,20 @@
       }
     };
 
-    if ('IntersectionObserver' in window) {
-      const observer = new IntersectionObserver((entries) => {
+    if (hasIntersectionObserver) {
+      runtimeState.intersectionObserver = new IntersectionObserver((entries) => {
         entries.forEach((entry) => {
           if (entry.target !== container) return;
           containerInView = entry.isIntersecting;
-          updateLoopState();
+          runtimeState.updateLoopState();
         });
       }, { threshold: 0.1 });
 
-      observer.observe(container);
+      runtimeState.intersectionObserver.observe(container);
     }
 
-    document.addEventListener('visibilitychange', updateLoopState);
-    updateLoopState();
+    ensureSharedVisibilityListener();
+    runtimeState.updateLoopState();
   }
 
   function init() {

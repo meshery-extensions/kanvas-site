@@ -93,36 +93,50 @@ document.addEventListener('DOMContentLoaded', () => {
 
 ```javascript
 // In static/scripts/main.js
-document.querySelectorAll('.typewriter').forEach(el => {
-  const texts  = el.dataset.texts.split(',');
-  const speed  = parseInt(el.dataset.speed || '60', 10);
-  let textIdx  = 0;
-  let charIdx  = 0;
-  let deleting = false;
+const prefersReducedMotion =
+  typeof window !== 'undefined' &&
+  typeof window.matchMedia === 'function' &&
+  window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  function tick() {
-    const current = texts[textIdx];
-    el.textContent = deleting
-      ? current.slice(0, charIdx--)
-      : current.slice(0, charIdx++);
+if (prefersReducedMotion) {
+  document.querySelectorAll('.typewriter').forEach(el => {
+    const texts = el.dataset.texts ? el.dataset.texts.split(',') : [];
+    if (texts.length > 0) {
+      el.textContent = texts[0];
+    }
+  });
+} else {
+  document.querySelectorAll('.typewriter').forEach(el => {
+    const texts  = el.dataset.texts.split(',');
+    const speed  = parseInt(el.dataset.speed || '60', 10);
+    let textIdx  = 0;
+    let charIdx  = 0;
+    let deleting = false;
 
-    let delay = deleting ? speed * 0.5 : speed;
+    function tick() {
+      const current = texts[textIdx];
+      el.textContent = deleting
+        ? current.slice(0, charIdx--)
+        : current.slice(0, charIdx++);
 
-    if (!deleting && charIdx > current.length) {
-      delay = 1800; // pause at end
-      deleting = true;
-    } else if (deleting && charIdx < 0) {
-      charIdx  = 0;
-      deleting = false;
-      textIdx  = (textIdx + 1) % texts.length;
-      delay    = 400;
+      let delay = deleting ? speed * 0.5 : speed;
+
+      if (!deleting && charIdx > current.length) {
+        delay = 1800; // pause at end
+        deleting = true;
+      } else if (deleting && charIdx < 0) {
+        charIdx  = 0;
+        deleting = false;
+        textIdx  = (textIdx + 1) % texts.length;
+        delay    = 400;
+      }
+
+      setTimeout(tick, delay);
     }
 
-    setTimeout(tick, delay);
-  }
-
-  tick();
-});
+    tick();
+  });
+}
 ```
 
 ```scss

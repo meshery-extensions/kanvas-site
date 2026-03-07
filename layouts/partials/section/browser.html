@@ -1,50 +1,42 @@
-<section class="section browser">
-  <div class="section-header centered">
-    <h2>See Kanvas in Action</h2>
+<div class="section-header centered">
+  <h2>See Kanvas in Action</h2>
+</div>
+
+<div class="browser-shell">
+  <div class="browser-header">
+    <div class="browser-dots">
+      <div class="browser-dot" style="background-color: #FF5F56;"></div>
+      <div class="browser-dot" style="background-color: #FFBD2E;"></div>
+      <div class="browser-dot" style="background-color: #27C93F;"></div>
+    </div>
+    <div class="browser-pill">https://kanvas.new</div>
   </div>
 
-  <div class="browser-shell">
-    <div class="browser-header">
-      <div class="browser-dots">
-        <span class="dot dot-red"></span>
-        <span class="dot dot-yellow"></span>
-        <span class="dot dot-green"></span>
-      </div>
-      <div class="browser-pill">https://kanvas.new</div>
-    </div>
-
-    <div class="browser-body">
-      <div class="browser-scene" id="browserScene">
-        <!-- Reunited 3D Logo — populated by JS when all 6 scroll pieces converge -->
-        <div class="reunited-float">
-          <div class="reunited-logo">
-            <div class="reunited-logo-inner" id="reunitedLogoInner">
-              <!-- 6 SVG pieces inserted here by initScrollPieces() -->
-            </div>
-          </div>
-          <div class="reunited-glow"></div>
-        </div>
-      </div>
-
-      <a class="browser-cta shine" style="margin-top:4rem;" href="https://layer5.io/kanvas">
-        <span class="cta-hexagon"></span>
-        <span>See Kanvas in action</span>
-        <span class="cta-arrow" aria-hidden="true"></span>
-      </a>
-
+  <div class="browser-body">
+    <div class="browser-scene" id="browserScene">
+      <!-- Interactive Kanvas Designer GIF -->
+      <img src="https://raw.githubusercontent.com/layer5io/layer5/master/src/assets/images/kanvas/gifs/start-from-scratch.gif" 
+           alt="Kanvas Designer - Getting Started" 
+           class="interactive-image">
     </div>
   </div>
+</div>
 
-  <div class="browser-stand"></div>
+<div class="browser-stand"></div>
 
-  <div style="background: radial-gradient(circle at 50% 100%, rgba(0, 179, 159, 0.05), transparent 50%);position:relative;top:-120px;height:130px;"></div>
-</section>
+<div style="background: radial-gradient(circle at 50% 100%, rgba(0, 179, 159, 0.05), transparent 50%);position:relative;top:-120px;height:130px;"></div>
+
+<a class="browser-cta shine" style="margin-top:4rem;" href="https://layer5.io/kanvas">
+  <span class="cta-hexagon"></span>
+  <span>See Kanvas in action</span>
+  <span class="cta-arrow" aria-hidden="true"></span>
+</a>
 
 <script>
   (function() {
     document.addEventListener('DOMContentLoaded', function() {
       var dashboardImage = document.querySelector('.interactive-image');
-
+      
       if (dashboardImage) {
         // Hover enter: Scale and rotate effect
         dashboardImage.addEventListener('mouseenter', function() {

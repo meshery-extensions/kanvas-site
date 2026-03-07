@@ -1,0 +1,240 @@
+// ─── Scroll Logo Pieces ───
+// The Kanvas logo decomposed into 6 independent polygon pieces.
+// Each piece is introduced separately as the user scrolls,
+// then reunites in the browser section.
+// Inspired by codewiki.google's floating 3D cube.
+
+.scroll-piece-anchor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 0;
+  z-index: -1; // behind content, subtle background continuity
+  pointer-events: none;
+  will-change: transform;
+  opacity: 0; // hidden until JS activates
+}
+
+.scroll-piece-stage {
+  position: absolute;
+  perspective: 1200px;
+  width: 50px;
+  height: 50px;
+  transform: translate(-50%, -50%);
+}
+
+.scroll-piece-body {
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+// Safari gets a high-resolution initial raster for each SVG, but users still see the intended 50px starting size before enlargement. 
+.scroll-piece-body svg {
+  width: 280px;
+  height: 280px;
+  display: block;
+  transform: scale(0.1785714286);
+  transform-origin: 0 0;
+  will-change: transform;
+}
+
+.scroll-piece-glow {
+  position: absolute;
+  width: 100px;
+  height: 36px;
+  bottom: -14px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: radial-gradient(
+    ellipse at center,
+    rgba(0, 179, 159, 0.08) 5%,
+    transparent 70%
+  );
+  filter: blur(12px);
+  pointer-events: none;
+  opacity: 0.5;
+}
+
+// 3D depth visual classes — pieces are subtle background elements
+.scroll-piece-body--depth-front {
+  svg {
+    filter: drop-shadow(0 0 14px rgba(0, 211, 169, 0.15));
+    opacity: 0.35;
+  }
+}
+
+.scroll-piece-body--depth-mid {
+  svg {
+    filter: drop-shadow(0 0 10px rgba(0, 179, 159, 0.1));
+    opacity: 0.25;
+  }
+}
+
+.scroll-piece-body--depth-back {
+  svg {
+    filter: drop-shadow(0 0 8px rgba(0, 179, 159, 0.08));
+    opacity: 0.18;
+  }
+}
+
+// ─── Reunited Logo in Browser Section ───
+.reunited-logo {
+  position: relative;
+  width: 280px;
+  height: 280px;
+  perspective: 1000px;
+}
+
+.reunited-logo-inner {
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  animation: reunitedRotate 10s ease-in-out infinite;
+}
+
+.reunited-piece {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  backface-visibility: visible;
+}
+
+// 3D depth offsets — front/mid/back pairs
+.reunited-piece--0 {
+  transform: translateZ(2px);
+  filter: drop-shadow(0 4px 20px rgba(0, 211, 169, 0.25));
+}
+
+.reunited-piece--1 {
+  transform: translateZ(18px);
+  filter: drop-shadow(0 4px 16px rgba(0, 211, 169, 0.22));
+}
+
+.reunited-piece--2 {
+  transform: translateZ(14px);
+  filter: drop-shadow(0 2px 12px rgba(0, 179, 159, 0.25));
+}
+
+.reunited-piece--3 {
+  transform: translateZ(10px);
+  filter: drop-shadow(0 2px 10px rgba(0, 179, 159, 0.18));
+}
+
+.reunited-piece--4 {
+  transform: translateZ(-2px);
+  filter: drop-shadow(0 0 8px rgba(0, 179, 159, 0.2));
+  opacity: 0.85;
+}
+
+.reunited-piece--5 {
+  transform: translateZ(-18px) rotateY(-1deg);
+  filter: drop-shadow(0 0 6px rgba(0, 211, 169, 0.08));
+  opacity: 0.78;
+}
+
+// Light reflection on front pieces
+.reunited-piece--0::after,
+.reunited-piece--1::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.06) 0%,
+    transparent 50%
+  );
+  pointer-events: none;
+}
+
+@keyframes reunitedRotate {
+  0%, 100% {
+    transform: rotateY(-18deg) rotateX(6deg);
+  }
+  25% {
+    transform: rotateY(0deg) rotateX(2deg);
+  }
+  50% {
+    transform: rotateY(18deg) rotateX(-4deg);
+  }
+  75% {
+    transform: rotateY(0deg) rotateX(2deg);
+  }
+}
+
+.reunited-float {
+  animation: reunitedFloat 7s ease-in-out infinite;
+}
+
+@keyframes reunitedFloat {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-18px); }
+}
+
+.reunited-glow {
+  position: absolute;
+  width: 320px;
+  height: 80px;
+  bottom: -30px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: radial-gradient(
+    ellipse at center,
+    rgba(0, 179, 159, 0.18) 0%,
+    rgba(0, 211, 169, 0.06) 40%,
+    transparent 70%
+  );
+  filter: blur(18px);
+  pointer-events: none;
+  animation: glowPulse 7s ease-in-out infinite;
+}
+
+@keyframes glowPulse {
+  0%, 100% { opacity: 0.7; }
+  50% { opacity: 1; }
+}
+
+// ─── Responsive ───
+@media (max-width: 768px) {
+  .scroll-piece-stage {
+    width: 50px;
+    height: 50px;
+  }
+
+  .reunited-logo {
+    width: 180px;
+    height: 180px;
+  }
+
+  .reunited-piece--0 { transform: translateZ(14px); }
+  .reunited-piece--1 { transform: translateZ(10px); }
+  .reunited-piece--2 { transform: translateZ(2px); }
+  .reunited-piece--3 { transform: translateZ(0px); }
+  .reunited-piece--4 { transform: translateZ(-8px); }
+  .reunited-piece--5 { transform: translateZ(-12px); }
+
+  .reunited-glow {
+    width: 200px;
+    height: 50px;
+    bottom: -20px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scroll-piece-anchor {
+    display: none;
+  }
+  .reunited-logo-inner {
+    animation: none;
+    transform: rotateY(-10deg) rotateX(4deg);
+  }
+  .reunited-float {
+    animation: none;
+  }
+  .reunited-glow {
+    animation: none;
+    opacity: 0.7;
+  }
+}

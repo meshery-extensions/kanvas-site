@@ -1,54 +1,28 @@
-# CLAUDE.md
+# Kanvas Site — Claude Code Instructions
 
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+See [AGENTS.md](AGENTS.md) for the full architecture reference, build commands, and conventions.
+Key points for Claude Code:
 
-## Build & Development Commands
+## Stack
+- **Hugo** static site — no React/Vue/JS framework
+- **SCSS** via Hugo Pipes + PostCSS — no Tailwind
+- **GSAP 3.13 + ScrollTrigger** loaded via CDN in `layouts/partials/footer.html`
+- **Vanilla JS** in `static/scripts/` — no bundler, no imports
 
-```bash
-make setup          # Install npm dependencies (postcss, autoprefixer)
-make site           # Dev server with drafts: hugo server -D -F --disableFastRender --ignoreCache
-make build          # Production build: hugo
-make clean          # Clean build cache and restart
-```
+## Most Important Conventions
+- Use `$primary` SCSS variable — never hardcode `#00b39f`
+- Scroll animations must be **scrub-based** (`scrub: 1`) via `scrubEach()` — never one-shot `gsap.from()` without a scrub
+- GSAP core must load **before** ScrollTrigger in `footer.html` (both pinned to 3.13.0)
+- Never edit `public/` — it is Hugo build output, wiped by `make build`
+- External links: `target="_blank" rel="noreferrer"` — always both attributes
+- No inline `style="..."` in HTML — styling belongs in SCSS
 
-Hugo dev server runs at `http://localhost:1313` by default.
+## Local Skills & Agents
+Run `make setup-claude` once after cloning to install local `.claude/` config:
+- **`/new-section <name>`** — scaffolds partial + SCSS + import + GSAP stub
+- **`ux-reviewer`** agent — validates CSS/GSAP/HTML against Kanvas design vision
+- **`hugo-template-reviewer`** agent — catches Go template syntax errors
 
-## Architecture
-
-**Static site built with Hugo** — no React/Vue/JS framework. Pages are Hugo templates (Go HTML), styled with SCSS, animated with GSAP + vanilla JS.
-
-### Key Structure
-- `layouts/index.html` — Homepage definition, assembles sections via `{{ partial }}` calls
-- `layouts/partials/section/` — Each homepage section is a separate partial (hero-glass, customers, hero, demo, capabilities, community, browser)
-- `layouts/_default/baseof.html` — Base HTML wrapper (head → navbar → main → footer)
-- `assets/scss/` — All styles; `_styles_project.scss` is the import manifest
-- `static/scripts/` — Vanilla JS: `main.js` (GSAP animations), `hero-glass.js` (3D tilt), `multi-player-cursors.js` (cursor sim)
-- `hugo.toml` — Hugo config (baseURL: https://www.kanvas.new)
-
-### Homepage Sections (in order)
-1. **hero-glass** — 3D tilting glass card with canvas preview + multi-player cursors
-2. **customers** — Infinite GSAP marquee of company logos
-3. **hero** — Large "Step aside, YAML" heading with counters
-4. **demo** — YouTube embed + feature card + persona cards
-5. **capabilities** — 9-card feature grid
-6. **community** — 5-card community links grid
-7. **browser** — Mock macOS browser with rotating 3D logo
-
-### Styling
-- Pure SCSS (no Tailwind) — `_variables_project.scss` defines color palette, fonts, spacing
-- Primary: `#00b39f`, Secondary: `#00d3a9`, Dark BG: `#121212`
-- Font: Qanelas Soft (custom OTF, 15 weights in `static/fonts/`)
-- Glass effects use `backdrop-filter: blur()` + gradient borders with mask-composite
-- CSS custom properties for cursor-tracking tilt: `--tilt-x`, `--tilt-y`, `--cursor-x`, `--cursor-y`
-
-### JavaScript
-- GSAP 3.13 + ScrollTrigger 3.12.5 loaded via CDN in `footer.html`
-- `hero-glass.js` updates CSS custom properties on pointermove for 3D perspective tilt
-- `multi-player-cursors.js` creates animated cursor elements with social proof indicators
-- `main.js` handles GSAP timeline for header, counter animations, marquee, scroll detection
-
-### Conventions
-- All external links use `target="_blank" rel="noreferrer"`
-- `prefers-reduced-motion` media query disables all animations
-- Responsive breakpoints: 960px, 768px/720px, 480px
-- Hugo pipes handle SCSS compilation and PostCSS processing
+## MCP Servers (configured in `.mcp.json`)
+- `github` — issues, PRs, CI. Needs `GITHUB_PERSONAL_ACCESS_TOKEN` env var.
+- `context7` — live Hugo and GSAP documentation lookup

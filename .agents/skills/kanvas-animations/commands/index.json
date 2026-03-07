@@ -1,0 +1,164 @@
+{
+  "version": 1,
+  "plugin": "kanvas-animations",
+  "type": "commands",
+  "generatedBy": "scripts/generate-plugin-indexes.mjs",
+  "entries": [
+    {
+      "name": "kanvas-animations:animate-3d",
+      "intent": "/animate-3d Command",
+      "tags": [
+        "kanvas-animations",
+        "command",
+        "animate-3d"
+      ],
+      "inputs": [],
+      "risk": "medium",
+      "cost": "medium",
+      "path": "commands/animate-3d.md"
+    },
+    {
+      "name": "kanvas-animations:animate-audit",
+      "intent": "/animate-audit",
+      "tags": [
+        "kanvas-animations",
+        "command",
+        "animate-audit"
+      ],
+      "inputs": [],
+      "risk": "medium",
+      "cost": "medium",
+      "path": "commands/animate-audit.md"
+    },
+    {
+      "name": "kanvas-animations:animate-background",
+      "intent": "/animate-background Command",
+      "tags": [
+        "kanvas-animations",
+        "command",
+        "animate-background"
+      ],
+      "inputs": [],
+      "risk": "medium",
+      "cost": "medium",
+      "path": "commands/animate-background.md"
+    },
+    {
+      "name": "kanvas-animations:animate-component",
+      "intent": "/animate-component",
+      "tags": [
+        "kanvas-animations",
+        "command",
+        "animate-component"
+      ],
+      "inputs": [],
+      "risk": "medium",
+      "cost": "medium",
+      "path": "commands/animate-component.md"
+    },
+    {
+      "name": "kanvas-animations:animate-effects",
+      "intent": "/animate-effects Command",
+      "tags": [
+        "kanvas-animations",
+        "command",
+        "animate-effects"
+      ],
+      "inputs": [],
+      "risk": "medium",
+      "cost": "medium",
+      "path": "commands/animate-effects.md"
+    },
+    {
+      "name": "kanvas-animations:animate-export",
+      "intent": "/animate-export",
+      "tags": [
+        "kanvas-animations",
+        "command",
+        "animate-export"
+      ],
+      "inputs": [],
+      "risk": "medium",
+      "cost": "medium",
+      "path": "commands/animate-export.md"
+    },
+    {
+      "name": "kanvas-animations:animate-preset",
+      "intent": "/animate-preset",
+      "tags": [
+        "kanvas-animations",
+        "command",
+        "animate-preset"
+      ],
+      "inputs": [],
+      "risk": "medium",
+      "cost": "medium",
+      "path": "commands/animate-preset.md"
+    },
+    {
+      "name": "kanvas-animations:animate-scroll",
+      "intent": "/animate-scroll",
+      "tags": [
+        "kanvas-animations",
+        "command",
+        "animate-scroll"
+      ],
+      "inputs": [],
+      "risk": "medium",
+      "cost": "medium",
+      "path": "commands/animate-scroll.md"
+    },
+    {
+      "name": "kanvas-animations:animate-sequence",
+      "intent": "/animate-sequence",
+      "tags": [
+        "kanvas-animations",
+        "command",
+        "animate-sequence"
+      ],
+      "inputs": [],
+      "risk": "medium",
+      "cost": "medium",
+      "path": "commands/animate-sequence.md"
+    },
+    {
+      "name": "kanvas-animations:animate-text",
+      "intent": "/animate-text Command",
+      "tags": [
+        "kanvas-animations",
+        "command",
+        "animate-text"
+      ],
+      "inputs": [],
+      "risk": "medium",
+      "cost": "medium",
+      "path": "commands/animate-text.md"
+    },
+    {
+      "name": "kanvas-animations:animate-transition",
+      "intent": "/animate-transition",
+      "tags": [
+        "kanvas-animations",
+        "command",
+        "animate-transition"
+      ],
+      "inputs": [],
+      "risk": "medium",
+      "cost": "medium",
+      "path": "commands/animate-transition.md"
+    },
+    {
+      "name": "kanvas-animations:animate",
+      "intent": "/animate",
+      "tags": [
+        "kanvas-animations",
+        "command",
+        "animate"
+      ],
+      "inputs": [],
+      "risk": "medium",
+      "cost": "medium",
+      "path": "commands/animate.md"
+    }
+  ]
+}

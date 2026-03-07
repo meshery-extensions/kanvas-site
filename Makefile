@@ -1,4 +1,4 @@
-# Copyright Layer5, Inc.
+# Copyright Meshery Authors.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -14,35 +14,45 @@
 
 include .github/build/Makefile.show-help.mk
 
-## Install docs.layer5.io dependencies on your local machine.
+## Install site dependencies on your local machine.
 ## See https://gohugo.io/categories/installation
 setup:
 	npm install
 
-## Run docs.layer5.io on your local machine with draft and future content enabled.
+## Run site on your local machine with draft and future content enabled.
 site: check-go
 	hugo server -D -F --disableFastRender --ignoreCache
 	
-## Run docs.layer5.io on your local machine. Alternate method.
-site-fast:
-	gatsby develop
-
-## Build docs.layer5.io on your local machine.
+## Build site on your local machine.
 build:
 	hugo
 
-## Empty build cache and run docs.layer5.io on your local machine.
+## Empty build cache and run site on your local machine.
 clean: 
 	hugo --cleanDestinationDir 
 	make site
 
-.PHONY: setup build site clean site-fast check-go docker
+.PHONY: setup build site clean site-fast check-go docker setup-claude
 
 check-go:
 	@echo "Checking if Go is installed..."
 	@command -v go > /dev/null || (echo "Go is not installed. Please install it before proceeding."; exit 1)
 	@echo "Go is installed."
 
-## Build and run docs website within a Docker container
+## Build and run site within a Docker container
 docker:
 	docker compose watch
+
+## Set up local Claude Code configuration from contrib/claude/ templates.
+## Run once after cloning if you use Claude Code as your AI coding assistant.
+setup-claude:
+	@mkdir -p .claude/agents .claude/skills/new-section
+	@cp contrib/claude/agents/*.md .claude/agents/
+	@cp contrib/claude/skills/new-section/SKILL.md .claude/skills/new-section/
+	@rm -rf .claude/skills/gsap-animations .claude/skills/scroll-animations .claude/skills/glass-morphism
+	@ln -s $(CURDIR)/.agents/skills/kanvas-animations/skills/gsap             .claude/skills/gsap-animations
+	@ln -s $(CURDIR)/.agents/skills/kanvas-animations/skills/scroll-animations .claude/skills/scroll-animations
+	@ln -s $(CURDIR)/.agents/skills/kanvas-animations/skills/glass-morphism   .claude/skills/glass-morphism
+	@cp contrib/claude/settings-template.json .claude/settings.json
+	@echo "Claude Code setup complete."
+	@echo "Set GITHUB_PERSONAL_ACCESS_TOKEN in your environment for GitHub MCP."

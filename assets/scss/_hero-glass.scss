@@ -1,10 +1,17 @@
 
+@property --border-angle {
+  syntax: '<angle>';
+  inherits: false;
+  initial-value: 0deg;
+}
+
 :root {
   color-scheme: dark;
   // --bg: #05060b;
   --text: #f5f7ff;
   --muted: rgba(222, 232, 248, 0.78);
   --accent: #00B39F;
+  --accent-rgba: rgba(0, 179, 159, 0.9);
   --accent-2: #00D3A9;
   --accent-3: #9EFFEC;
   --glass: rgba(12, 19, 33, 0.72);
@@ -195,15 +202,22 @@ main {
   margin: 18px 0 18px;
 }
 
+.hero-content h2 {
+  font-size: clamp(2rem, 4.2vw, 3.6rem);
+  line-height: 1.08;
+  margin: 18px 0 18px;
+}
+
 .hero-content p {
   color: var(--muted);
-  font-size: 1.05rem;
-  max-width: 520px;
+  font-size: clamp(1rem, 1.4vw, 1.28rem);
+  max-width: 100%;
 }
 
 .pill {
   display: inline-flex;
-  align-items: center;
+  align-items: flex-start;
+  margin-bottom: 1vw;
   gap: 8px;
   padding: 6px 14px;
   border-radius: 999px;
@@ -213,10 +227,11 @@ main {
   text-transform: uppercase;
   font-size: 0.75rem;
   letter-spacing: 0.2em;
+  
 }
 
 .cta {
-  margin-top: 24px;
+  margin-top: 64px;
   display: flex;
   flex-wrap: wrap;
   gap: 14px;
@@ -467,9 +482,7 @@ main {
 }
 
 .footer {
-  max-width: 1200px;
-  margin: 96px auto 0;
-  padding: 0 24px;
+  margin-top: 96px;
 }
 
 .footer-top {
@@ -559,6 +572,21 @@ main {
   opacity: 0.7;
 }
 
+.hero.glass::after {
+  background: conic-gradient(
+    from var(--border-angle) at 50% 50%,
+    rgba(0, 179, 159, 0.1) 0deg,
+    rgba(0, 179, 159, 0.1) 238deg,
+    rgba(200, 255, 248, 0.96) 252deg,
+    rgba(0, 211, 169, 0.72) 266deg,
+    rgba(0, 179, 159, 0.28) 284deg,
+    rgba(0, 179, 159, 0.1) 308deg,
+    rgba(0, 179, 159, 0.1) 360deg
+  );
+  animation: borderSpin 7s linear infinite;
+  opacity: 1;
+}
+
 [data-tilt] {
   transform: perspective(1200px) rotateX(var(--tilt-x)) rotateY(var(--tilt-y));
   transition: transform 0.35s ease;
@@ -621,8 +649,15 @@ main {
 }
 
 .button.primary:hover {
-  box-shadow: 0 16px 40px rgba(0, 179, 159, 0.25),
+  
+  box-shadow: 0 6px 40px rgba(0, 179, 159, 0.25),
               0 4px 12px rgba(0, 179, 159, 0.15);
+    background: linear-gradient(300deg, var(--accent-rgba), var(--accent));
+}
+
+.button.ghost:hover,
+.button.ghost.subtle:hover {
+  background: rgba(0, 0, 0, 0.05);
 }
 
 .button:active {
@@ -674,6 +709,25 @@ main {
   }
   100% {
     background-position: 0% 50%;
+  }
+}
+
+@keyframes borderSpin {
+  to { --border-angle: 360deg; }
+}
+
+@keyframes borderGlowDrift {
+  0% {
+    filter: drop-shadow(-10px -6px 20px rgba(158, 255, 236, 0.3))
+            drop-shadow(-4px -2px 10px rgba(0, 211, 169, 0.22));
+  }
+  50% {
+    filter: drop-shadow(8px 8px 24px rgba(158, 255, 236, 0.42))
+            drop-shadow(3px 3px 12px rgba(0, 179, 159, 0.3));
+  }
+  100% {
+    filter: drop-shadow(-10px -6px 20px rgba(158, 255, 236, 0.3))
+            drop-shadow(-4px -2px 10px rgba(0, 211, 169, 0.22));
   }
 }
 

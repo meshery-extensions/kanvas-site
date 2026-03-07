@@ -38,6 +38,8 @@
   }
 
   .community-grid {
+    position: relative;
+    z-index: 20;
     display: grid;
     grid-template-columns: repeat(3, 1fr); // 3 columns as per screenshot
     gap: 25px;
@@ -90,9 +92,27 @@
       pointer-events: none;
     }
 
-    i {
-      color: $primary;
-      font-size: 2rem;
+    .icon {
+      display: inline-flex;
+      align-items: center;
+      vertical-align: middle;
+      margin-right: 8px;
+      margin-bottom: 10px;
+
+      i {
+        color: $primary;
+        font-size: 2rem;
+        display: block;
+        line-height: 1;
+      }
+    }
+
+    .icon + h3 {
+      display: inline-flex;
+      align-items: center;
+      vertical-align: middle;
+      margin: 0 0 10px 0;
+      line-height: 1.2;
     }
 
     h3 {

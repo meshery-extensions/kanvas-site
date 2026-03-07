@@ -1,4 +1,4 @@
-baseURL = "/"
+baseURL = "http://www.kanvas.new"
 title = "Kanvas"
 relativeURLs = true
 canonifyurls = false
@@ -31,6 +31,6 @@ enableMissingTranslationPlaceholders = true
   dark-mode = true
   logo_light = "images/kanvas-logo-light.svg"
   logo_dark = "images/kanvas-logo-dark.svg"
-  description = "Collaborative cloud native management for Kubernetes"
+  description = "Infrastructure as Design for collaborative Cloud and Kubernetesmanagement"
 
   canonicalBaseURL = "https://www.kanvas.new"

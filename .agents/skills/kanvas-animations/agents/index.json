@@ -1,0 +1,86 @@
+{
+  "version": 1,
+  "plugin": "kanvas-animations",
+  "type": "agents",
+  "generatedBy": "scripts/generate-plugin-indexes.mjs",
+  "entries": [
+    {
+      "name": "kanvas-animations:animation-architect",
+      "intent": "Animation Architect",
+      "tags": [
+        "kanvas-animations",
+        "agent",
+        "animation-architect"
+      ],
+      "inputs": [],
+      "risk": "medium",
+      "cost": "medium",
+      "path": "agents/animation-architect.md"
+    },
+    {
+      "name": "kanvas-animations:creative-effects-artist",
+      "intent": "Creative Effects Artist Agent",
+      "tags": [
+        "kanvas-animations",
+        "agent",
+        "creative-effects-artist"
+      ],
+      "inputs": [],
+      "risk": "medium",
+      "cost": "medium",
+      "path": "agents/creative-effects-artist.md"
+    },
+    {
+      "name": "kanvas-animations:interaction-specialist",
+      "intent": "Interaction Specialist",
+      "tags": [
+        "kanvas-animations",
+        "agent",
+        "interaction-specialist"
+      ],
+      "inputs": [],
+      "risk": "medium",
+      "cost": "medium",
+      "path": "agents/interaction-specialist.md"
+    },
+    {
+      "name": "kanvas-animations:motion-designer",
+      "intent": "Motion Designer",
+      "tags": [
+        "kanvas-animations",
+        "agent",
+        "motion-designer"
+      ],
+      "inputs": [],
+      "risk": "medium",
+      "cost": "medium",
+      "path": "agents/motion-designer.md"
+    },
+    {
+      "name": "kanvas-animations:performance-optimizer",
+      "intent": "Performance Optimizer",
+      "tags": [
+        "kanvas-animations",
+        "agent",
+        "performance-optimizer"
+      ],
+      "inputs": [],
+      "risk": "medium",
+      "cost": "medium",
+      "path": "agents/performance-optimizer.md"
+    },
+    {
+      "name": "kanvas-animations:transition-engineer",
+      "intent": "Transition Engineer",
+      "tags": [
+        "kanvas-animations",
+        "agent",
+        "transition-engineer"
+      ],
+      "inputs": [],
+      "risk": "medium",
+      "cost": "medium",
+      "path": "agents/transition-engineer.md"
+    }
+  ]
+}

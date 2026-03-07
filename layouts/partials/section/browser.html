@@ -1,6 +1,6 @@
 <section class="section browser">
   <div class="section-header centered">
-    <!-- <h2>Add the missing dimensions to your software</h2> -->
+    <h2>See Kanvas in Action</h2>
   </div>
 
   <div class="browser-shell">
@@ -14,30 +14,16 @@
     </div>
 
     <div class="browser-body">
-      <div class="browser-scene">
-
-        <!-- WEBP Dashboard Image - Replaced old 3D hexagon diagram -->
-        <div class="dashboard-container dashboard-float">
-          <div class="dashboard-content animated">
-            <picture>
-              <!-- WEBP format for modern browsers -->
-              <source 
-                srcset="/images/kanvas/KanvasDesignerN.webp"
-                type="image/webp"
-              />
-
-              <!-- Fallback for older browser compatibility -->
-              <img 
-                src="/images/kanvas/KanvasDesignerN.webp"
-                alt="Kanvas Designer - Real-time Kubernetes Infrastructure Design"
-                class="dashboard-image interactive-image"
-                data-interactions="enabled"
-                loading="lazy"
-              />
-            </picture>
+      <div class="browser-scene" id="browserScene">
+        <!-- Reunited 3D Logo — populated by JS when all 6 scroll pieces converge -->
+        <div class="reunited-float">
+          <div class="reunited-logo">
+            <div class="reunited-logo-inner" id="reunitedLogoInner">
+              <!-- 6 SVG pieces inserted here by initScrollPieces() -->
+            </div>
           </div>
+          <div class="reunited-glow"></div>
         </div>
-
       </div>
 
       <a class="browser-cta shine" style="margin-top:4rem;" href="https://layer5.io/kanvas">

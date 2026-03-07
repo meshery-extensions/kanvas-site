@@ -68,3 +68,7 @@ dist/**
 public/
 resources/
 .hugo_build.lock
+
+# Local AI coding assistant config (tool-specific, per-contributor)
+# Claude Code users: run `make setup-claude` to bootstrap from contrib/claude/
+.claude/

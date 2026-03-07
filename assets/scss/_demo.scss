@@ -58,6 +58,120 @@
     aspect-ratio: 16 / 9;
     width: 100%;
 
+    .video-thumbnail {
+      width: 100%;
+      height: 100%;
+      border: none;
+      padding: 0;
+      background: rgba($black, 0.15);
+      cursor: pointer;
+      position: relative;
+      display: block;
+      overflow: hidden;
+
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+        transition: transform 0.4s ease, filter 0.4s ease;
+      }
+
+      &::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(180deg, rgba($black, 0.08) 0%, rgba($black, 0.38) 100%);
+        pointer-events: none;
+      }
+
+      &:hover img,
+      &:focus-visible img {
+        transform: scale(1.02);
+        filter: brightness(1.05);
+      }
+
+      &:hover .video-play-icon,
+      &:focus-visible .video-play-icon {
+        transform: translate(-50%, -50%) scale(1.08);
+        background: rgba($saffron, 0.84);
+        box-shadow:
+          0 0 0 6px rgba($saffron, 0.12),
+          0 10px 28px rgba($black, 0.42);
+      }
+
+      &:hover .video-play-icon::after,
+      &:focus-visible .video-play-icon::after {
+        opacity: 1;
+        background:
+          radial-gradient(circle at 1px 1px, rgba($blonde, 0.75) 1px, transparent 1.6px) 0 0 / 4px 4px,
+          linear-gradient(135deg, rgba($blonde, 0.5), rgba($saffron, 0.28));
+      }
+
+      &:hover .video-play-icon::before,
+      &:focus-visible .video-play-icon::before {
+        border-left-color: rgba($white, 0.98);
+      }
+
+      &:focus-visible {
+        outline: 2px solid rgba($primary, 0.9);
+        outline-offset: -2px;
+      }
+
+      .video-play-icon {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        width: 72px;
+        height: 72px;
+        border-radius: 50%;
+        background: rgba($saffron, 0.72);
+        border: none;
+        backdrop-filter: blur(4px);
+        z-index: 1;
+        isolation: isolate;
+        transition: transform 0.26s ease, background-color 0.26s ease, box-shadow 0.26s ease;
+        box-shadow: 0 8px 18px rgba($black, 0.28);
+
+        &::after {
+          content: "";
+          position: absolute;
+          inset: 0;
+          border-radius: 50%;
+          padding: 1px;
+          background:
+            radial-gradient(circle at 1px 1px, rgba($blonde, 0.55) 1px, transparent 1.6px) 0 0 / 4px 4px,
+            linear-gradient(135deg, rgba($blonde, 0.35), rgba($saffron, 0.2));
+          pointer-events: none;
+          -webkit-mask:
+            linear-gradient(#000 0 0) content-box,
+            linear-gradient(#000 0 0);
+          mask:
+            linear-gradient(#000 0 0) content-box,
+            linear-gradient(#000 0 0);
+          -webkit-mask-composite: xor;
+          mask-composite: exclude;
+          opacity: 0.9;
+          transition: opacity 0.26s ease, background 0.26s ease;
+        }
+
+        &::before {
+          content: "";
+          position: absolute;
+          left: 30px;
+          top: 23px;
+          width: 0;
+          height: 0;
+          border-top: 12px solid transparent;
+          border-bottom: 12px solid transparent;
+          border-left: 19px solid $white;
+          z-index: 1;
+          transition: border-left-color 0.26s ease;
+        }
+      }
+    }
+
     iframe {
       width: 100%;
       height: 100%;
@@ -158,7 +272,7 @@
       }
       .demo-btn-primary {
         background: $primary;
-        color: $white;
+        color: $black;
         padding: 12px 24px;
         border-radius: 8px;
         text-decoration: none;

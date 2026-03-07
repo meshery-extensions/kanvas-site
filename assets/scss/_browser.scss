@@ -95,13 +95,35 @@
 }
 .browser-scene {
   position: relative;
-  width: 100%;        
-  max-width: 580px;   
-  min-height: 320px; 
-  display: grid;
-  place-items: center;
-  perspective: 1200px; 
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+  background: transparent; // No background
+  
+  .interactive-image {
+    width: 100%;
+    height: auto;
+    display: block;
+    transition: all 0.3s ease;
+    transform-style: preserve-3d;
+    filter: brightness(1) contrast(1);
+  }
 }
+
+// Pulse animation for click effect
+@keyframes pulse-animation {
+  0%, 100% {
+    transform: scale(1) rotateY(0deg);
+  }
+  50% {
+    transform: scale(1.08) rotateY(3deg);
+  }
+}
+
+.pulse-animation {
+  animation: pulse-animation 0.6s ease !important;
+}
+
 
 
 /* ============================================

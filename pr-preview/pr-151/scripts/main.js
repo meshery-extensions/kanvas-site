@@ -559,32 +559,20 @@ const initScrollAnimations = () => {
 };
 
 const initVideoHandler = () => {
-    const playButton = document.getElementById('play-button-trigger');
-    const uiOverlay = document.getElementById('video-ui-overlay');
-    const videoSlot = document.getElementById('video-iframe-slot');
+  const wrapper = document.getElementById('video-wrapper');
+  const btn = document.getElementById('play-button-trigger');
 
-    if (playButton && videoSlot) {
-        playButton.addEventListener('click', function() {
-            videoSlot.innerHTML = `
-                <iframe
-                    width="100%"
-                    height="100%"
-                    src="https://www.youtube.com/embed/034nVaQUyME?autoplay=1&rel=0&modestbranding=1"
-                    title="YouTube video player"
-                    frameborder="0"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                    allowfullscreen>
-                </iframe>`;
-
-            if (uiOverlay) {
-                gsap.to(uiOverlay, {
-                    opacity: 0,
-                    duration: 0.3,
-                    onComplete: () => uiOverlay.remove()
-                });
-            }
-        });
-    }
+  if (btn && wrapper) {
+    btn.addEventListener('click', () => {
+      const videoId = btn.getAttribute('data-video-id');
+      wrapper.innerHTML = `
+        <iframe 
+          src="https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0" 
+          allow="autoplay; encrypted-media" 
+          allowfullscreen>
+        </iframe>`;
+    });
+  }
 };
 
 document.addEventListener("DOMContentLoaded", () => {

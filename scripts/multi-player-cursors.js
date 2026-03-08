@@ -42,7 +42,12 @@
   const MIN_INTERVAL_FACTOR = 0.6;
   const MAX_INTERVAL_FACTOR = 1.4;
   const SOCIAL_PROOF_INTERVAL = 3600;
+  const SOCIAL_PROOF_ACTIVITY_INTERVAL = 4200;
   const ACTIVITY_HIDE_DELAY = 1800;
+  const runtimeStateByContainer = new WeakMap();
+  const runtimeStates = new Set();
+  let hasVisibilityListener = false;
+  let visibilityChangeHandler = null;
 
   function clamp(value, min, max) {
     return Math.min(max, Math.max(min, value));
@@ -68,6 +73,16 @@
       x: Math.floor(Math.random() * (maxX - minX + 1)) + minX,
       y: Math.floor(Math.random() * (maxY - minY + 1)) + minY
     };
+  }
+
+  function isElementPartiallyVisible(element) {
+    if (!element || !document.documentElement) return false;
+
+    const rect = element.getBoundingClientRect();
+    const viewWidth = window.innerWidth || document.documentElement.clientWidth;
+    const viewHeight = window.innerHeight || document.documentElement.clientHeight;
+
+    return rect.bottom > 0 && rect.right > 0 && rect.top < viewHeight && rect.left < viewWidth;
   }
 
   function setCursorPosition(element, pos, duration) {
@@ -253,22 +268,123 @@
     }
   }
 
-  function scheduleCursorMovement(container, element, allCursors) {
+  function scheduleInitialCursorMovement(state, element) {
+    if (!state || !state.isActive) return;
+
+    const delay = getRandomInterval();
+    const timerId = window.setTimeout(() => {
+      state.cursorTimers.delete(element);
+      scheduleCursorMovement(state, element);
+    }, delay);
+
+    state.cursorTimers.set(element, timerId);
+  }
+
+  function scheduleCursorMovement(state, element) {
+    if (!state || !state.isActive) return;
+
+    const { container, cursors } = state;
     if (!document.body.contains(container) || !document.body.contains(element)) return;
 
-    animateCursor(container, element, allCursors);
+    animateCursor(container, element, cursors);
 
     const nextDelay = getRandomInterval();
-    window.setTimeout(() => {
-      scheduleCursorMovement(container, element, allCursors);
+    const timerId = window.setTimeout(() => {
+      state.cursorTimers.delete(element);
+      scheduleCursorMovement(state, element);
     }, nextDelay);
+    state.cursorTimers.set(element, timerId);
+  }
+
+  function startSocialProofActivityUpdates(state) {
+    if (!state || !state.socialProofState || state.socialProofActivityIntervalId) return;
+
+    state.socialProofActivityIntervalId = window.setInterval(() => {
+      const message = ACTIVITY_MESSAGES[Math.floor(Math.random() * ACTIVITY_MESSAGES.length)];
+      updateSocialProofActivity(state.socialProofState, message);
+    }, SOCIAL_PROOF_ACTIVITY_INTERVAL);
+  }
+
+  function clearSocialProofActivityUpdates(state) {
+    if (!state || !state.socialProofActivityIntervalId) return;
+    window.clearInterval(state.socialProofActivityIntervalId);
+    state.socialProofActivityIntervalId = null;
+  }
+
+  function maybeRemoveSharedVisibilityListener() {
+    if (!hasVisibilityListener) return;
+    if (runtimeStates.size > 0) return;
+    if (!visibilityChangeHandler) return;
+
+    document.removeEventListener('visibilitychange', visibilityChangeHandler);
+    visibilityChangeHandler = null;
+    hasVisibilityListener = false;
+  }
+
+  function ensureSharedVisibilityListener() {
+    if (hasVisibilityListener) return;
+
+    // This script has a page-level lifecycle, so a single shared listener is sufficient.
+    visibilityChangeHandler = () => {
+      runtimeStates.forEach((state) => {
+        if (state && typeof state.updateLoopState === 'function') {
+          state.updateLoopState();
+        }
+      });
+    };
+    document.addEventListener('visibilitychange', visibilityChangeHandler);
+    hasVisibilityListener = true;
+  }
+
+  function startAnimationLoops(state) {
+    if (!state || state.isActive) return;
+
+    state.isActive = true;
+    state.cursors.forEach((cursorElement) => {
+      scheduleInitialCursorMovement(state, cursorElement);
+    });
+
+    if (state.socialProofState) {
+      scheduleSocialProofUpdates(state.socialProofState);
+      startSocialProofActivityUpdates(state);
+    }
+  }
+
+  function stopAnimationLoops(state) {
+    if (!state || !state.isActive) return;
+
+    state.isActive = false;
+    state.cursorTimers.forEach((timerId) => {
+      window.clearTimeout(timerId);
+    });
+    state.cursorTimers.clear();
+
+    if (state.socialProofState) {
+      clearSocialProofUpdates(state.socialProofState);
+      clearSocialProofActivityUpdates(state);
+    }
   }
 
   function initCursors(container, cursorIndices = [0, 1]) {
     if (!container) return;
+    // Keep init idempotent in case this function is called more than once for the same container.
+    if (runtimeStateByContainer.has(container)) return;
 
     const cursors = [];
     const surface = container.closest('.canvas-preview') || container.parentElement || container;
+    const runtimeState = {
+      container,
+      cursors,
+      cursorTimers: new Map(),
+      socialProofState: null,
+      socialProofActivityIntervalId: null,
+      isActive: false,
+      intersectionObserver: null,
+      updateLoopState: null
+    };
+
+    runtimeStateByContainer.set(container, runtimeState);
+    runtimeStates.add(runtimeState);
 
     cursorIndices.forEach((index) => {
       if (index >= CURSORS.length) return;
@@ -279,25 +395,52 @@
       cursors.push(cursorElement);
 
       setCursorPosition(cursorElement, getRandomPosition(container));
-
-      const initialDelay = getRandomInterval();
-      window.setTimeout(() => {
-        scheduleCursorMovement(container, cursorElement, cursors);
-      }, initialDelay);
     });
 
     const socialProofState = initSocialProof(surface, container.getAttribute('data-social-proof'));
+    runtimeState.socialProofState = socialProofState;
     if (socialProofState) {
       updateSocialProofActivity(socialProofState, 'Live collaboration is active');
-      scheduleSocialProofUpdates(socialProofState);
     }
 
-    if (socialProofState) {
-      window.setInterval(() => {
-        const message = ACTIVITY_MESSAGES[Math.floor(Math.random() * ACTIVITY_MESSAGES.length)];
-        updateSocialProofActivity(socialProofState, message);
-      }, 4200);
+    const hasIntersectionObserver = 'IntersectionObserver' in window;
+    let containerInView = isElementPartiallyVisible(container);
+    runtimeState.updateLoopState = () => {
+      const containerIsMounted = document.body.contains(container);
+      if (!containerIsMounted) {
+        stopAnimationLoops(runtimeState);
+        if (runtimeState.intersectionObserver) {
+          runtimeState.intersectionObserver.disconnect();
+          runtimeState.intersectionObserver = null;
+        }
+        runtimeStates.delete(runtimeState);
+        runtimeStateByContainer.delete(container);
+        maybeRemoveSharedVisibilityListener();
+        return;
+      }
+
+      const shouldRun = containerInView && !document.hidden;
+      if (shouldRun) {
+        startAnimationLoops(runtimeState);
+      } else {
+        stopAnimationLoops(runtimeState);
+      }
+    };
+
+    if (hasIntersectionObserver) {
+      runtimeState.intersectionObserver = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.target !== container) return;
+          containerInView = entry.isIntersecting;
+          runtimeState.updateLoopState();
+        });
+      }, { threshold: 0.1 });
+
+      runtimeState.intersectionObserver.observe(container);
     }
+
+    ensureSharedVisibilityListener();
+    runtimeState.updateLoopState();
   }
 
   function init() {

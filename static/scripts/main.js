@@ -1,6 +1,11 @@
 // Register Plugin
 gsap.registerPlugin(ScrollTrigger);
 
+// Responsive animation config
+let isMobile = window.matchMedia("(max-width: 768px)").matches;
+
+const SCRUB = isMobile ? false : 1;
+
 // 1. Header Timeline
 let tl = gsap.timeline({
     defaults: { ease: "power4.out" }
@@ -73,7 +78,8 @@ const scrubEach = (elements, props, triggerEl, startBase, endBase, offsetPer) =>
                 trigger: triggerEl,
                 start: 'top ' + (startBase - i * offsetPer) + '%',
                 end: 'top ' + (endBase - i * offsetPer) + '%',
-                scrub: 1,
+                toggleActions: isMobile ? "play none none none" : undefined,
+                scrub: SCRUB,
             }
         }));
     });
@@ -192,7 +198,7 @@ const initScrollPieces = () => {
                 trigger: triggerEl,
                 start: 'top 85%',
                 end: 'top 50%',
-                scrub: 1,
+                scrub: SCRUB,
             }
         });
 
@@ -220,7 +226,8 @@ const initScrollPieces = () => {
                 start: 'top 80%',
                 endTrigger: '.browser',
                 end: 'top 40%',
-                scrub: 2,
+                toggleActions: isMobile ? "play none none none" : undefined,
+                scrub: isMobile ? false : 2,
             }
         });
         journeyTriggers.push(journey.scrollTrigger);
@@ -370,15 +377,15 @@ const initScrollAnimations = () => {
 
     gsap.to('.scroll-orb--1', {
         y: '-60vh', x: '15vw', scale: 1.4, opacity: 0.5,
-        scrollTrigger: { trigger: 'body', start: 'top top', end: 'bottom bottom', scrub: 2 }
+        scrollTrigger: { trigger: 'body', start: 'top top', end: 'bottom bottom', scrub: isMobile ? false : 2 }
     });
     gsap.to('.scroll-orb--2', {
         y: '-40vh', x: '-20vw', scale: 0.8,
-        scrollTrigger: { trigger: 'body', start: 'top top', end: 'bottom bottom', scrub: 3 }
+        scrollTrigger: { trigger: 'body', start: 'top top', end: 'bottom bottom', scrub: isMobile ? false : 3 }
     });
     gsap.to('.scroll-orb--3', {
         y: '-80vh', x: '10vw', scale: 1.2, opacity: 0.7,
-        scrollTrigger: { trigger: 'body', start: 'top top', end: 'bottom bottom', scrub: 2.5 }
+        scrollTrigger: { trigger: 'body', start: 'top top', end: 'bottom bottom', scrub: isMobile ? false : 2.5 }
     });
 
     // ── Scroll Logo Pieces Journey ──
@@ -401,7 +408,7 @@ const initScrollAnimations = () => {
                 trigger: wrapper,
                 start: 'bottom 30%',  // recession begins when bottom of hero reaches 60% viewport
                 end: 'bottom top',
-                scrub: 1,
+                scrub: SCRUB,
             }
         });
     }
@@ -411,7 +418,7 @@ const initScrollAnimations = () => {
     if (customersSection) {
         gsap.from('.customers-title', {
             y: 30, opacity: 0,
-            scrollTrigger: { trigger: customersSection, start: 'top 90%', end: 'top 55%', scrub: 1 }
+            scrollTrigger: { trigger: customersSection, start: 'top 90%', end: 'top 55%', scrub: SCRUB }
         });
     }
 
@@ -420,19 +427,19 @@ const initScrollAnimations = () => {
     if (heroSection) {
         gsap.from('.hero-badge', {
             y: 40, opacity: 0,
-            scrollTrigger: { trigger: heroSection, start: 'top 90%', end: 'top 50%', scrub: 1 }
+            scrollTrigger: { trigger: heroSection, start: 'top 90%', end: 'top 50%', scrub: SCRUB }
         });
         gsap.from('.hero-title', {
             y: 80, opacity: 0,
-            scrollTrigger: { trigger: heroSection, start: 'top 88%', end: 'top 40%', scrub: 1 }
+            scrollTrigger: { trigger: heroSection, start: 'top 88%', end: 'top 40%', scrub: SCRUB }
         });
         gsap.from('.hero-subtitle', {
             y: 100, opacity: 0,
-            scrollTrigger: { trigger: heroSection, start: 'top 85%', end: 'top 35%', scrub: 1 }
+            scrollTrigger: { trigger: heroSection, start: 'top 85%', end: 'top 35%', scrub: SCRUB }
         });
         gsap.from('.hero-actions', {
             y: 60, opacity: 0,
-            scrollTrigger: { trigger: heroSection, start: 'top 80%', end: 'top 35%', scrub: 1 }
+            scrollTrigger: { trigger: heroSection, start: 'top 80%', end: 'top 35%', scrub: SCRUB }
         });
 
         const statItems = heroSection.querySelectorAll('.stat-item');
@@ -450,7 +457,7 @@ const initScrollAnimations = () => {
         // Recession — only after scrolling well past
         gsap.to(heroSection, {
             opacity: 0.4, y: -30,
-            scrollTrigger: { trigger: heroSection, start: 'bottom 10%', end: 'bottom top', scrub: 1 }
+            scrollTrigger: { trigger: heroSection, start: 'bottom 10%', end: 'bottom top', scrub: SCRUB }
         });
     }
 
@@ -459,14 +466,14 @@ const initScrollAnimations = () => {
     if (demoSection) {
         gsap.from('.demo-header', {
             y: 50, opacity: 0,
-            scrollTrigger: { trigger: demoSection, start: 'top 88%', end: 'top 50%', scrub: 1 }
+            scrollTrigger: { trigger: demoSection, start: 'top 88%', end: 'top 50%', scrub: SCRUB }
         });
 
         const demoContainer = document.querySelector('.demo-container');
         if (demoContainer) {
             gsap.from(demoContainer, {
                 scale: 0.88, opacity: 0, y: 60,
-                scrollTrigger: { trigger: demoContainer, start: 'top 90%', end: 'top 35%', scrub: 1 }
+                scrollTrigger: { trigger: demoContainer, start: 'top 90%', end: 'top 35%', scrub: SCRUB }
             });
         }
 
@@ -477,7 +484,7 @@ const initScrollAnimations = () => {
 
         gsap.to(demoSection, {
             opacity: 0.5, y: -20,
-            scrollTrigger: { trigger: demoSection, start: 'bottom 40%', end: 'bottom top', scrub: 1 }
+            scrollTrigger: { trigger: demoSection, start: 'bottom 40%', end: 'bottom top', scrub: SCRUB }
         });
     }
 
@@ -500,7 +507,7 @@ const initScrollAnimations = () => {
         if (ctaBox) {
             gsap.from(ctaBox, {
                 y: 40, opacity: 0, scale: 0.96,
-                scrollTrigger: { trigger: ctaBox, start: 'top 90%', end: 'top 55%', scrub: 1 }
+                scrollTrigger: { trigger: ctaBox, start: 'top 90%', end: 'top 55%', scrub: SCRUB }
             });
         }
     }
@@ -527,7 +534,7 @@ const initScrollAnimations = () => {
     if (browserShell) {
         gsap.from(browserShell, {
             scale: 0.82, opacity: 0, y: 80,
-            scrollTrigger: { trigger: '.browser', start: 'top 90%', end: 'top 30%', scrub: 1 }
+            scrollTrigger: { trigger: '.browser', start: 'top 90%', end: 'top 30%', scrub: SCRUB }
         });
     }
 
@@ -535,7 +542,7 @@ const initScrollAnimations = () => {
     if (browserStand) {
         gsap.from(browserStand, {
             scaleX: 0.5, opacity: 0,
-            scrollTrigger: { trigger: browserStand, start: 'top 95%', end: 'top 65%', scrub: 1 }
+            scrollTrigger: { trigger: browserStand, start: 'top 95%', end: 'top 65%', scrub: SCRUB }
         });
     }
 
@@ -553,7 +560,7 @@ const initScrollAnimations = () => {
 
         gsap.from(divider, {
             opacity: 0, scaleX: 0.3,
-            scrollTrigger: { trigger: divider, start: 'top 90%', end: 'top 70%', scrub: 1 }
+            scrollTrigger: { trigger: divider, start: 'top 90%', end: 'top 70%', scrub: SCRUB }
         });
     });
 };

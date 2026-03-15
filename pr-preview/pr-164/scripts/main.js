@@ -81,6 +81,8 @@ const scrubEach = (elements, props, triggerEl, startBase, endBase, offsetPer) =>
 
 // ── 5. Scroll Logo Pieces — 6 independent pieces that reunite in the browser section ──
 const initScrollPieces = () => {
+    document.querySelectorAll('.scroll-piece-anchor').forEach((node) => node.remove());
+
     // The 6 polygons of the Kanvas isometric logo
     // Each piece: SVG polygon data, fill color, depth class, intro section
     const pieces = [
@@ -129,6 +131,9 @@ const initScrollPieces = () => {
         const anchor = document.createElement('div');
         anchor.className = 'scroll-piece-anchor';
         anchor.setAttribute('data-piece', i);
+        anchor.style.opacity = '0';
+        anchor.style.visibility = 'hidden';
+        anchor.style.zIndex = '-1';
         anchor.innerHTML =
             '<div class="scroll-piece-stage">' +
                 '<div class="scroll-piece-body scroll-piece-body--depth-' + p.depth + '">' +
@@ -160,9 +165,8 @@ const initScrollPieces = () => {
         gsap.set(reunitedFloat, { opacity: 0 });
     }
 
-    // ── Per-piece scroll journeys ──
-    // Store journey triggers so we can kill the scrubs when convergence fires
-    const journeyTriggers = [];
+    const pieceTriggers = [];
+    const journeyTimelines = [];
 
     const browserSection = document.querySelector('.browser');
     const sections = [
@@ -181,36 +185,46 @@ const initScrollPieces = () => {
         const triggerEl = document.querySelector(section);
         if (!triggerEl) return;
 
-        // Start at position, scale 1 (50px stage)
         gsap.set(anchor, { x: startX, y: startY, scale: 1 });
         gsap.set(body, { rotateY: rotation, rotateX: Math.random() * 10 - 5 });
 
-        // Fade-in as intro section enters viewport
-        gsap.to(anchor, {
+        const fadeTween = gsap.to(anchor, {
             opacity: .8,
+            immediateRender: false,
             scrollTrigger: {
                 trigger: triggerEl,
                 start: 'top 85%',
                 end: 'top 50%',
                 scrub: 1,
+                onEnter: () => {
+                    anchor.style.visibility = 'visible';
+                    anchor.style.display = 'block';
+                },
+                onEnterBack: () => {
+                    anchor.style.visibility = 'visible';
+                    anchor.style.display = 'block';
+                },
+                onLeaveBack: () => {
+                    anchor.style.visibility = 'hidden';
+                    anchor.style.display = 'none';
+                },
             }
         });
+        if (fadeTween.scrollTrigger) {
+            pieceTriggers.push(fadeTween.scrollTrigger);
+        }
 
-        // Journey: drift toward browser section center,
-        // growing from scale 1 (50px) to scale 5.6 (280px)
         const sectionIndex = sections.indexOf(section);
         const remainingSections = sections.slice(sectionIndex + 1);
         const steps = remainingSections.length + 1;
 
-        // Each piece drifts to a unique orbit position around the browser area
-        // so they remain visibly spread out — ready to swoop in from distinct directions.
         const orbitTargets = [
-            { x: 35, y: 30 }, // piece 0: upper-left
-            { x: 65, y: 30 }, // piece 1: upper-right
-            { x: 70, y: 52 }, // piece 2: right
-            { x: 60, y: 70 }, // piece 3: lower-right
-            { x: 30, y: 52 }, // piece 4: left
-            { x: 48, y: 22 }, // piece 5: top-center
+            { x: 35, y: 30 },
+            { x: 65, y: 30 },
+            { x: 70, y: 52 },
+            { x: 60, y: 70 },
+            { x: 30, y: 52 },
+            { x: 48, y: 22 },
         ];
         const orbit = orbitTargets[pieceIdx];
 
@@ -220,10 +234,12 @@ const initScrollPieces = () => {
                 start: 'top 80%',
                 endTrigger: '.browser',
                 end: 'top 40%',
-                scrub: 2,
+                scrub: 1,
+                fastScrollEnd: true,
             }
         });
-        journeyTriggers.push(journey.scrollTrigger);
+        journeyTimelines.push(journey);
+        if (journey.scrollTrigger) pieceTriggers.push(journey.scrollTrigger);
 
         for (let s = 0; s < steps; s++) {
             const progress = (s + 1) / steps;
@@ -247,7 +263,6 @@ const initScrollPieces = () => {
         }
     });
 
-    // ── Step 1: Reveal — pieces rise from background as browser section approaches ──
     if (browserSection) {
         ScrollTrigger.create({
             trigger: browserSection,
@@ -255,6 +270,8 @@ const initScrollPieces = () => {
             once: true,
             onEnter: () => {
                 anchors.forEach(a => {
+                    a.style.visibility = 'visible';
+                    a.style.display = 'block';
                     a.style.zIndex = '10';
                     const svg = a.querySelector('svg');
                     if (svg) gsap.to(svg, { opacity: 0.85, duration: 0.6, overwrite: true });
@@ -263,72 +280,113 @@ const initScrollPieces = () => {
         });
     }
 
-    // ── Step 2: Convergence — pieces swoop from orbit into the browser screen ──
     if (reunitedFloat && browserSection) {
-        ScrollTrigger.create({
-            trigger: browserSection,
-            start: 'top 30%',
-            once: true,
-            onEnter: () => {
-                journeyTriggers.forEach(t => {
-                    if (t) {
-                        if (t.animation) t.animation.progress(1);
-                        t.kill();
-                    }
+        let hasConverged = false;
+        const startConvergence = (instant = false) => {
+            if (hasConverged) return;
+            hasConverged = true;
+
+            if (instant) {
+                gsap.set(reunitedFloat, { opacity: 1 });
+                anchors.forEach(a => {
+                    gsap.set(a, { autoAlpha: 0 });
+                    a.style.zIndex = '-1';
+                    a.style.visibility = 'hidden';
+                    a.style.display = 'none';
+                });
+                return;
+            }
+
+            journeyTimelines.forEach(tl => {
+                tl.progress(1);
+                if (tl.scrollTrigger) tl.scrollTrigger.kill();
+            });
+            pieceTriggers.forEach(t => { if (t) t.kill(); });
+            anchors.forEach(a => gsap.killTweensOf(a));
+            bodies.forEach(b => gsap.killTweensOf(b));
+
+            requestAnimationFrame(() => {
+                anchors.forEach(a => {
+                    a.style.display = 'block';
+                    a.style.visibility = 'visible';
+                    a.style.zIndex = '100';
+                    gsap.set(a, { autoAlpha: 1 });
                 });
 
-                requestAnimationFrame(() => {
+                const logoEl = document.querySelector('.reunited-logo');
+                if (!logoEl) return;
+
+                const logoRect = logoEl.getBoundingClientRect();
+                const logoCenterX = logoRect.left + logoRect.width / 2;
+                const finalLogoYOffset = -24;
+                const logoCenterY = logoRect.top + logoRect.height / 2 + finalLogoYOffset;
+
+                const convergeTl = gsap.timeline({ defaults: { overwrite: true } });
+
+                introSchedule.forEach(({ pieceIdx }, order) => {
+                    const anchor = anchors[pieceIdx];
+                    const body = bodies[pieceIdx];
+                    const svg = anchor.querySelector('svg');
+                    const glow = anchor.querySelector('.scroll-piece-glow');
+                    const pieceDelay = order * 0.04;
+
+                    if (glow) gsap.to(glow, { opacity: 0, duration: 0.15, overwrite: true });
+                    if (svg) gsap.set(svg, { opacity: 1 });
+
+                    convergeTl.to(anchor, {
+                        x: logoCenterX,
+                        y: logoCenterY,
+                        scale: 5.6,
+                        opacity: 1,
+                        duration: 0.5,
+                        ease: 'power3.inOut',
+                    }, pieceDelay);
+
+                    convergeTl.to(body, {
+                        rotateY: 0, rotateX: 0,
+                        duration: 0.5,
+                        ease: 'power2.inOut',
+                    }, pieceDelay);
+                });
+
+                convergeTl
+                .to(reunitedFloat, { opacity: 1, duration: 0.2, ease: 'sine.out' })
+                .to(anchors, { autoAlpha: 0, duration: 0.2, ease: 'sine.out' }, '<')
+                .add(() => {
                     anchors.forEach(a => {
-                        gsap.killTweensOf(a);
-                        a.style.zIndex = '100';
+                        a.style.zIndex = '-1';
+                        a.style.visibility = 'hidden';
+                        a.style.display = 'none';
+                        a.style.opacity = '0';
                     });
-                    bodies.forEach(b => gsap.killTweensOf(b));
+                });
+            });
+        };
 
-                    const logoEl = document.querySelector('.reunited-logo');
-                    if (!logoEl) return;
+        ScrollTrigger.create({
+            trigger: browserSection,
+            start: 'top 40%',
+            once: true,
+            onEnter: startConvergence
+        });
 
-                    const logoRect = logoEl.getBoundingClientRect();
-                    const logoCenterX = logoRect.left + logoRect.width / 2;
-                    const finalLogoYOffset = -24;
-                    const logoCenterY = logoRect.top + logoRect.height / 2 + finalLogoYOffset;
-
-                    const convergeTl = gsap.timeline({ defaults: { overwrite: true } });
-
-                    introSchedule.forEach(({ pieceIdx }, order) => {
-                        const anchor = anchors[pieceIdx];
-                        const body = bodies[pieceIdx];
-                        const svg = anchor.querySelector('svg');
-                        const glow = anchor.querySelector('.scroll-piece-glow');
-                        const pieceDelay = order * 0.04;
-
-                        if (glow) gsap.to(glow, { opacity: 0, duration: 0.15, overwrite: true });
-                        if (svg) gsap.set(svg, { opacity: 1 });
-
-                        convergeTl.to(anchor, {
-                            x: logoCenterX,
-                            y: logoCenterY,
-                            scale: 5.6,
-                            opacity: 1,
-                            duration: 0.5,
-                            ease: 'power3.inOut',
-                        }, pieceDelay);
-
-                        convergeTl.to(body, {
-                            rotateY: 0, rotateX: 0,
-                            duration: 0.5,
-                            ease: 'power2.inOut',
-                        }, pieceDelay);
-                    });
-
-                    convergeTl
-                    .to(reunitedFloat, { opacity: 1, duration: 0.15, ease: 'none' })
-                    .to(anchors, { opacity: 0, duration: 0.15, ease: 'none' }, '<')
-                    .add(() => {
-                        anchors.forEach(a => { a.style.zIndex = '-1'; });
-                    });
+        ScrollTrigger.create({
+            trigger: browserSection,
+            start: 'bottom bottom',
+            onEnter: () => {
+                if (!hasConverged) startConvergence(true);
+                anchors.forEach(a => {
+                    gsap.set(a, { autoAlpha: 0 });
+                    a.style.zIndex = '-1';
+                    a.style.visibility = 'hidden';
+                    a.style.display = 'none';
                 });
             }
         });
+
+        if (browserSection.getBoundingClientRect().top <= window.innerHeight * 0.4) {
+            startConvergence(true);
+        }
     }
 };
 

@@ -100,7 +100,6 @@ $gitops-blue: #3b82f6;
 
 .gitops-node-wrap {
     position: relative;
-    /* Added for tooltip positioning */
     display: flex;
     align-items: center;
     flex: 0 0 auto;
@@ -184,7 +183,6 @@ $gitops-blue: #3b82f6;
     font-size: 1rem;
 }
 
-// Node color variants (matching React HSL)
 .gitops-node--commit {
     .gitops-node-glow {
         background: rgba($gitops-orange, 0.2);
@@ -281,7 +279,6 @@ $gitops-blue: #3b82f6;
     transition: color 0.3s ease;
 }
 
-// Tooltip (shown on hover/focus)
 .gitops-tooltip {
     position: absolute;
     bottom: -3.5rem;
@@ -310,7 +307,6 @@ $gitops-blue: #3b82f6;
     transform: translateX(-50%) translateY(-4px);
 }
 
-// Connector line between nodes
 .gitops-connector {
     width: 60px;
     flex: 1;
@@ -402,7 +398,6 @@ $gitops-blue: #3b82f6;
     animation-delay: 4.5s;
 }
 
-// Status row
 .gitops-status {
     display: flex;
     align-items: center;
@@ -455,7 +450,6 @@ $gitops-blue: #3b82f6;
     }
 }
 
-// Footer features
 .gitops-footer {
     display: grid;
     grid-template-columns: repeat(3, 1fr);

@@ -124,7 +124,6 @@
             }
         }
 
-        // Active Event Display — fixed height prevents width/layout jitter
         .active-event-display {
             display: flex;
             align-items: flex-start;
@@ -270,8 +269,6 @@
             }
         }
 
-        // Canvas area — equivalent to collaboration's .card-canvas
-        // Flex:1 means it absorbs all remaining height automatically
         .timeline-track {
             position: relative;
             padding: 28px 24px 16px;
@@ -409,7 +406,6 @@
                 }
             }
 
-            // Time labels below the track
             .time-labels {
                 display: flex;
                 justify-content: space-between;
@@ -425,7 +421,6 @@
             }
         }
 
-        // Controls Bar — matching collaboration .card-footer bg
         .card-controls {
             display: flex;
             align-items: center;
@@ -514,7 +509,7 @@
         }
     }
 
-    // Ambient glow
+
     &::before {
         content: '';
         position: absolute;

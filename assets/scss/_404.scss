@@ -1,0 +1,61 @@
+.error-page {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: calc(100vh - 90px);
+  padding: 40px 20px;
+  text-align: center;
+
+  .error-page-content {
+    max-width: 520px;
+  }
+
+  .error-code {
+    font-size: 8rem;
+    font-weight: 800;
+    letter-spacing: -0.04em;
+    line-height: 1;
+    margin: 0 0 1rem;
+    background: linear-gradient(
+      135deg,
+      $primary 0%,
+      $secondary 100%
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .error-title {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: $white;
+    margin: 0 0 1rem;
+    letter-spacing: -0.02em;
+  }
+
+  .error-message {
+    font-size: 1rem;
+    color: $casper;
+    line-height: 1.6;
+    margin: 0 0 2.5rem;
+  }
+
+  .error-cta {
+    display: inline-block;
+  }
+
+  @media (max-width: 600px) {
+    .error-code {
+      font-size: 5rem;
+    }
+
+    .error-title {
+      font-size: 1.35rem;
+    }
+
+    .error-message {
+      font-size: 0.9rem;
+    }
+  }
+}

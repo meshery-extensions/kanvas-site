@@ -297,6 +297,8 @@ const initScrollPieces = () => {
                 return;
             }
 
+            gsap.set(reunitedFloat, { opacity: 0 });
+
             journeyTimelines.forEach(tl => {
                 tl.progress(1);
                 if (tl.scrollTrigger) tl.scrollTrigger.kill();
@@ -366,13 +368,16 @@ const initScrollPieces = () => {
         ScrollTrigger.create({
             trigger: browserSection,
             start: 'top 40%',
-            once: true,
-            onEnter: startConvergence
+            onEnter: startConvergence,
+            onLeaveBack: () => {
+                hasConverged = false;
+            }
         });
 
         ScrollTrigger.create({
             trigger: browserSection,
             start: 'bottom bottom',
+            once: true,
             onEnter: () => {
                 if (!hasConverged) startConvergence(true);
                 anchors.forEach(a => {

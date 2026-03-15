@@ -144,6 +144,11 @@ const initScrollPieces = () => {
                 '<div class="scroll-piece-glow"></div>' +
             '</div>';
         document.body.appendChild(anchor);
+        const stage = anchor.querySelector('.scroll-piece-stage');
+        if (stage) {
+            stage.style.animationDuration = (2.4 + Math.random() * 1.4) + 's';
+            stage.style.animationDelay   = (-Math.random() * 3) + 's';
+        }
         anchors.push(anchor);
         bodies.push(anchor.querySelector('.scroll-piece-body'));
     });
@@ -320,8 +325,7 @@ const initScrollPieces = () => {
 
                 const logoRect = logoEl.getBoundingClientRect();
                 const logoCenterX = logoRect.left + logoRect.width / 2;
-                const finalLogoYOffset = -24;
-                const logoCenterY = logoRect.top + logoRect.height / 2 + finalLogoYOffset;
+                const logoCenterY = logoRect.top + logoRect.height / 2 - 24;
 
                 const convergeTl = gsap.timeline({ defaults: { overwrite: true } });
 
@@ -330,38 +334,44 @@ const initScrollPieces = () => {
                     const body = bodies[pieceIdx];
                     const svg = anchor.querySelector('svg');
                     const glow = anchor.querySelector('.scroll-piece-glow');
-                    const pieceDelay = order * 0.04;
+                    const t = order * 0.05;
 
-                    if (glow) gsap.to(glow, { opacity: 0, duration: 0.15, overwrite: true });
+                    if (glow) convergeTl.to(glow, { opacity: 0, duration: 0.12, ease: 'none' }, 0);
                     if (svg) gsap.set(svg, { opacity: 1 });
+
+                    gsap.set(body, { rotateZ: (order % 2 === 0 ? 1 : -1) * (10 + order * 4) });
 
                     convergeTl.to(anchor, {
                         x: logoCenterX,
                         y: logoCenterY,
                         scale: 5.6,
                         opacity: 1,
-                        duration: 0.5,
-                        ease: 'power3.inOut',
-                    }, pieceDelay);
+                        duration: 0.46,
+                        ease: 'power3.in',
+                    }, t);
 
                     convergeTl.to(body, {
-                        rotateY: 0, rotateX: 0,
-                        duration: 0.5,
+                        rotateX: 0, rotateY: 0, rotateZ: 0,
+                        duration: 0.46,
                         ease: 'power2.inOut',
-                    }, pieceDelay);
+                    }, t);
                 });
 
+                const allLand = 5 * 0.05 + 0.46;
+
                 convergeTl
-                .to(reunitedFloat, { opacity: 1, duration: 0.2, ease: 'sine.out' })
-                .to(anchors, { autoAlpha: 0, duration: 0.2, ease: 'sine.out' }, '<')
-                .add(() => {
-                    anchors.forEach(a => {
-                        a.style.zIndex = '-1';
-                        a.style.visibility = 'hidden';
-                        a.style.display = 'none';
-                        a.style.opacity = '0';
+                    .to(anchors, { scale: 5.76, duration: 0.07, ease: 'power2.out' }, allLand)
+                    .to(anchors, { scale: 5.6, duration: 0.14, ease: 'expo.out' })
+                    .to(reunitedFloat, { opacity: 1, duration: 0.22, ease: 'power2.out' }, '-=0.1')
+                    .to(anchors, { autoAlpha: 0, duration: 0.16, ease: 'power2.in' }, '<')
+                    .add(() => {
+                        anchors.forEach(a => {
+                            a.style.zIndex = '-1';
+                            a.style.visibility = 'hidden';
+                            a.style.display = 'none';
+                            a.style.opacity = '0';
+                        });
                     });
-                });
             });
         };
 

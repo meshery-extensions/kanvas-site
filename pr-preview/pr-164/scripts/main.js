@@ -375,9 +375,11 @@ const initScrollPieces = () => {
             });
         };
 
+        const browserMockup = browserSection.querySelector('.browser-mockup') || browserSection;
+
         ScrollTrigger.create({
-            trigger: browserSection,
-            start: 'top 40%',
+            trigger: browserMockup,
+            start: 'top 70%',
             onEnter: startConvergence,
             onLeaveBack: () => {
                 hasConverged = false;
@@ -399,7 +401,7 @@ const initScrollPieces = () => {
             }
         });
 
-        if (browserSection.getBoundingClientRect().top <= window.innerHeight * 0.4) {
+        if (browserMockup.getBoundingClientRect().top <= window.innerHeight * 0.7) {
             startConvergence(true);
         }
     }

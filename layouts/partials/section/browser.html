@@ -14,11 +14,8 @@
 
   <div class="browser-body">
     <div class="browser-scene" id="browserScene">
-      <!-- Interactive Kanvas Designer GIF -->
-      <img src="/images/kanvas/start-from-scratch.gif" 
-           alt="Kanvas Designer - Getting Started" 
-           class="interactive-image"
-           loading="lazy">
+      <!-- Interactive Kanvas Designer 3D Animation -->
+      {{< cube-scene >}}
     </div>
     
     <!-- Button inside browser body -->
@@ -33,32 +30,3 @@
 </div>
 
 <div class="browser-stand"></div>
-
-<script>
-  (function() {
-    document.addEventListener('DOMContentLoaded', function() {
-      var dashboardImage = document.querySelector('.interactive-image');
-      
-      if (dashboardImage) {
-        // Hover enter: Scale and rotate effect
-        dashboardImage.addEventListener('mouseenter', function() {
-          this.style.transform = 'scale(1.05) rotateY(2deg)';
-          this.style.filter = 'brightness(1.15) contrast(1.1)';
-          this.style.cursor = 'pointer';
-        });
-
-        // Hover leave: Reset to normal
-        dashboardImage.addEventListener('mouseleave', function() {
-          this.style.transform = 'scale(1) rotateY(0deg)';
-          this.style.filter = 'brightness(1) contrast(1)';
-        });
-
-        // Click: Trigger pulse animation
-        dashboardImage.addEventListener('click', function() {
-          this.classList.add('pulse-animation');
-          setTimeout(() => this.classList.remove('pulse-animation'), 600);
-        });
-      }
-    });
-  })();
-</script>

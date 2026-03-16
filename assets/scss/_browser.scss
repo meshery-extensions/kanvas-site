@@ -7,11 +7,19 @@
   --browser-glow: rgba(0, 179, 159, 0.75);
 }
 
+.browser-mockup {
+  position: relative;
+  max-width: 980px;
+  width: 100%;
+  margin: 48px auto 0;
+  container-type: inline-size;
+  display: flex;
+  flex-direction: column;
+}
 
 .browser-shell {
   position: relative;
-  max-width: 980px;
-  margin: 48px auto 0;
+  width: 100%;
   border-radius: 22px;
   overflow: hidden;
   background: #111214;
@@ -19,6 +27,9 @@
   box-shadow:
     0 40px 90px rgba(0, 0, 0, 0.6),
     inset 0 1px 0 rgba(255, 255, 255, 0.04);
+  aspect-ratio: 16 / 10;
+  display: flex;
+  flex-direction: column;
 }
 
 
@@ -36,7 +47,7 @@
   display: flex;
   align-items: center;
   gap: 18px;
-  padding: 18px 22px;
+  padding: 1.8cqi 2.2cqi; /* scale padding proportionally */
   background: #1a1b1d;
   border-bottom: 1px solid rgba(100, 100, 100, 0.06);
 }
@@ -44,13 +55,13 @@
 
 .browser-dots {
   display: flex;
-  gap: 8px;
+  gap: 0.8cqi;
 }
 
 
 .browser-dots span {
-  width: 10px;
-  height: 10px;
+  width: unquote("min(10px, 1.2cqi)");
+  height: unquote("min(10px, 1.2cqi)");
   border-radius: 50%;
 }
 
@@ -80,22 +91,29 @@
   color: #cbd2d9;
   background: rgba(200, 200, 200, 0.08);
   margin: 0 auto;
-  font-size: .9rem;
+  font-size: clamp(0.6rem, 1.2cqi, 0.9rem); /* Scale font size slightly */
 }
 
 
 .browser-body {
+  flex: 1;
   position: relative;
-  min-height: auto; 
-  padding: 0; 
-  display: flex; 
-  flex-direction: column; 
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   align-items: center;
-  gap: 0;
   background: linear-gradient(180deg, #000202 0%, #001211 65%, #00211e 100%);
   overflow: hidden;
 }
 
+.browser-body-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 34px;
+  transform-origin: center center;
+}
 
 .browser-body::before {
   content: "";
@@ -439,6 +457,7 @@
   padding: 1px;
   background: linear-gradient(120deg, rgba(0, 211, 169, 0.6), rgba(0, 102, 97, 0.15));
   -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
   -webkit-mask-composite: xor;
   mask-composite: exclude;
   pointer-events: none;
@@ -502,21 +521,21 @@
    ============================================ */
 
 .browser-stand {
-  width: 220px;
-  height: 128px;
+  width: 22.45cqi;
+  height: 13.06cqi;
   margin: 0 auto;
   border-radius: 0 0 0 0;
   background: linear-gradient(180deg, #1d251d, #0b120b);
-  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.6);
+  box-shadow: 0 3cqi 6cqi rgba(0, 0, 0, 0.6);
   position: relative;
 }
 
 .browser-stand::before {
   content: "";
   position: absolute;
-  width: 220px;
-  height: 24px;
-  top: 108px;
+  width: 100%;
+  height: 18.75%;
+  top: 84.375%;
   left: 50%;
   transform: translateX(-50%);
   border-radius: 4px;

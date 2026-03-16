@@ -5,22 +5,23 @@
 <div class="browser-shell">
   <div class="browser-header">
     <div class="browser-dots">
-      <div class="browser-dot" style="background-color: #FF5F56;"></div>
-      <div class="browser-dot" style="background-color: #FFBD2E;"></div>
-      <div class="browser-dot" style="background-color: #27C93F;"></div>
+      <div class="browser-dot" style="background-color:#FF5F56;"></div>
+      <div class="browser-dot" style="background-color:#FFBD2E;"></div>
+      <div class="browser-dot" style="background-color:#27C93F;"></div>
     </div>
     <div class="browser-pill">https://kanvas.new</div>
   </div>
 
   <div class="browser-body">
     <div class="browser-scene" id="browserScene">
-      <!-- Interactive Kanvas Designer 3D Animation -->
-      {{ cube-scene }}
+      <cube-scene></cube-scene>
     </div>
-    
-    <!-- Button inside browser body -->
+
     <div class="browser-cta-container">
-      <a class="browser-cta shine" href="https://layer5.io/kanvas">
+      <a class="browser-cta shine"
+         href="https://layer5.io/kanvas"
+         target="_blank"
+         rel="noopener">
         <span class="cta-hexagon"></span>
         <span>See Kanvas in action</span>
         <span class="cta-arrow" aria-hidden="true"></span>

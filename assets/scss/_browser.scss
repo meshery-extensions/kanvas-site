@@ -86,12 +86,11 @@
 
 .browser-body {
   position: relative;
-  min-height: auto; 
-  padding: 0; 
-  display: flex; 
-  flex-direction: column; 
-  align-items: center;
-  gap: 0;
+  min-height: 440px;
+  padding: 64px 32px;
+  display: grid;
+  place-items: center;
+  gap: 34px;
   background: linear-gradient(180deg, #000202 0%, #001211 65%, #00211e 100%);
   overflow: hidden;
 }
@@ -105,7 +104,6 @@
   opacity: 0.9;
   pointer-events: none;
 }
-
 
 .browser-scene {
   position: relative;
@@ -401,7 +399,6 @@
   align-items: center;
   gap: 16px;
   padding: 14px 24px;
-  margin: 0;
   border-radius: 999px;
   background: rgba(14, 18, 28, 0.92);
   border: 1px solid rgba(0, 211, 169, 0.5);
@@ -722,3 +719,4 @@
     transform: translateY(-20px);
   }
 }
+

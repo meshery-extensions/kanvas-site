@@ -558,9 +558,27 @@ const initScrollAnimations = () => {
     });
 };
 
+const initVideoHandler = () => {
+  const wrapper = document.getElementById('video-wrapper');
+  const btn = document.getElementById('play-button-trigger');
+
+  if (btn && wrapper) {
+    btn.addEventListener('click', () => {
+      const videoId = btn.getAttribute('data-video-id');
+      wrapper.innerHTML = `
+        <iframe 
+          src="https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0" 
+          allow="autoplay; encrypted-media" 
+          allowfullscreen>
+        </iframe>`;
+    });
+  }
+};
+
 document.addEventListener("DOMContentLoaded", () => {
     initMarquee();
     initScrollAnimations();
+    initVideoHandler();
 
     const header = document.querySelector(".site-header");
     if (header) {

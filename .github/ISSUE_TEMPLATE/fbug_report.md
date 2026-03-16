@@ -2,7 +2,7 @@
 name: 🐛 General Bug Report
 about: Report an issue to help improve the project.
 title: ''
-labels: 'kind/bug'
+labels: 'kind/bug, help wanted, language/javascript, language/css'
 assignees: ''
 ---
 ### Current Behavior

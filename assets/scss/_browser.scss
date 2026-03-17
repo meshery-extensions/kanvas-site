@@ -98,6 +98,12 @@
   overflow: hidden;
 }
 
+@property --browser-scale {
+  syntax: "<number>";
+  inherits: false;
+  initial-value: 1;
+}
+
 .browser-body-inner {
   display: flex;
   flex-direction: column;
@@ -105,6 +111,16 @@
   justify-content: center;
   gap: 34px;
   transform-origin: center center;
+  scale: var(--browser-scale);
+  transition: scale 0.08s linear;
+
+  // CSS-only scale: equivalent of JS clamp(0.2, containerWidth / 980, 1)
+  // SCSS loop generates a breakpoint every 50px; transition bridges the steps.
+  @for $i from 1 through 15 {
+    $w: 980 - ($i * 50);
+    @container (width <= #{$w}px) { --browser-scale: calc(#{$w} / 980); }
+  }
+  @container (width <= 196px) { --browser-scale: 0.2; }
 }
 
 .browser-body::before {

@@ -6,8 +6,9 @@ let tl = gsap.timeline({
     defaults: { ease: "power4.out" }
 });
 
-tl.from(".site-header .btn-secondary", { x: 20, opacity: 0, duration: 0.6 }, 0.5);
-tl.from(".site-header .btn-primary", { x: 20, opacity: 0, duration: 0.6 }, "<");
+tl.from(".main-nav ul li a", { opacity: 0, y: -50, duration: 1, stagger: 0.2 });
+tl.from(".btn-secondary", { x: 20, opacity: 0, duration: 0.6 }, "-=0.5");
+tl.from(".btn-primary", { x: 20, opacity: 0, duration: 0.6 }, "<");
 
 // 2. Optimized Counter Animation
 const animateCounters = () => {
@@ -72,7 +73,7 @@ const scrubEach = (elements, props, triggerEl, startBase, endBase, offsetPer) =>
                 trigger: triggerEl,
                 start: 'top ' + (startBase - i * offsetPer) + '%',
                 end: 'top ' + (endBase - i * offsetPer) + '%',
-                scrub: 0.3,
+                scrub: 1,
             }
         }));
     });
@@ -191,7 +192,7 @@ const initScrollPieces = () => {
                 trigger: triggerEl,
                 start: 'top 85%',
                 end: 'top 50%',
-                scrub: 0.3,
+                scrub: 1,
             }
         });
 
@@ -358,6 +359,28 @@ const initScrollPieces = () => {
 const initScrollAnimations = () => {
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
+    // ── Background Ambient Overlay ──
+    const ambient = document.createElement('div');
+    ambient.className = 'scroll-ambient';
+    ambient.innerHTML =
+        '<div class="scroll-orb scroll-orb--1"></div>' +
+        '<div class="scroll-orb scroll-orb--2"></div>' +
+        '<div class="scroll-orb scroll-orb--3"></div>';
+    document.body.prepend(ambient);
+
+    gsap.to('.scroll-orb--1', {
+        y: '-60vh', x: '15vw', scale: 1.4, opacity: 0.5,
+        scrollTrigger: { trigger: 'body', start: 'top top', end: 'bottom bottom', scrub: 2 }
+    });
+    gsap.to('.scroll-orb--2', {
+        y: '-40vh', x: '-20vw', scale: 0.8,
+        scrollTrigger: { trigger: 'body', start: 'top top', end: 'bottom bottom', scrub: 3 }
+    });
+    gsap.to('.scroll-orb--3', {
+        y: '-80vh', x: '10vw', scale: 1.2, opacity: 0.7,
+        scrollTrigger: { trigger: 'body', start: 'top top', end: 'bottom bottom', scrub: 2.5 }
+    });
+
     // ── Scroll Logo Pieces Journey ──
     initScrollPieces();
 
@@ -376,53 +399,46 @@ const initScrollAnimations = () => {
             scale: 0.92, opacity: 1, y: -40,
             scrollTrigger: {
                 trigger: wrapper,
-                start: 'bottom 30%',
+                start: 'bottom 30%',  // recession begins when bottom of hero reaches 60% viewport
                 end: 'bottom top',
-                scrub: 0.3,
+                scrub: 1,
             }
         });
     }
 
-    const revealEl = (el, { y = 30, delay = 0, duration = 0.55, scale = 1 } = {}) => {
-        gsap.fromTo(el,
-            { y, opacity: 0, scale },
-            {
-                y: 0, opacity: 1, scale: 1,
-                duration,
-                delay,
-                ease: 'power3.out',
-                scrollTrigger: {
-                    trigger: el,
-                    start: 'top 92%',
-                    once: true,
-                }
-            }
-        );
-    };
-
-    const revealGroup = (els, { y = 30, stagger = 0.07, duration = 0.5, scale = 1 } = {}) => {
-        els.forEach((el, i) => revealEl(el, { y, delay: i * stagger, duration, scale }));
-    };
-
     // ── Customers Section ──
     const customersSection = document.querySelector('.customers-section');
     if (customersSection) {
-        revealEl(customersSection.querySelector('.customers-title') || customersSection, { y: 20 });
+        gsap.from('.customers-title', {
+            y: 30, opacity: 0,
+            scrollTrigger: { trigger: customersSection, start: 'top 90%', end: 'top 55%', scrub: 1 }
+        });
     }
 
-    // ── Hero Section ("Step aside, YAML") ──
+    // ── Hero Section ("Step aside, YAML") — Layered parallax ──
     const heroSection = document.querySelector('.hero-section');
     if (heroSection) {
-        const heroRevealEls = [
-            heroSection.querySelector('.hero-badge'),
-            heroSection.querySelector('.hero-title'),
-            heroSection.querySelector('.hero-subtitle'),
-            heroSection.querySelector('.hero-actions'),
-        ].filter(Boolean);
-        revealGroup(heroRevealEls, { y: 40, stagger: 0.08 });
+        gsap.from('.hero-badge', {
+            y: 40, opacity: 0,
+            scrollTrigger: { trigger: heroSection, start: 'top 90%', end: 'top 50%', scrub: 1 }
+        });
+        gsap.from('.hero-title', {
+            y: 80, opacity: 0,
+            scrollTrigger: { trigger: heroSection, start: 'top 88%', end: 'top 40%', scrub: 1 }
+        });
+        gsap.from('.hero-subtitle', {
+            y: 100, opacity: 0,
+            scrollTrigger: { trigger: heroSection, start: 'top 85%', end: 'top 35%', scrub: 1 }
+        });
+        gsap.from('.hero-actions', {
+            y: 60, opacity: 0,
+            scrollTrigger: { trigger: heroSection, start: 'top 80%', end: 'top 35%', scrub: 1 }
+        });
 
         const statItems = heroSection.querySelectorAll('.stat-item');
-        if (statItems.length) revealGroup([...statItems], { y: 30, stagger: 0.06 });
+        if (statItems.length) {
+            scrubEach(statItems, { y: 50, opacity: 0 }, '.hero-stats', 90, 55, 3);
+        }
 
         ScrollTrigger.create({
             trigger: heroSection,
@@ -431,29 +447,51 @@ const initScrollAnimations = () => {
             onEnter: animateCounters,
         });
 
-        // Recession — keep scrub here
-        gsap.to(heroSection, {
-            opacity: 0.4, y: -30,
-            scrollTrigger: { trigger: heroSection, start: 'bottom 10%', end: 'bottom top', scrub: 0.3 }
-        });
+    // ── New Hero  Section Entrance ──
+    const newHero = document.querySelector('.new-hero');
+    if (newHero) {
+        gsap.from('.new-hero .eyebrow', { y: 20, opacity: 0, duration: 0.8, ease: 'power3.out' });
+        gsap.from('.new-hero .main-heading', { y: 30, opacity: 0, duration: 0.8, delay: 0.1, ease: 'power3.out' });
+        gsap.from('.new-hero .sub-heading', { y: 30, opacity: 0, duration: 0.8, delay: 0.2, ease: 'power3.out' });
+        gsap.from('.new-hero .btn', { y: 20, opacity: 0, duration: 0.8, delay: 0.3, stagger: 0.1, ease: 'power3.out' });
+        gsap.from('.new-hero .sub-cta', { y: 20, opacity: 0, duration: 0.8, delay: 0.6, ease: 'power3.out' });
+        gsap.from('.new-hero .ide-window', { y: 60, opacity: 0, duration: 1, delay: 0.4, ease: 'power3.out' });
     }
 
+    // Recession — only after scrolling well past
+    gsap.to(heroSection, {
+        opacity: 0.4, y: -30,
+        scrollTrigger: { trigger: heroSection, start: 'bottom 10%', end: 'bottom top', scrub: 1 }
+    });
+    }
     // ── Demo Section ──
     const demoSection = document.querySelector('.demo-section');
     if (demoSection) {
-        revealEl(demoSection.querySelector('.demo-header') || demoSection, { y: 30 });
+        gsap.from('.demo-header', {
+            y: 50, opacity: 0,
+            duration: 0.6,
+            scrollTrigger: { trigger: demoSection, start: 'top 88%', toggleActions: 'play none none none' }
+        });
 
         const demoContainer = document.querySelector('.demo-container');
-        if (demoContainer) revealEl(demoContainer, { y: 50, scale: 0.95, duration: 0.65 });
+        if (demoContainer) {
+            gsap.from(demoContainer, {
+                scale: 0.88, opacity: 0, y: 60,
+                duration: 0.6, delay: 0.1,
+                scrollTrigger: { trigger: demoContainer, start: 'top 90%', toggleActions: 'play none none none' }
+            });
+        }
 
         const personaCards = document.querySelectorAll('.persona-card');
-        if (personaCards.length) revealGroup([...personaCards], { y: 40, scale: 0.96, stagger: 0.08 });
-
-        // Recession — keep scrub
-        gsap.to(demoSection, {
-            opacity: 0.5, y: -20,
-            scrollTrigger: { trigger: demoSection, start: 'bottom 40%', end: 'bottom top', scrub: 0.3 }
-        });
+        if (personaCards.length) {
+            personaCards.forEach((card, i) => {
+                gsap.from(card, {
+                    y: 60, opacity: 0, scale: 0.94,
+                    duration: 0.5, delay: i * 0.1,
+                    scrollTrigger: { trigger: '.demo-personas', start: 'top 80%', toggleActions: 'play none none none' }
+                });
+            });
+        }
     }
 
     // ── Capabilities Section ──
@@ -464,13 +502,20 @@ const initScrollAnimations = () => {
             capSection.querySelector('.capabilities-title'),
             capSection.querySelector('.capabilities-subtitle'),
         ].filter(Boolean);
-        revealGroup(capHeaderEls, { y: 30, stagger: 0.07 });
+        scrubEach(capHeaderEls, { y: 40, opacity: 0 }, capSection, 88, 50, 4);
 
         const capCards = document.querySelectorAll('.cap-card');
-        if (capCards.length) revealGroup([...capCards], { y: 40, stagger: 0.06 });
+        if (capCards.length) {
+            scrubEach(capCards, { y: 70, opacity: 0 }, '.capabilities-grid', 90, 40, 3);
+        }
 
         const ctaBox = document.querySelector('.cta-box');
-        if (ctaBox) revealEl(ctaBox, { y: 30, scale: 0.97 });
+        if (ctaBox) {
+            gsap.from(ctaBox, {
+                y: 40, opacity: 0, scale: 0.96,
+                scrollTrigger: { trigger: ctaBox, start: 'top 90%', end: 'top 55%', scrub: 1 }
+            });
+        }
     }
 
     // ── Community Section ──
@@ -479,31 +524,50 @@ const initScrollAnimations = () => {
         const comHeaderEls = [
             communitySection.querySelector('.community-badge'),
             communitySection.querySelector('.community-title'),
-            communitySection.querySelector('.capabilities-subtitle'),
+            communitySection.querySelector('.community-subtitle') ||
+              communitySection.querySelector('.capabilities-subtitle'),
         ].filter(Boolean);
-        revealGroup(comHeaderEls, { y: 30, stagger: 0.07 });
+        scrubEach(comHeaderEls, { y: 40, opacity: 0 }, communitySection, 88, 50, 4);
 
         const communityCards = document.querySelectorAll('.community-card');
-        if (communityCards.length) revealGroup([...communityCards], { y: 40, scale: 0.96, stagger: 0.07 });
+        if (communityCards.length) {
+            scrubEach(communityCards, { y: 60, opacity: 0, scale: 0.92 }, '.community-grid', 90, 40, 4);
+        }
     }
 
     // ── Browser Section ──
     const browserShell = document.querySelector('.browser-shell');
-    if (browserShell) revealEl(browserShell, { y: 60, scale: 0.92, duration: 0.7 });
+    if (browserShell) {
+        gsap.from(browserShell, {
+            scale: 0.82, opacity: 0, y: 80,
+            scrollTrigger: { trigger: '.browser', start: 'top 90%', end: 'top 30%', scrub: 1 }
+        });
+    }
 
     const browserStand = document.querySelector('.browser-stand');
-    if (browserStand) revealEl(browserStand, { y: 20, duration: 0.5 });
+    if (browserStand) {
+        gsap.from(browserStand, {
+            scaleX: 0.5, opacity: 0,
+            scrollTrigger: { trigger: browserStand, start: 'top 95%', end: 'top 65%', scrub: 1 }
+        });
+    }
 
     // ── Section Dividers ──
     const dividerSections = document.querySelectorAll(
         '.customers-section, .hero-section, .demo-section, .capabilities-section, .community-section'
     );
+
     dividerSections.forEach((section) => {
         if (section.nextElementSibling && section.nextElementSibling.classList.contains('section-divider')) return;
+
         const divider = document.createElement('div');
         divider.className = 'section-divider';
         section.after(divider);
-        revealEl(divider, { y: 0, duration: 0.4 });
+
+        gsap.from(divider, {
+            opacity: 0, scaleX: 0.3,
+            scrollTrigger: { trigger: divider, start: 'top 90%', end: 'top 70%', scrub: 1 }
+        });
     });
 };
 

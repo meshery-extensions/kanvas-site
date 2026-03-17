@@ -1,12 +1,13 @@
-export const KEPPEL_LIGHT = '#5FCDB8';
-export const KEPPEL_PRIMARY = '#3AB09E';
-export const KEPPEL_GLOW = '#4ECBB8';
-export const BACKGROUND_COLOR = '#060c0c';
+const KEPPEL_LIGHT = '#5FCDB8';
+const KEPPEL_PRIMARY = '#3AB09E';
+const KEPPEL_GLOW = '#4ECBB8';
+const BACKGROUND_COLOR = '#060c0c';
+
 const KEPPEL_FILL = 'rgba(58, 176, 158, 0.3)';
 const KEPPEL_FILL_LIGHT = 'rgba(95, 205, 184, 0.25)';
 
 // Center cube icon - Server/Data center
-export const CENTER_ICON_SVG = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="${KEPPEL_FILL}" stroke="${KEPPEL_PRIMARY}" stroke-width="1.2">
+ const CENTER_ICON_SVG = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="${KEPPEL_FILL}" stroke="${KEPPEL_PRIMARY}" stroke-width="1.2">
   <rect x="2" y="2" width="20" height="8" rx="2" ry="2"/>
   <rect x="2" y="14" width="20" height="8" rx="2" ry="2"/>
   <line x1="6" y1="6" x2="6.01" y2="6"/>
@@ -14,7 +15,7 @@ export const CENTER_ICON_SVG = `<svg xmlns="http://www.w3.org/2000/svg" viewBox=
 </svg>`;
 
 // 28 unique tech-themed SVG logos in Keppel colors with fills
-export const TECH_LOGOS = [
+const TECH_LOGOS = [
     // 1. AWS-style cloud
     `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="${KEPPEL_FILL}" stroke="${KEPPEL_LIGHT}" stroke-width="2">
     <path d="M32 16c-8 0-14 4-16 10-1-2-4-4-7-4-5 0-8 4-8 8s3 8 8 8h40c6 0 10-4 10-10s-4-10-10-10c0-6-8-12-17-12z"/>
@@ -243,7 +244,7 @@ export const TECH_LOGOS = [
 ];
 
 // Simple icons for opposite faces
-export const SIMPLE_ICONS = [
+const SIMPLE_ICONS = [
     `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="${KEPPEL_FILL}" stroke="${KEPPEL_LIGHT}" stroke-width="2"><circle cx="32" cy="32" r="20"/><circle cx="32" cy="32" r="8" fill="${KEPPEL_LIGHT}"/></svg>`,
     `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="${KEPPEL_FILL}" stroke="${KEPPEL_LIGHT}" stroke-width="2"><rect x="16" y="16" width="32" height="32" rx="4"/></svg>`,
     `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="${KEPPEL_FILL}" stroke="${KEPPEL_LIGHT}" stroke-width="2"><path d="M32 12l20 20-20 20-20-20z"/></svg>`,
@@ -258,9 +259,9 @@ export const SIMPLE_ICONS = [
     `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none" stroke="${KEPPEL_LIGHT}" stroke-width="3"><path d="M20 32c-6-8-6-16 0-16s12 8 12 16-6 16-12 16-6-8 0-16z"/><path d="M44 32c6 8 6 16 0 16s-12-8-12-16 6-16 12-16 6 8 0 16z"/></svg>`,
 ];
 
-// CRITICAL: Bridge for non-module scripts
+// expose variables globally for non-module scripts
 if (typeof window !== 'undefined') {
-    window.TECH_LOGOS = TECH_LOGOS;
-    window.SIMPLE_ICONS = SIMPLE_ICONS;
-    window.CENTER_ICON_SVG = CENTER_ICON_SVG;
+  window.TECH_LOGOS = TECH_LOGOS;
+  window.SIMPLE_ICONS = SIMPLE_ICONS;
+  window.CENTER_ICON_SVG = CENTER_ICON_SVG;
 }

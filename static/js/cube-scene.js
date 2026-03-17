@@ -1,127 +1,158 @@
-import * as THREE from 'three';
-import { TECH_LOGOS, SIMPLE_ICONS, CENTER_ICON_SVG, KEPPEL_PRIMARY, KEPPEL_LIGHT, KEPPEL_GLOW } from './tech-logos.js';
+const THREE = window.THREE;
+
+const TECH_LOGOS = window.TECH_LOGOS || [];
+const SIMPLE_ICONS = window.SIMPLE_ICONS || [];
+const CENTER_ICON_SVG = window.CENTER_ICON_SVG || "";
 
 async function createIconTexture(svgString, isCenter = false) {
-    const size = isCenter ? 256 : 128;
-    const canvas = document.createElement('canvas');
-    canvas.width = size;
-    canvas.height = size;
-    const ctx = canvas.getContext('2d');
 
-    // 1. Background: Darker & more opaque for better icon contrast
-    ctx.fillStyle = isCenter ? 'rgba(5, 15, 14, 0.95)' : 'rgba(6, 12, 12, 0.9)';
-    ctx.fillRect(0, 0, size, size);
+  const size = isCenter ? 256 : 128;
 
-    // 2. Neon Border
-    ctx.strokeStyle = isCenter ? KEPPEL_PRIMARY : KEPPEL_LIGHT;
-    ctx.lineWidth = isCenter ? 6 : 4;
-    ctx.strokeRect(2, 2, size - 4, size - 4);
+  const canvas = document.createElement("canvas");
+  canvas.width = size;
+  canvas.height = size;
 
-    return new Promise((resolve) => {
-        // Ensure the SVG string has width/height for the canvas renderer
-        const fixedSvg = svgString.replace('<svg', `<svg width="${size}" height="${size}"`);
-        const img = new Image();
-        const blob = new Blob([fixedSvg], { type: 'image/svg+xml;charset=utf-8' });
-        const url = URL.createObjectURL(blob);
+  const ctx = canvas.getContext("2d");
 
-        img.onload = () => {
-            const padding = isCenter ? 40 : 20;
-            const drawSize = size - padding * 2;
-            ctx.drawImage(img, padding, padding, drawSize, drawSize);
+  ctx.fillStyle = "rgba(6,12,12,0.9)";
+  ctx.fillRect(0, 0, size, size);
 
-            const texture = new THREE.CanvasTexture(canvas);
-            texture.colorSpace = THREE.SRGBColorSpace;
-            texture.needsUpdate = true; // Force Three.js to see the new pixels
-            
-            URL.revokeObjectURL(url);
-            resolve(texture);
-        };
-        img.src = url;
+  ctx.strokeStyle = "#5FCDB8";
+  ctx.lineWidth = 4;
+  ctx.strokeRect(2, 2, size - 4, size - 4);
+
+  return new Promise((resolve) => {
+
+    if (!svgString) {
+      const texture = new THREE.CanvasTexture(canvas);
+      resolve(texture);
+      return;
+    }
+
+    const img = new Image();
+
+    const blob = new Blob([svgString], { type: "image/svg+xml" });
+    const url = URL.createObjectURL(blob);
+
+    img.onload = () => {
+
+      const padding = isCenter ? 40 : 20;
+      const drawSize = size - padding * 2;
+
+      ctx.drawImage(img, padding, padding, drawSize, drawSize);
+
+      const texture = new THREE.CanvasTexture(canvas);
+      texture.colorSpace = THREE.SRGBColorSpace;
+
+      URL.revokeObjectURL(url);
+
+      resolve(texture);
+    };
+
+    img.src = url;
+
+  });
+}
+
+async function initCubeScene(containerId) {
+
+  console.log("🚀 Initializing cube scene:", containerId);
+
+  const container = document.getElementById(containerId);
+  if (!container) {
+    console.error("Container not found:", containerId);
+    return;
+  }
+
+  const canvas = container.querySelector("canvas");
+
+  const scene = new THREE.Scene();
+
+  const width = container.clientWidth || 800;
+  const height = 600;
+
+  const camera = new THREE.PerspectiveCamera(60, width / height, 0.1, 1000);
+  camera.position.set(0, 2, 7);
+
+  const renderer = new THREE.WebGLRenderer({
+    canvas,
+    alpha: true,
+    antialias: true
+  });
+
+  renderer.setSize(width, height);
+  renderer.setPixelRatio(window.devicePixelRatio);
+
+  console.log("Logos loaded:", TECH_LOGOS.length);
+
+  // CENTER CUBE
+
+  const centerTex = await createIconTexture(CENTER_ICON_SVG, true);
+
+  const centerGeo = new THREE.BoxGeometry(1.6, 1.6, 1.6);
+  const centerMat = new THREE.MeshBasicMaterial({
+    map: centerTex,
+    transparent: true
+  });
+
+  const centerCube = new THREE.Mesh(centerGeo, centerMat);
+  scene.add(centerCube);
+
+  // ORBITING CUBES
+
+  const orbiters = [];
+
+  for (let i = 0; i < 12; i++) {
+
+    const logoIndex = TECH_LOGOS.length ? i % TECH_LOGOS.length : 0;
+    const tex = await createIconTexture(TECH_LOGOS[logoIndex]);
+
+    const geo = new THREE.BoxGeometry(0.7, 0.7, 0.7);
+
+    const mat = new THREE.MeshBasicMaterial({
+      map: tex,
+      transparent: true
     });
+
+    const cube = new THREE.Mesh(geo, mat);
+
+    scene.add(cube);
+
+    orbiters.push({
+      cube,
+      angle: (i / 12) * Math.PI * 2,
+      radius: 3 + (i % 3) * 0.5,
+      speed: 0.3
+    });
+  }
+
+  const clock = new THREE.Clock();
+
+  function animate() {
+
+    const t = clock.getElapsedTime();
+
+    centerCube.rotation.y = t * 0.3;
+
+    orbiters.forEach((o) => {
+
+      const a = o.angle + t * o.speed;
+
+      o.cube.position.x = Math.cos(a) * o.radius;
+      o.cube.position.z = Math.sin(a) * o.radius;
+      o.cube.position.y = Math.sin(t) * 0.5;
+
+      o.cube.rotation.x += 0.01;
+      o.cube.rotation.y += 0.01;
+    });
+
+    renderer.render(scene, camera);
+
+    requestAnimationFrame(animate);
+  }
+
+  animate();
 }
 
-export default async function initCubeScene(containerId) {
-    const container = document.getElementById(containerId);
-    if (!container) return;
-    const canvas = container.querySelector('canvas');
-    
-    // Scene Setup
-    const scene = new THREE.Scene();
-    const width = container.clientWidth || 800;
-    const height = container.clientHeight || 500;
-    const camera = new THREE.PerspectiveCamera(60, width / height, 0.1, 1000);
-    camera.position.set(0, 2.5, 7);
-
-    const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
-    renderer.setSize(width, height);
-    renderer.setPixelRatio(window.devicePixelRatio);
-
-    // Create Central Cube
-    const centerTex = await createIconTexture(CENTER_ICON_SVG, true);
-    const centerGeo = new THREE.BoxGeometry(1.6, 1.6, 1.6);
-    const centerMat = new THREE.MeshBasicMaterial({ map: centerTex, transparent: true });
-    const centerCube = new THREE.Mesh(centerGeo, centerMat);
-    const centerEdges = new THREE.LineSegments(
-        new THREE.EdgesGeometry(centerGeo),
-        new THREE.LineBasicMaterial({ color: KEPPEL_PRIMARY, transparent: true, opacity: 0.6 })
-    );
-    const centerGroup = new THREE.Group();
-    centerGroup.add(centerCube, centerEdges);
-    scene.add(centerGroup);
-
-    // Create 12 Orbiting Cubes
-    const orbits = [];
-    for (let i = 0; i < 12; i++) {
-        const sideTex = await createIconTexture(TECH_LOGOS[i % TECH_LOGOS.length]);
-        const topBotTex = await createIconTexture(SIMPLE_ICONS[i % SIMPLE_ICONS.length]);
-
-        const materials = [
-            new THREE.MeshBasicMaterial({ map: sideTex, transparent: true }), // +X
-            new THREE.MeshBasicMaterial({ map: sideTex, transparent: true }), // -X
-            new THREE.MeshBasicMaterial({ map: topBotTex, transparent: true }), // +Y
-            new THREE.MeshBasicMaterial({ map: topBotTex, transparent: true }), // -Y
-            new THREE.MeshBasicMaterial({ map: sideTex, transparent: true }), // +Z
-            new THREE.MeshBasicMaterial({ map: sideTex, transparent: true })  // -Z
-        ];
-
-        const size = 0.7;
-        const geo = new THREE.BoxGeometry(size, size, size);
-        const mesh = new THREE.Mesh(geo, materials);
-        const edge = new THREE.LineSegments(
-            new THREE.EdgesGeometry(geo),
-            new THREE.LineBasicMaterial({ color: KEPPEL_LIGHT, transparent: true, opacity: 0.4 })
-        );
-
-        const group = new THREE.Group();
-        group.add(mesh, edge);
-        scene.add(group);
-
-        orbits.push({
-            group,
-            angle: (i / 12) * Math.PI * 2,
-            radius: 3.5 + (i % 3) * 0.4,
-            speed: 0.2 + (i % 5) * 0.05
-        });
-    }
-
-    // Animation Loop
-    const clock = new THREE.Clock();
-    function animate() {
-        const t = clock.getElapsedTime();
-        centerGroup.rotation.y = t * 0.2;
-
-        orbits.forEach((orbit, i) => {
-            const currentAngle = orbit.angle + t * orbit.speed;
-            orbit.group.position.x = Math.cos(currentAngle) * orbit.radius;
-            orbit.group.position.z = Math.sin(currentAngle) * orbit.radius;
-            orbit.group.position.y = Math.sin(t + i) * 0.8;
-            
-            orbit.group.rotation.x += 0.01;
-            orbit.group.rotation.y += 0.01;
-        });
-
-        renderer.render(scene, camera);
-        requestAnimationFrame(animate);
-    }
-    animate();
-}
+// expose globally
+window.initCubeScene = initCubeScene;

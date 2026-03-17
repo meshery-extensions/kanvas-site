@@ -1,0 +1,144 @@
+<div id="cube-scene-{{ .Ordinal }}" class="relative w-full h-[600px] bg-[#060c0c] overflow-hidden">
+  <canvas id="canvas-{{ .Ordinal }}" class="w-full h-full"></canvas>
+  <div class="pointer-events-none absolute inset-0 bg-gradient-to-r from-[#060c0c] via-transparent to-[#060c0c] opacity-40 z-10"></div>
+</div>
+
+<script>
+(async function() {
+  try {
+    const ordinal = "{{ .Ordinal }}";
+    if (window.THREE_READY) await window.THREE_READY;
+    const THREE = window.THREE;
+    
+    const canvas = document.getElementById(`canvas-${ordinal}`);
+    const container = canvas.parentElement;
+    let w = container.clientWidth || window.innerWidth;
+    let h = 600; 
+    
+    const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
+    renderer.setSize(w, h);
+    renderer.setPixelRatio(window.devicePixelRatio);
+
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(50, w / h, 0.1, 1000);
+    camera.position.set(0, 0, 16); 
+    camera.lookAt(0, 0, 0);
+
+    // --- DATA CHECK ---
+    // We wait a moment to ensure tech-logo.js has executed
+    const getLogos = () => window.TECH_LOGOS || [];
+    const getSimple = () => window.SIMPLE_ICONS || [];
+    const getCenter = () => window.CENTER_ICON_SVG || '';
+
+    // --- TEXTURE ENGINE ---
+    async function createTexture(svgString) {
+      return new Promise((resolve) => {
+        const size = 256;
+        const cvs = document.createElement('canvas');
+        cvs.width = size; cvs.height = size;
+        const ctx = cvs.getContext('2d');
+        
+        ctx.fillStyle = 'rgba(10, 25, 22, 0.95)';
+        ctx.fillRect(0, 0, size, size);
+        ctx.strokeStyle = '#5FCDB8';
+        ctx.lineWidth = 10;
+        ctx.strokeRect(5, 5, size-10, size-10);
+
+        if (!svgString) { resolve(new THREE.CanvasTexture(cvs)); return; }
+
+        const parser = new DOMParser();
+        const svgDoc = parser.parseFromString(svgString, 'image/svg+xml');
+        const svgElement = svgDoc.documentElement;
+        svgElement.setAttribute('width', size.toString());
+        svgElement.setAttribute('height', size.toString());
+        
+        const serializedSvg = new XMLSerializer().serializeToString(svgElement);
+        const img = new Image();
+        img.onload = function() {
+          setTimeout(() => {
+            const pad = size * 0.2;
+            ctx.drawImage(img, pad, pad, size - (pad * 2), size - (pad * 2));
+            const tex = new THREE.CanvasTexture(cvs);
+            tex.colorSpace = THREE.SRGBColorSpace;
+            tex.needsUpdate = true;
+            resolve(tex);
+          }, 60); // Safety delay
+        };
+        img.src = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(serializedSvg);
+      });
+    }
+
+    // --- BUILD CENTRAL CUBE ---
+    const centerMats = [];
+    const centerSvg = getCenter();
+    for(let i=0; i<6; i++) {
+        const t = await createTexture(centerSvg);
+        centerMats.push(new THREE.MeshBasicMaterial({ map: t, transparent: true }));
+    }
+    const centerCube = new THREE.Mesh(new THREE.BoxGeometry(2.5, 2.5, 2.5), centerMats);
+    scene.add(centerCube);
+
+    // --- BUILD ORBITERS ---
+    const orbiters = [];
+    const count = 12;
+    const logos = getLogos();
+    const simples = getSimple();
+
+    for (let i = 0; i < count; i++) {
+      const mats = [];
+      // Assign unique textures to each face
+      for(let j=0; j<6; j++) {
+          const svg = (j % 2 === 0) ? logos[(i + j) % logos.length] : simples[(i + j) % simples.length];
+          const t = await createTexture(svg);
+          mats.push(new THREE.MeshBasicMaterial({ map: t, transparent: true, blending: THREE.AdditiveBlending }));
+      }
+
+      const cube = new THREE.Mesh(new THREE.BoxGeometry(1.1, 1.1, 1.1), mats);
+      const lineGeo = new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(0,0,0), new THREE.Vector3(0,0,0)]);
+      const line = new THREE.Line(lineGeo, new THREE.LineBasicMaterial({ color: 0x3AB09E, transparent: true, opacity: 0.2 }));
+      
+      scene.add(cube, line);
+      orbiters.push({
+        cube, line,
+        angle: (i / count) * Math.PI * 2,
+        radius: 9.0 + (Math.random() * 2),
+        speed: 0.12 + (i * 0.01),
+        yFloat: Math.random() * 10
+      });
+    }
+
+    function animate() {
+      const time = performance.now() * 0.001;
+      centerCube.rotation.y = time * 0.2;
+      centerCube.rotation.x = time * 0.1;
+
+      orbiters.forEach((o) => {
+        const a = o.angle + (time * o.speed);
+        const x = Math.cos(a) * o.radius;
+        const z = Math.sin(a) * o.radius;
+        const y = Math.sin(time + o.yFloat) * 1.5;
+        
+        o.cube.position.set(x, y, z);
+        o.cube.rotation.x += 0.01;
+        o.cube.rotation.y += 0.01;
+
+        const pos = o.line.geometry.attributes.position.array;
+        pos[3] = x; pos[4] = y; pos[5] = z;
+        o.line.geometry.attributes.position.needsUpdate = true;
+      });
+
+      renderer.render(scene, camera);
+      requestAnimationFrame(animate);
+    }
+
+    window.addEventListener('resize', () => {
+      w = container.clientWidth;
+      renderer.setSize(w, h);
+      camera.aspect = w / h;
+      camera.updateProjectionMatrix();
+    });
+
+    animate();
+  } catch (e) { console.error("Cube Scene Error:", e); }
+})();
+</script>

@@ -5,50 +5,35 @@
 <div class="browser-shell">
   <div class="browser-header">
     <div class="browser-dots">
-      <div class="browser-dot" style="background-color:#FF5F56;"></div>
-      <div class="browser-dot" style="background-color:#FFBD2E;"></div>
-      <div class="browser-dot" style="background-color:#27C93F;"></div>
+      <div class="browser-dot dot-red"></div>
+      <div class="browser-dot dot-yellow"></div>
+      <div class="browser-dot dot-green"></div>
     </div>
-
     <div class="browser-pill">https://kanvas.new/extension/meshmap</div>
   </div>
 
   <div class="browser-body">
-    <div class="hero-visual">
-      <div class="canvas-preview glass--dark" data-float>
-        <div class="cursor-layer" data-cursors="0,1,2,3,4" style="position:absolute; inset:0; z-index:15; pointer-events:none;"></div>
-        <div class="canvas-header">
+    <div class="hero-visual" style="padding: 0; margin: 0; width: 100%;">
+      <div class="canvas-preview glass--dark" style="border-radius: 0; border-left: none; border-right: none;">
+        <div class="canvas-header" style="padding: 1rem 2rem;">
           <span>Production</span>
           <span class="status">Collaboration</span>
         </div>
-        <div id="cube-scene-1" class="relative w-full h-[520px] overflow-hidden">
-          c<anvas class="absolute inset-0"></canvas>
-          <!-- overlay gradient -->
-          <div class="pointer-events-none absolute inset-0 bg-gradient-to-b from-transparent via-black/20 to-black/60"></div>
-          <!-- scanlines -->
-          <div class="pointer-events-none absolute inset-0 opacity-[0.08] bg-[linear-gradient(to_bottom,transparent_50%,rgba(255,255,255,0.04)_50%)] bg-[length:100%_4px]"></div>
-        </div>
+
+        {{ partial "cube-scene.html" (dict "Ordinal" 1) }}
+
       </div>
     </div>
 
-    <!-- Button inside browser body -->
     <div class="browser-cta-container">
       <a class="browser-cta shine" href="https://layer5.io/kanvas" target="_blank" rel="noopener">
         <span class="cta-hexagon"></span>
         <span>See Kanvas in action</span>
-        <span class="cta-arrow" aria-hidden="true"></span>
+        <span class="cta-arrow"></span>
       </a>
     </div>
   </div>
 </div>
 
 <div class="browser-stand"></div>
-<div style="background: radial-gradient(circle at 50% 100%, rgba(0, 179, 159, 0.05), transparent 50%);position:relative;top:-120px;height:130px;"></div>
-
-<script src="/scripts/multi-player-cursors.js"></script>
-<script type="module">
-  import initCubeScene from "static/js/cube-scene.js";
-  (async () => {
-    await initCubeScene("cube-scene-1");
-  })();
-</script>
+<div class="browser-glow"></div>

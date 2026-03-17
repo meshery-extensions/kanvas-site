@@ -57,7 +57,7 @@
   flex-direction: column;
   align-items: center;
   text-align: center;
-  max-width: 800px;
+  max-width: 1000px;
   margin-bottom: 80px;
   z-index: 10;
 }
@@ -87,6 +87,18 @@
   line-height: 1.1;
   margin: 0 0 24px;
   color: var(--text-primary);
+  white-space: nowrap;
+
+  .text-gradient {
+    background: linear-gradient(
+      90deg,
+      var(--accent-base),
+      var(--accent-light)
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
 }
 
 .sub-heading {
@@ -468,7 +480,11 @@
 
 @media (max-width: 960px) {
   .new-hero { padding: 140px 24px 60px; margin-top: -100px; }
-  .main-heading { font-size: clamp(40px, 7vw, 56px); margin-bottom: 16px; max-width: 90%; margin-inline: auto; }
+  .main-heading { 
+    font-size: clamp(40px, 7vw, 56px); margin-bottom: 16px; 
+    max-width: 90%; margin-inline: auto; 
+    white-space: normal; 
+  }
   .sub-heading { font-size: 20px; margin-bottom: 32px; max-width: 90%; margin-inline: auto; }
   .hero-ctas { 
     flex-wrap: wrap; 
@@ -488,7 +504,7 @@
 @media (max-width: 768px) {
   .new-hero { padding: 120px 16px 40px; }
   .eyebrow { font-size: 12px; padding: 6px 14px; margin-bottom: 20px; }
-  .main-heading { font-size: clamp(34px, 10vw, 42px); line-height: 1.15; margin-bottom: 16px; }
+  .main-heading { font-size: clamp(34px, 10vw, 42px); line-height: 1.15; margin-bottom: 16px; white-space: normal; }
   .sub-heading { font-size: 16px; line-height: 1.6; margin-bottom: 32px; }
   
   .hero-ctas { flex-direction: column; width: 100%; max-width: 340px; gap: 12px; margin-bottom: 24px; }

@@ -1,7 +1,7 @@
 export const KEPPEL_LIGHT = '#5FCDB8';
 export const KEPPEL_PRIMARY = '#3AB09E';
 export const KEPPEL_GLOW = '#4ECBB8';
-export const BACKGROUND_COLOR = '#060c0c'
+export const BACKGROUND_COLOR = '#060c0c';
 const KEPPEL_FILL = 'rgba(58, 176, 158, 0.3)';
 const KEPPEL_FILL_LIGHT = 'rgba(95, 205, 184, 0.25)';
 
@@ -43,7 +43,7 @@ export const TECH_LOGOS = [
     <rect x="28" y="20" width="6" height="6" fill="${KEPPEL_LIGHT}"/>
   </svg>`,
 
-    // 4. Terraform style (layered)
+    // 4. Terraform style
     `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="${KEPPEL_FILL}" stroke="${KEPPEL_LIGHT}" stroke-width="2">
     <polygon points="12,20 32,8 32,28 12,40" fill="${KEPPEL_FILL}"/>
     <polygon points="36,20 56,8 56,28 36,40" fill="${KEPPEL_PRIMARY}" fill-opacity="0.4"/>
@@ -52,9 +52,9 @@ export const TECH_LOGOS = [
 
     // 5. Lambda symbol
     `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="${KEPPEL_FILL}" stroke="${KEPPEL_LIGHT}" stroke-width="3">
-    <path d="M16 12h8l8 20 8-20h8"/>
-    <path d="M32 32l12 24"/>
-    <path d="M24 56l8-24"/>
+    <path d="M16 12h8l8 20 8-20h8" fill="none"/>
+    <path d="M32 32l12 24" fill="none"/>
+    <path d="M24 56l8-24" fill="none"/>
   </svg>`,
 
     // 6. Database cylinder
@@ -91,8 +91,8 @@ export const TECH_LOGOS = [
     // 10. Gear settings
     `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="${KEPPEL_FILL}" stroke="${KEPPEL_LIGHT}" stroke-width="2">
     <circle cx="32" cy="32" r="10" fill="${KEPPEL_PRIMARY}" fill-opacity="0.5"/>
-    <path d="M32 8v8M32 48v8M8 32h8M48 32h8"/>
-    <path d="M15 15l6 6M43 43l6 6M49 15l-6 6M21 43l-6 6"/>
+    <path d="M32 8v8M32 48v8M8 32h8M48 32h8" fill="none"/>
+    <path d="M15 15l6 6M43 43l6 6M49 15l-6 6M21 43l-6 6" fill="none"/>
   </svg>`,
 
     // 11. Server rack
@@ -149,7 +149,7 @@ export const TECH_LOGOS = [
     <circle cx="52" cy="32" r="6"/>
     <line x1="18" y1="32" x2="26" y2="32" stroke-width="3"/>
     <line x1="38" y1="32" x2="46" y2="32" stroke-width="3"/>
-    <path d="M32 12v14M32 38v14" stroke-width="2"/>
+    <path d="M32 12v14M32 38v14" fill="none" stroke-width="2"/>
   </svg>`,
 
     // 18. Monitoring/chart
@@ -169,9 +169,9 @@ export const TECH_LOGOS = [
     // 20. Container/box
     `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="${KEPPEL_FILL}" stroke="${KEPPEL_LIGHT}" stroke-width="2">
     <path d="M32 8l24 12v24l-24 12-24-12V20z"/>
-    <path d="M32 8v24" stroke-width="2"/>
+    <path d="M32 8v24" fill="none" stroke-width="2"/>
     <path d="M8 20l24 12 24-12" stroke-width="2" fill="none"/>
-    <path d="M32 32v24" stroke-width="2"/>
+    <path d="M32 32v24" fill="none" stroke-width="2"/>
   </svg>`,
 
     // 21. Prometheus/fire
@@ -191,10 +191,10 @@ export const TECH_LOGOS = [
     // 23. Redis/keyvalue
     `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="${KEPPEL_FILL}" stroke="${KEPPEL_LIGHT}" stroke-width="2">
     <path d="M8 24l24-12 24 12-24 12z" fill="${KEPPEL_PRIMARY}" fill-opacity="0.5"/>
-    <path d="M8 32l24 12 24-12" fill="none"/>
-    <path d="M8 40l24 12 24-12" fill="none"/>
-    <path d="M8 24v16"/>
-    <path d="M56 24v16"/>
+    <path d="M8 32l24 12 24-12" fill="none" stroke="${KEPPEL_LIGHT}"/>
+    <path d="M8 40l24 12 24-12" fill="none" stroke="${KEPPEL_LIGHT}"/>
+    <path d="M8 24v16" fill="none" stroke="${KEPPEL_LIGHT}"/>
+    <path d="M56 24v16" fill="none" stroke="${KEPPEL_LIGHT}"/>
   </svg>`,
 
     // 24. Jenkins/butler
@@ -203,7 +203,7 @@ export const TECH_LOGOS = [
     <path d="M20 44h24v12c0 4-4 8-12 8s-12-4-12-8z"/>
     <circle cx="26" cy="26" r="3" fill="${KEPPEL_LIGHT}"/>
     <circle cx="38" cy="26" r="3" fill="${KEPPEL_LIGHT}"/>
-    <path d="M26 34c0 4 6 6 12 0" fill="none"/>
+    <path d="M26 34c0 4 6 6 12 0" fill="none" stroke="${KEPPEL_LIGHT}"/>
   </svg>`,
 
     // 25. Vault/safe
@@ -242,72 +242,25 @@ export const TECH_LOGOS = [
   </svg>`,
 ];
 
-// Simple icons for opposite faces (front/back) - with fills
+// Simple icons for opposite faces
 export const SIMPLE_ICONS = [
-    // Circle dot
-    `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="${KEPPEL_FILL}" stroke="${KEPPEL_LIGHT}" stroke-width="2">
-    <circle cx="32" cy="32" r="20"/>
-    <circle cx="32" cy="32" r="8" fill="${KEPPEL_LIGHT}"/>
-  </svg>`,
-
-    // Square
-    `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="${KEPPEL_FILL}" stroke="${KEPPEL_LIGHT}" stroke-width="2">
-    <rect x="16" y="16" width="32" height="32" rx="4"/>
-  </svg>`,
-
-    // Diamond
-    `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="${KEPPEL_FILL}" stroke="${KEPPEL_LIGHT}" stroke-width="2">
-    <path d="M32 12l20 20-20 20-20-20z"/>
-  </svg>`,
-
-    // Triangle
-    `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="${KEPPEL_FILL}" stroke="${KEPPEL_LIGHT}" stroke-width="2">
-    <path d="M32 12l22 40H10z"/>
-  </svg>`,
-
-    // Plus
-    `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none" stroke="${KEPPEL_LIGHT}" stroke-width="4">
-    <line x1="32" y1="12" x2="32" y2="52"/>
-    <line x1="12" y1="32" x2="52" y2="32"/>
-  </svg>`,
-
-    // Star
-    `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="${KEPPEL_FILL}" stroke="${KEPPEL_LIGHT}" stroke-width="2">
-    <path d="M32 12l6 16h16l-13 10 5 16-14-10-14 10 5-16-13-10h16z"/>
-  </svg>`,
-
-    // Hexagon
-    `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="${KEPPEL_FILL}" stroke="${KEPPEL_LIGHT}" stroke-width="2">
-    <path d="M32 8l22 12v24l-22 12-22-12V20z"/>
-  </svg>`,
-
-    // Cross circle
-    `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="${KEPPEL_FILL}" stroke="${KEPPEL_LIGHT}" stroke-width="2">
-    <circle cx="32" cy="32" r="20"/>
-    <line x1="22" y1="22" x2="42" y2="42" stroke-width="3"/>
-    <line x1="42" y1="22" x2="22" y2="42" stroke-width="3"/>
-  </svg>`,
-
-    // Double circle
-    `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="${KEPPEL_FILL}" stroke="${KEPPEL_LIGHT}" stroke-width="2">
-    <circle cx="32" cy="32" r="22"/>
-    <circle cx="32" cy="32" r="12" fill="${KEPPEL_PRIMARY}" fill-opacity="0.5"/>
-  </svg>`,
-
-    // Octagon
-    `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="${KEPPEL_FILL}" stroke="${KEPPEL_LIGHT}" stroke-width="2">
-    <path d="M22 12h20l10 10v20l-10 10H22l-10-10V22z"/>
-  </svg>`,
-
-    // Arrow up
-    `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="${KEPPEL_FILL}" stroke="${KEPPEL_LIGHT}" stroke-width="2">
-    <path d="M32 8l20 24H12z"/>
-    <rect x="24" y="32" width="16" height="24"/>
-  </svg>`,
-
-    // Infinity
-    `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none" stroke="${KEPPEL_LIGHT}" stroke-width="3">
-    <path d="M20 32c-6-8-6-16 0-16s12 8 12 16-6 16-12 16-6-8 0-16z"/>
-    <path d="M44 32c6 8 6 16 0 16s-12-8-12-16 6-16 12-16 6 8 0 16z"/>
-  </svg>`,
+    `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="${KEPPEL_FILL}" stroke="${KEPPEL_LIGHT}" stroke-width="2"><circle cx="32" cy="32" r="20"/><circle cx="32" cy="32" r="8" fill="${KEPPEL_LIGHT}"/></svg>`,
+    `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="${KEPPEL_FILL}" stroke="${KEPPEL_LIGHT}" stroke-width="2"><rect x="16" y="16" width="32" height="32" rx="4"/></svg>`,
+    `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="${KEPPEL_FILL}" stroke="${KEPPEL_LIGHT}" stroke-width="2"><path d="M32 12l20 20-20 20-20-20z"/></svg>`,
+    `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="${KEPPEL_FILL}" stroke="${KEPPEL_LIGHT}" stroke-width="2"><path d="M32 12l22 40H10z"/></svg>`,
+    `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none" stroke="${KEPPEL_LIGHT}" stroke-width="4"><line x1="32" y1="12" x2="32" y2="52"/><line x1="12" y1="32" x2="52" y2="32"/></svg>`,
+    `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="${KEPPEL_FILL}" stroke="${KEPPEL_LIGHT}" stroke-width="2"><path d="M32 12l6 16h16l-13 10 5 16-14-10-14 10 5-16-13-10h16z"/></svg>`,
+    `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="${KEPPEL_FILL}" stroke="${KEPPEL_LIGHT}" stroke-width="2"><path d="M32 8l22 12v24l-22 12-22-12V20z"/></svg>`,
+    `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="${KEPPEL_FILL}" stroke="${KEPPEL_LIGHT}" stroke-width="2"><circle cx="32" cy="32" r="20"/><line x1="22" y1="22" x2="42" y2="42" stroke-width="3"/><line x1="42" y1="22" x2="22" y2="42" stroke-width="3"/></svg>`,
+    `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="${KEPPEL_FILL}" stroke="${KEPPEL_LIGHT}" stroke-width="2"><circle cx="32" cy="32" r="22"/><circle cx="32" cy="32" r="12" fill="${KEPPEL_PRIMARY}" fill-opacity="0.5"/></svg>`,
+    `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="${KEPPEL_FILL}" stroke="${KEPPEL_LIGHT}" stroke-width="2"><path d="M22 12h20l10 10v20l-10 10H22l-10-10V22z"/></svg>`,
+    `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="${KEPPEL_FILL}" stroke="${KEPPEL_LIGHT}" stroke-width="2"><path d="M32 8l20 24H12z"/><rect x="24" y="32" width="16" height="24"/></svg>`,
+    `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none" stroke="${KEPPEL_LIGHT}" stroke-width="3"><path d="M20 32c-6-8-6-16 0-16s12 8 12 16-6 16-12 16-6-8 0-16z"/><path d="M44 32c6 8 6 16 0 16s-12-8-12-16 6-16 12-16 6 8 0 16z"/></svg>`,
 ];
+
+// CRITICAL: Bridge for non-module scripts
+if (typeof window !== 'undefined') {
+    window.TECH_LOGOS = TECH_LOGOS;
+    window.SIMPLE_ICONS = SIMPLE_ICONS;
+    window.CENTER_ICON_SVG = CENTER_ICON_SVG;
+}

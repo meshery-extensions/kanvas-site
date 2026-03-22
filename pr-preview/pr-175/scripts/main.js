@@ -577,23 +577,15 @@ const initVideoHandler = () => {
 
 const initThemeToggle = () => {
     const btn = document.getElementById('theme-toggler');
-    const icon = document.getElementById('theme-icon');
-    if (!btn || !icon) return;
-
-    const updateIcon = (theme) => {
-        icon.classList.replace(theme === 'light' ? 'fa-moon' : 'fa-sun',
-                               theme === 'light' ? 'fa-sun'  : 'fa-moon');
-    };
+    if (!btn) return;
 
     const saved = localStorage.getItem('theme') || 'dark';
     document.documentElement.setAttribute('data-theme', saved);
-    updateIcon(saved);
 
     btn.addEventListener('click', () => {
         const next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
         document.documentElement.setAttribute('data-theme', next);
         localStorage.setItem('theme', next);
-        updateIcon(next);
     });
 };
 

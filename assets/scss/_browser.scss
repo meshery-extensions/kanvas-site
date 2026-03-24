@@ -318,12 +318,23 @@
   }
 
   .browser-scene-wrap {
-    top: 42%;
+    top: 43%;
   }
 
   .browser-scene {
-    width: clamp(130px, 42vw, 210px);
-    height: clamp(120px, 36vw, 190px);
+    width: clamp(112px, 34vw, 150px);
+    height: clamp(104px, 32vw, 140px);
+  }
+
+  .browser .reunited-logo {
+    width: 100%;
+    height: 100%;
+  }
+
+  .browser .reunited-glow {
+    width: 108%;
+    height: 24%;
+    bottom: -11%;
   }
 
   .browser-cta {
@@ -331,6 +342,22 @@
     padding: 11px 16px;
     font-size: 0.84rem;
     gap: 10px;
+  }
+}
+
+@media (max-width: 560px) {
+  .browser-scene-wrap {
+    top: 42%;
+  }
+
+  .browser-scene {
+    width: clamp(100px, 32vw, 126px);
+    height: clamp(92px, 30vw, 116px);
+  }
+
+  .browser .reunited-logo {
+    width: 100%;
+    height: 100%;
   }
 }
 
@@ -343,12 +370,23 @@
   }
 
   .browser-scene-wrap {
-    top: 39%;
+    top: 41%;
   }
 
   .browser-scene {
-    width: clamp(120px, 40vw, 160px);
-    height: clamp(110px, 34vw, 144px);
+    width: clamp(94px, 30vw, 112px);
+    height: clamp(88px, 28vw, 104px);
+  }
+
+  .browser .reunited-logo {
+    width: 100%;
+    height: 100%;
+  }
+
+  .browser .reunited-glow {
+    width: 104%;
+    height: 22%;
+    bottom: -10%;
   }
 
   .browser-cta {

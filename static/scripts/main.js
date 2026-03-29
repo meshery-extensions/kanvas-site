@@ -447,38 +447,51 @@ const initScrollAnimations = () => {
             onEnter: animateCounters,
         });
 
-        // Recession — only after scrolling well past
-        gsap.to(heroSection, {
-            opacity: 0.4, y: -30,
-            scrollTrigger: { trigger: heroSection, start: 'bottom 10%', end: 'bottom top', scrub: 1 }
-        });
+    // ── New Hero  Section Entrance ──
+    const newHero = document.querySelector('.new-hero');
+    if (newHero) {
+        gsap.from('.new-hero .eyebrow', { y: 20, opacity: 0, duration: 0.8, ease: 'power3.out' });
+        gsap.from('.new-hero .main-heading', { y: 30, opacity: 0, duration: 0.8, delay: 0.1, ease: 'power3.out' });
+        gsap.from('.new-hero .sub-heading', { y: 30, opacity: 0, duration: 0.8, delay: 0.2, ease: 'power3.out' });
+        gsap.from('.new-hero .btn', { y: 20, opacity: 0, duration: 0.8, delay: 0.3, stagger: 0.1, ease: 'power3.out' });
+        gsap.from('.new-hero .sub-cta', { y: 20, opacity: 0, duration: 0.8, delay: 0.6, ease: 'power3.out' });
+        gsap.from('.new-hero .ide-window', { y: 60, opacity: 0, duration: 1, delay: 0.4, ease: 'power3.out' });
     }
 
+    // Recession — only after scrolling well past
+    gsap.to(heroSection, {
+        opacity: 0.4, y: -30,
+        scrollTrigger: { trigger: heroSection, start: 'bottom 10%', end: 'bottom top', scrub: 1 }
+    });
+    }
     // ── Demo Section ──
     const demoSection = document.querySelector('.demo-section');
     if (demoSection) {
         gsap.from('.demo-header', {
             y: 50, opacity: 0,
-            scrollTrigger: { trigger: demoSection, start: 'top 88%', end: 'top 50%', scrub: 1 }
+            duration: 0.6,
+            scrollTrigger: { trigger: demoSection, start: 'top 88%', toggleActions: 'play none none none' }
         });
 
         const demoContainer = document.querySelector('.demo-container');
         if (demoContainer) {
             gsap.from(demoContainer, {
                 scale: 0.88, opacity: 0, y: 60,
-                scrollTrigger: { trigger: demoContainer, start: 'top 90%', end: 'top 35%', scrub: 1 }
+                duration: 0.6, delay: 0.1,
+                scrollTrigger: { trigger: demoContainer, start: 'top 90%', toggleActions: 'play none none none' }
             });
         }
 
         const personaCards = document.querySelectorAll('.persona-card');
         if (personaCards.length) {
-            scrubEach(personaCards, { y: 60, opacity: 0, scale: 0.94 }, '.demo-personas', 90, 50, 5);
+            personaCards.forEach((card, i) => {
+                gsap.from(card, {
+                    y: 60, opacity: 0, scale: 0.94,
+                    duration: 0.5, delay: i * 0.1,
+                    scrollTrigger: { trigger: '.demo-personas', start: 'top 80%', toggleActions: 'play none none none' }
+                });
+            });
         }
-
-        gsap.to(demoSection, {
-            opacity: 0.5, y: -20,
-            scrollTrigger: { trigger: demoSection, start: 'bottom 40%', end: 'bottom top', scrub: 1 }
-        });
     }
 
     // ── Capabilities Section ──

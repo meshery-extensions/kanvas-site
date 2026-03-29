@@ -117,7 +117,8 @@
      - min scale = 0.2 (matches previous <=196px rule)
      - max scale = 1 (no upscaling above baseline) */
   --browser-scale: clamp(0.2, calc(100cqi / 980), 1);
-  scale: var(--browser-scale);
+  --browser-scale: 1;
+  scale: var(--browser-scale, 1);
   transition: scale 0.08s linear;
 }
 

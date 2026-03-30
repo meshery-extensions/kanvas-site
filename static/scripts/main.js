@@ -194,6 +194,78 @@ const initBrowserReveal = () => {
     syncVisibilityState();
 };
 
+// 6. Convergence pieces
+const initConvergingPieces = () => {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    const browser = document.querySelector('.browser');
+    if (!browser) return;
+
+    const vw = window.innerWidth;
+    const scaleMult = vw < 480 ? 0.48 : vw < 768 ? 0.62 : vw < 1024 ? 0.80 : 1;
+
+    const config = [
+        { points: '362.54 42.38 362.54 253.13 545.2 147.38',   fill: '#00d3a9', depth: 'front', maxScale: 4.8, maxOpacity: 0.88, x0: '108vw', y0:  '8vh', yMid:  '2vh', xE: '54vw', yE: '30vh', rotY:  38, rotX: -10, initScale: 1.10, scrub: 1.8, fadeDelay:   0 },
+        { points: '362.54 297.22 362.54 508.98 546.87 403.59', fill: '#00d3a9', depth: 'front', maxScale: 4.4, maxOpacity: 0.84, x0: '112vw', y0: '58vh', yMid: '65vh', xE: '56vw', yE: '62vh', rotY: -32, rotX:  14, initScale: 0.85, scrub: 2.3, fadeDelay:  80 },
+        { points: '559.39 380.45 559.39 169.55 376.95 275.18', fill: '#00b39f', depth: 'back',  maxScale: 3.0, maxOpacity: 0.55, x0: '110vw', y0: '34vh', yMid: '28vh', xE: '52vw', yE: '46vh', rotY:  42, rotX:  -8, initScale: 1.25, scrub: 1.5, fadeDelay: 160 },
+        { points: '336.24 251.68 336.24 44.16 155.82 147.58',  fill: '#00b39f', depth: 'mid',   maxScale: 3.8, maxOpacity: 0.74, x0: '-12vw', y0: '44vh', yMid: '50vh', xE: '44vw', yE: '20vh', rotY: -40, rotX:  10, initScale: 0.90, scrub: 2.0, fadeDelay:  40 },
+        { points: '336.24 508 336.24 298.75 155.38 403.45',    fill: '#00b39f', depth: 'mid',   maxScale: 4.0, maxOpacity: 0.76, x0: '-10vw', y0: '16vh', yMid: '10vh', xE: '46vw', yE: '50vh', rotY:  34, rotX: -14, initScale: 1.15, scrub: 1.7, fadeDelay: 120 },
+        { points: '140.61 169.16 140.61 381.62 324.4 275.21',  fill: '#00d3a9', depth: 'back',  maxScale: 2.8, maxOpacity: 0.52, x0: '-14vw', y0: '76vh', yMid: '83vh', xE: '45vw', yE: '76vh', rotY: -36, rotX:   9, initScale: 0.80, scrub: 2.4, fadeDelay: 200 },
+    ];
+
+    const journeyEnd = Math.max(browser.offsetTop - window.innerHeight * 0.4, window.innerHeight);
+
+    config.forEach((c, i) => {
+        if (c.depth === 'back' && vw < 600) return;
+
+        const anchor = document.createElement('div');
+        anchor.className = 'scroll-piece-anchor';
+        anchor.innerHTML =
+            '<div class="scroll-piece-stage">' +
+                '<div class="scroll-piece-body scroll-piece-body--depth-' + c.depth + '">' +
+                    '<svg viewBox="130 30 440 490" xmlns="http://www.w3.org/2000/svg">' +
+                        '<polygon points="' + c.points + '" fill="' + c.fill + '"/>' +
+                    '</svg>' +
+                '</div>' +
+                '<div class="scroll-piece-glow"></div>' +
+            '</div>';
+        document.body.appendChild(anchor);
+
+        const body = anchor.querySelector('.scroll-piece-body');
+        const glow = anchor.querySelector('.scroll-piece-glow');
+
+        gsap.set(anchor, { x: c.x0, y: c.y0, scale: c.initScale * scaleMult, opacity: 0 });
+        gsap.set(body,   { rotateY: c.rotY, rotateX: c.rotX });
+
+        gsap.to(anchor, {
+            opacity: c.maxOpacity,
+            scrollTrigger: { start: 60 + i * 100, end: 230 + i * 100, scrub: 1 },
+        });
+
+        const tl = gsap.timeline({
+            scrollTrigger: { start: 80, end: journeyEnd, scrub: c.scrub },
+        });
+        tl.to(anchor, { x: c.xE, ease: 'power1.out', duration: 1 }, 0);
+        tl.to(anchor, { y: c.yMid, ease: 'sine.in',  duration: 0.4 }, 0);
+        tl.to(anchor, { y: c.yE,   ease: 'sine.out', duration: 0.6 }, 0.4);
+        tl.to(anchor, { scale: c.maxScale * scaleMult, ease: 'power1.inOut', duration: 1 }, 0);
+        tl.to(body,   { rotateY: 0, rotateX: 0, ease: 'power1.inOut', duration: 1 }, 0);
+        if (glow) tl.to(glow, { opacity: 1, ease: 'power1.in', duration: 1 }, 0);
+
+        const fd = c.fadeDelay * 0.06;
+        gsap.to(anchor, {
+            opacity: 0,
+            scale: (c.maxScale + 1.2) * scaleMult,
+            scrollTrigger: {
+                trigger: browser,
+                start: `top ${92 - fd}%`,
+                end:   `top ${54 - fd}%`,
+                scrub: 1,
+            },
+        });
+    });
+};
+
 const initScrollAnimations = () => {
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
     if (!document.querySelector('.browser, #browserScene')) return;
@@ -401,6 +473,7 @@ document.addEventListener("DOMContentLoaded", () => {
     initMarquee();
     if (document.querySelector('.browser, #browserScene')) {
         initScrollPieces();
+        initConvergingPieces();
         initBrowserReveal();
         initScrollAnimations();
     }

@@ -75,7 +75,7 @@ const scrubEach = (elements, props, triggerEl, startBase, endBase, offsetPer) =>
         const endVal   = endBase   - i * offsetPer;
         gsap.from(el, Object.assign({}, props, {
             scrollTrigger: isMobile
-                ? { trigger: triggerEl, start: 'top ' + Math.min(startVal + 5, 100) + '%', once: true }
+                ? { trigger: triggerEl, start: 'top ' + Math.min(startVal + 5, 100) + '%', toggleActions: "play none none none" }
                 : { trigger: triggerEl, start: 'top ' + startVal + '%', end: 'top ' + endVal + '%', scrub: 1 },
         }));
     });
@@ -363,7 +363,7 @@ const initScrollPieces = () => {
 const stConfig = (trigger, start, end, scrubVal = 1) => {
     if (isMobile) {
         const mStart = start.replace(/(\d+)%/, (_, n) => Math.min(+n + 5, 100) + '%');
-        return { trigger, start: mStart, once: true };
+        return { trigger, start: mStart, toggleActions: "play none none none" };
     }
     return { trigger, start, end, scrub: scrubVal };
 };
@@ -457,7 +457,7 @@ const initScrollAnimations = () => {
         ScrollTrigger.create({
             trigger: heroSection,
             start: isMobile ? 'top 75%' : 'top 70%',
-            once: true,
+            toggleActions: "play none none none",
             onEnter: animateCounters,
         });
 

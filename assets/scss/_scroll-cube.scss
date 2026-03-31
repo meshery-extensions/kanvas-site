@@ -10,7 +10,7 @@
   left: 0;
   width: 100%;
   height: 100%;
-  z-index: -1; // behind content, subtle background continuity
+  z-index: -1; 
   pointer-events: none;
   will-change: transform;
   opacity: 0; // hidden until JS activates

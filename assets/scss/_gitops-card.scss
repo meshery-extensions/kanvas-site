@@ -5,10 +5,11 @@ $gitops-blue: #3b82f6;
 
 .gitops-card-section {
     max-width: 900px;
+    width:100%
 }
 
 .gitops-card-wrapper {
-    width: 121%;
+    width: 100%;
 }
 
 .gitops-card {
@@ -87,28 +88,38 @@ $gitops-blue: #3b82f6;
 
 .gitops-pipeline-nodes {
     display: flex;
-    align-items: stretch;
+    align-items: flex-start;
     justify-content: space-between;
     gap: $spacer * 0.5;
-    flex-wrap: nowrap;
+    flex-wrap: nowrap;     
+    max-width: 100%;   
+    // overflow-x: auto;     
+  
+   @media (max-width: 1024px) {
+        overflow-x: auto;
+        padding-bottom: 1rem;
+        justify-content: flex-start; /* Taaki left side se Git Commit cut na ho */
+    }
 
     @media (max-width: 768px) {
         flex-direction: column;
         align-items: center;
+        overflow-x: visible;
     }
 }
 
 .gitops-node-wrap {
     position: relative;
     display: flex;
-    align-items: center;
-    flex: 0 0 auto;
+    align-items: flex-start;
+    flex: 0 1 auto;
     min-width: 0;
 
     @media (max-width: 768px) {
         width: 100%;
         flex: none;
         flex-direction: column;
+        align-items: center;
 
         &:not(.gitops-node-wrap--last)::after {
             content: "";
@@ -311,11 +322,14 @@ $gitops-blue: #3b82f6;
     width: 60px;
     flex: 1;
     height: 2px;
-    margin: 0 $spacer * 0.5;
+    margin-top: 1.35rem; 
+    margin-right: $spacer * 0.5;
+    margin-left: $spacer * 0.5;
     position: relative;
     overflow: hidden;
     border-radius: 2px;
-    min-width: 6rem;
+    min-width: 1rem;
+    
 
     @media (max-width: 768px) {
         display: none;
@@ -498,6 +512,11 @@ $gitops-blue: #3b82f6;
     justify-content: left;
     margin-left: 25px;
     margin-bottom: 20px;
+    @media (max-width: 992px) {
+        margin-left: 0;
+        justify-content: center; // Mobile par title center ho jayega
+        text-align: center;
+    }
 }
 
 .workflow-row {
@@ -506,10 +525,20 @@ $gitops-blue: #3b82f6;
     align-items: stretch;
     gap: 20px;
     padding: 0 25px;
+    @media (max-width: 992px) {
+        flex-direction: column; // YAHI HAI ASLI FIX: Cards ab niche-niche aayenge
+        align-items: center;
+        padding: 0 15px; // Side se thodi space kam kar di mobile ke liye
+    }
 }
 
 .workflow-card {
     flex: 1;
     display: flex;
     flex-direction: column;
+    @media (max-width: 992px) {
+        width: 100%; // Mobile par card poori width lega
+        max-width: 450px; // Card bahut zyada fail na jaye isliye ek limit
+        margin-bottom: 10px; // Do cards ke beech mein thodi space
+    }
 }

@@ -422,3 +422,22 @@
         transform: scale(1.05);
     }
 }
+
+.capabilities-badge {
+    color: $casper;
+    font-size: 0.8rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: $spacer * 0.75;
+    margin-bottom: 15px;
+
+    .dot {
+    display: inline-block; 
+    width: 8px;            
+    height: 8px;
+    background-color: $primary; 
+    border-radius: 50%;
+    flex-shrink: 0;
+    }
+}

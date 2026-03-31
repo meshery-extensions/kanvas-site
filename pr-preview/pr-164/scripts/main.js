@@ -1,7 +1,5 @@
-// Register Plugin
 gsap.registerPlugin(ScrollTrigger);
 
-// 1. Header Timeline
 let tl = gsap.timeline({
     defaults: { ease: "power4.out" }
 });
@@ -10,7 +8,6 @@ tl.from(".main-nav ul li a", { opacity: 0, y: -50, duration: 1, stagger: 0.2 });
 tl.from(".btn-secondary", { x: 20, opacity: 0, duration: 0.6 }, "-=0.5");
 tl.from(".btn-primary", { x: 20, opacity: 0, duration: 0.6 }, "<");
 
-// 2. Optimized Counter Animation
 const animateCounters = () => {
     const counters = document.querySelectorAll('.counter');
     const speed = 2000;
@@ -44,7 +41,6 @@ const animateCounters = () => {
     });
 };
 
-// 3. Customers Marquee
 const initMarquee = () => {
     const marquee = document.getElementById('customersMarquee');
     if (!marquee) return;
@@ -61,11 +57,6 @@ const initMarquee = () => {
     marquee.addEventListener('mouseleave', () => animation.play());
 };
 
-// ────────────────────────────────────────────────
-// 4. Scroll-Linked Page Animations
-// ────────────────────────────────────────────────
-
-// Helper: per-element scrub entrance
 const scrubEach = (elements, props, triggerEl, startBase, endBase, offsetPer) => {
     elements.forEach((el, i) => {
         gsap.from(el, Object.assign({}, props, {
@@ -79,11 +70,9 @@ const scrubEach = (elements, props, triggerEl, startBase, endBase, offsetPer) =>
     });
 };
 
-// ── 5. Browser scene — assembled logo + CTA rise from below (CodeWiki-style) ──
 const initScrollPieces = () => {
     document.querySelectorAll('.scroll-piece-anchor').forEach((node) => node.remove());
 
-    // Populate the reunited logo SVGs in the browser scene
     const pieces = [
         { points: '362.54 42.38 362.54 253.13 545.2 147.38',   fill: '#00d3a9' },
         { points: '362.54 297.22 362.54 508.98 546.87 403.59', fill: '#00d3a9' },
@@ -110,91 +99,29 @@ const initBrowserReveal = () => {
     if (!browserBody || !browserScene) return;
 
     gsap.set(browserScene, { xPercent: -50, yPercent: -50, visibility: 'visible' });
-    const getHideY = () => Math.min(Math.max(browserBody.offsetHeight * 0.55, 220), 480);
-
-    const setVisible = () => gsap.set(browserScene, { y: 0, opacity: 1, visibility: 'visible' });
-    const setHidden = () => gsap.set(browserScene, { y: getHideY(), opacity: 0, visibility: 'visible' });
 
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-        setVisible();
+        gsap.set(browserScene, { y: 0, opacity: 1 });
         return;
     }
 
-    if (typeof ScrollTrigger === 'undefined' || !ScrollTrigger || !gsap || !gsap.to) {
-        setVisible();
-        return;
-    }
+    const hideY = Math.min(Math.max(browserBody.offsetHeight * 0.55, 220), 480);
 
-    if (window.__browserRevealST) {
-        window.__browserRevealST.kill();
-        window.__browserRevealST = null;
-    }
-
-    const isAboveTrigger = () => browserBody.getBoundingClientRect().top > window.innerHeight * 0.78;
-    let isVisibleState = !isAboveTrigger();
-    if (isVisibleState) setVisible();
-    else setHidden();
-
-    const revealTween = gsap.to(browserScene, {
-        y: 0,
-        opacity: 1,
-        duration: 0.9,
-        ease: 'power3.out',
-        paused: true
-    });
-
-    const revealST = ScrollTrigger.create({
-        trigger: browserBody,
-        start: 'top 78%',
-        end: 'top 38%',
-        onEnter: () => {
-            if (isVisibleState) return;
-            setHidden();
-            revealTween.restart();
-            isVisibleState = true;
-        },
-        onEnterBack: () => {
-            if (isVisibleState) return;
-            setHidden();
-            revealTween.restart();
-            isVisibleState = true;
-        },
-        onLeaveBack: () => {
-            revealTween.pause(0);
-            setHidden();
-            isVisibleState = false;
-        },
-        onRefresh: () => {
-            if (isAboveTrigger()) {
-                revealTween.pause(0);
-                setHidden();
-                isVisibleState = false;
-            } else {
-                revealTween.pause(1);
-                setVisible();
-                isVisibleState = true;
-            }
+    gsap.fromTo(browserScene,
+        { y: hideY, opacity: 0 },
+        {
+            y: 0, opacity: 1,
+            ease: 'none',
+            scrollTrigger: {
+                trigger: browserSection,
+                start: 'top 90%',
+                end: 'top 5%',
+                scrub: 0.8,
+            },
         }
-    });
-
-    window.__browserRevealST = revealST;
-
-    const syncVisibilityState = () => {
-        if (isAboveTrigger()) {
-            revealTween.pause(0);
-            setHidden();
-            isVisibleState = false;
-        } else {
-            revealTween.pause(1);
-            setVisible();
-            isVisibleState = true;
-        }
-    };
-
-    syncVisibilityState();
+    );
 };
 
-// 6. Convergence pieces
 const initConvergingPieces = () => {
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
@@ -252,17 +179,20 @@ const initConvergingPieces = () => {
         tl.to(body,   { rotateY: 0, rotateX: 0, ease: 'power1.inOut', duration: 1 }, 0);
         if (glow) tl.to(glow, { opacity: 1, ease: 'power1.in', duration: 1 }, 0);
 
-        const fd = c.fadeDelay * 0.06;
-        gsap.to(anchor, {
-            opacity: 0,
-            scale: (c.maxScale + 1.2) * scaleMult,
-            scrollTrigger: {
-                trigger: browser,
-                start: `top ${92 - fd}%`,
-                end:   `top ${54 - fd}%`,
-                scrub: 1,
-            },
-        });
+        gsap.fromTo(anchor,
+            { opacity: c.maxOpacity },
+            {
+                opacity: 0,
+                ease: 'none',
+                immediateRender: false,
+                scrollTrigger: {
+                    trigger: browser,
+                    start: 'top 95%',
+                    end: 'top 65%',
+                    scrub: 0.6,
+                },
+            }
+        );
     });
 };
 
@@ -292,10 +222,6 @@ const initScrollAnimations = () => {
         scrollTrigger: { trigger: 'body', start: 'top top', end: 'bottom bottom', scrub: 2.5 }
     });
 
-    // ── Hero Glass — Recession ──
-    // Wraps #hero so GSAP recession doesn't conflict with hero-glass.js tilt.
-    // Uses gsap.to (NOT gsap.from) — hero starts at full opacity/scale,
-    // only recedes AFTER user scrolls past center.
     const hero = document.querySelector('#hero');
     if (hero) {
         const wrapper = document.createElement('div');
@@ -307,14 +233,13 @@ const initScrollAnimations = () => {
             scale: 0.92, opacity: 1, y: -40,
             scrollTrigger: {
                 trigger: wrapper,
-                start: 'bottom 30%',  // recession begins when bottom of hero reaches 60% viewport
+                start: 'bottom 30%',
                 end: 'bottom top',
                 scrub: 1,
             }
         });
     }
 
-    // ── Customers Section ──
     const customersSection = document.querySelector('.customers-section');
     if (customersSection) {
         gsap.from('.customers-title', {
@@ -323,7 +248,6 @@ const initScrollAnimations = () => {
         });
     }
 
-    // ── Hero Section ("Step aside, YAML") — Layered parallax ──
     const heroSection = document.querySelector('.hero-section');
     if (heroSection) {
         gsap.from('.hero-badge', {
@@ -355,14 +279,12 @@ const initScrollAnimations = () => {
             onEnter: animateCounters,
         });
 
-        // Recession — only after scrolling well past
         gsap.to(heroSection, {
             opacity: 0.4, y: -30,
             scrollTrigger: { trigger: heroSection, start: 'bottom 10%', end: 'bottom top', scrub: 1 }
         });
     }
 
-    // ── Demo Section ──
     const demoSection = document.querySelector('.demo-section');
     if (demoSection) {
         gsap.from('.demo-header', {
@@ -389,7 +311,6 @@ const initScrollAnimations = () => {
         });
     }
 
-    // ── Capabilities Section ──
     const capSection = document.querySelector('.capabilities-section');
     if (capSection) {
         const capHeaderEls = [
@@ -413,7 +334,6 @@ const initScrollAnimations = () => {
         }
     }
 
-    // ── Community Section ──
     const communitySection = document.querySelector('.community-section');
     if (communitySection) {
         const comHeaderEls = [
@@ -430,10 +350,6 @@ const initScrollAnimations = () => {
         }
     }
 
-    // ── Browser Section ──
-    // Keep stand static: no scroll animation on browser base.
-
-    // ── Section Dividers ──
     const dividerSections = document.querySelectorAll(
         '.customers-section, .hero-section, .demo-section, .capabilities-section, .community-section'
     );

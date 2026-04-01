@@ -1,0 +1,24 @@
+.theme-toggle-btn {
+  appearance: none;
+  -webkit-appearance: none;
+  background: none;
+  border: none;
+  box-shadow: none;
+  outline: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: transform 0.3s ease;
+
+  &:hover { transform: rotate(20deg); }
+
+  .icon-moon { display: block; }
+  .icon-sun  { display: none; }
+}
+
+[data-theme="light"] .theme-toggle-btn {
+  .icon-moon { display: none; }
+  .icon-sun  { display: block; filter: brightness(0); }
+}

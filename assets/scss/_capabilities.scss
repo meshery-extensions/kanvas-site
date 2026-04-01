@@ -1,6 +1,7 @@
 .capabilities-section {
   padding: 50px 20px;
   text-align: center;
+  overflow: hidden;
 
   .capabilities-header {
     margin-bottom: 50px;
@@ -40,18 +41,20 @@
   }
 
   .capabilities-grid {
+    width: 100%;
     display: grid;
-    grid-template-columns: repeat(3, 1fr); 
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     gap: $spacer * 1.25;
     max-width: 1140px;
     margin: 2rem auto;
     padding: 0 $spacer;
 
-    @media (max-width: 992px) { grid-template-columns: repeat(2, 1fr); }
-    @media (max-width: 768px) { grid-template-columns: 1fr; }
+    
   }
 
   .cap-card {
+    width: 100%;
+    min-width: 0;
     position: relative;
     background: linear-gradient(
       135deg,

@@ -62,3 +62,6 @@ $body-color: #fff !default;
   color: $body-color;
   border-collapse: collapse;
 }
+body{
+  overflow-x:hidden;
+}

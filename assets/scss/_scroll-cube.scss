@@ -5,12 +5,12 @@
 // Inspired by codewiki.google's floating 3D cube.
 
 .scroll-piece-anchor {
-  position: fixed;
+  position: fixed; 
   top: 0;
   left: 0;
-  width: 0;
-  height: 0;
-  z-index: -1; // behind content, subtle background continuity
+  width: 100%;
+  height: 100%;
+  z-index: -1; 
   pointer-events: none;
   will-change: transform;
   opacity: 0; // hidden until JS activates
@@ -21,6 +21,7 @@
   perspective: 1200px;
   width: 50px;
   height: 50px;
+  max-width: 100%;
   transform: translate(-50%, -50%);
 }
 
@@ -32,10 +33,11 @@
 }
 // Safari gets a high-resolution initial raster for each SVG, but users still see the intended 50px starting size before enlargement. 
 .scroll-piece-body svg {
-  width: 280px;
-  height: 280px;
+  width: 100%;
+  height: auto;
+  max-width: 280px;
   display: block;
-  transform: scale(0.1785714286);
+  // transform: scale(0.1785714286);
   transform-origin: 0 0;
   will-change: transform;
 }
@@ -198,6 +200,9 @@
 
 // ─── Responsive ───
 @media (max-width: 768px) {
+  .scroll-piece-body svg {
+  max-width: 150px;
+  }
   .scroll-piece-stage {
     width: 50px;
     height: 50px;

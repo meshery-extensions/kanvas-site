@@ -121,13 +121,13 @@ $gitops-blue: #3b82f6;
         flex-direction: column;
         align-items: center;
 
-        &:not(.gitops-node-wrap--last)::after {
-            content: "";
-            width: 2px;
-            height: 24px;
-            background: rgba($secondary, 0.3);
-            margin: 4px 0;
-        }
+        // &:not(.gitops-node-wrap--last)::after {
+        //     content: "";
+        //     width: 2px;
+        //     height: 24px;
+        //     background: rgba($secondary, 0.3);
+        //     margin: 4px 0;
+        // }
     }
 
     &.gitops-node-wrap--last .gitops-connector {
@@ -322,7 +322,7 @@ $gitops-blue: #3b82f6;
     width: 60px;
     flex: 1;
     height: 2px;
-    margin-top: 1.35rem; 
+    margin-top: 2.25rem; 
     margin-right: $spacer * 0.5;
     margin-left: $spacer * 0.5;
     position: relative;
@@ -332,7 +332,14 @@ $gitops-blue: #3b82f6;
     
 
     @media (max-width: 768px) {
-        display: none;
+        // display: none;
+        display: flex;
+        width: 3px;
+         min-width: 2px;      
+        flex: none; 
+        height: 28px;
+        margin: 0;
+        margin-top: 0;
     }
 }
 
@@ -351,6 +358,17 @@ $gitops-blue: #3b82f6;
     background: linear-gradient(90deg, transparent, $primary, transparent);
     opacity: 0;
     animation: gitops-flow 6s linear infinite;
+
+    @media (max-width: 768px) {
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: auto;
+        width: 100%;
+        height: 0.5rem;
+        background: linear-gradient(180deg, transparent, $primary, transparent);
+        animation: gitops-flow-vertical 6s linear infinite;
+    }
 }
 
 .gitops-flow-paused .gitops-connector-flow {
@@ -401,15 +419,24 @@ $gitops-blue: #3b82f6;
 
 .gitops-connector-flow--2 {
     animation-delay: 1.5s;
+    @media (max-width: 768px) {
+        animation-name: gitops-flow-vertical;
+    }
 }
 
 .gitops-connector-flow--3 {
     animation-name: gitops-flow-reverse;
     animation-delay: 3s;
+     @media (max-width: 768px) {
+        animation-name: gitops-flow-vertical-reverse;
+    }
 }
 
 .gitops-connector-flow--4 {
     animation-delay: 4.5s;
+    @media (max-width: 768px) {
+        animation-name: gitops-flow-vertical;
+    }
 }
 
 .gitops-status {
@@ -539,5 +566,45 @@ $gitops-blue: #3b82f6;
         width: 100%; 
         max-width: 450px; 
         margin-bottom: 10px;
+    }
+}
+@media (max-width: 510px) {
+    .card-header {
+        display: block !important;
+    }
+}
+@keyframes gitops-flow-vertical {
+    0% {
+        transform: translateY(-100%);
+        opacity: 1;
+    }
+    25% {
+        transform: translateY(1500%);
+        opacity: 1;
+    }
+    25.001% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 0;
+        transform: translateY(-100%);
+    }
+}
+
+@keyframes gitops-flow-vertical-reverse {
+    0% {
+        transform: translateY(1500%);
+        opacity: 1;
+    }
+    25% {
+        transform: translateY(-100%);
+        opacity: 1;
+    }
+    25.001% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 0;
+        transform: translateY(1500%);
     }
 }

@@ -582,3 +582,18 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 });
+
+document.addEventListener("scroll", function () {
+  const btn = document.getElementById("button-scroll-to-up");
+
+  if (window.scrollY > 100) {
+    btn.classList.add("show");
+  } else {
+    btn.classList.remove("show");
+  }
+});
+
+document.getElementById("button-scroll-to-up").addEventListener("click", function (e) {
+  e.preventDefault();
+  window.scrollTo({ top: 0, behavior: "smooth" });
+});

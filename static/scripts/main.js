@@ -357,7 +357,6 @@ const initScrollPieces = () => {
 };
 
 const initScrollAnimations = () => {
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
     // ── Background Ambient Overlay ──
     const ambient = document.createElement('div');

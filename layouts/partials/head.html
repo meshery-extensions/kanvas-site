@@ -16,13 +16,13 @@
   <meta property="og:description" content="{{ with .Description }}{{ . }}{{ else }}{{ .Site.Params.description }}{{ end }}" />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="{{ .Permalink }}" />
-  <meta property="og:image" content="{{ printf "%s/images/screenshots/demo-thumbnail.webp" (site.Params.canonicalBaseURL | strings.TrimRight "/") }}" />
+  <meta property="og:image" content="{{ printf "%s/brand/kanvas/stacked/kanvas-stacked-color.png" (site.Params.canonicalBaseURL | strings.TrimRight "/") }}" />
   <meta name="twitter:card" content="summary_large_image">
 
   <meta name="twitter:site" content="@mesheryio">
   <meta name="twitter:title" content="{{ if .IsHome }}{{ .Site.Title }}{{ else }}{{ .Title }} | {{ .Site.Title }}{{ end }}">
   <meta name="twitter:description" content="{{ with .Description }}{{ . }}{{ else }}{{ .Site.Params.description }}{{ end }}">
-  <meta name="twitter:image" content="{{ printf "%s/images/screenshots/demo-thumbnail.webp" (site.Params.canonicalBaseURL | strings.TrimRight "/") }}" />
+  <meta name="twitter:image" content="{{ printf "%s/brand/kanvas/stacked/kanvas-stacked-color.png" (site.Params.canonicalBaseURL | strings.TrimRight "/") }}" />
   {{- with site.Params.canonicalBaseURL }}
   <link rel="canonical" href="{{ . | strings.TrimRight "/" }}{{ $.RelPermalink }}">
   {{- end }}

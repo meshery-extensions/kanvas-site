@@ -1,54 +1,39 @@
-<section class="section browser">
-  <div class="section-header centered">
-    <h2>See Kanvas in Action</h2>
+<div class="section-header centered">
+  <h2>See Kanvas in Action</h2>
+</div>
+
+<div class="browser-shell">
+  <div class="browser-header">
+    <div class="browser-dots">
+      <div class="browser-dot dot-red"></div>
+      <div class="browser-dot dot-yellow"></div>
+      <div class="browser-dot dot-green"></div>
+    </div>
+    <div class="browser-pill">https://kanvas.new/extension/meshmap</div>
   </div>
-  <div class="browser-mockup">
-    <div class="browser-shell">
-      <div class="browser-header">
-        <div class="browser-dots">
-          <span class="dot dot-red"></span>
-          <span class="dot dot-yellow"></span>
-          <span class="dot dot-green"></span>
+
+  <div class="browser-body">
+    <div class="hero-visual" style="padding: 0; margin: 0; width: 100%;">
+      <div class="canvas-preview glass--dark" style="border-radius: 0; border-left: none; border-right: none;">
+        <div class="canvas-header" style="padding: 1rem 2rem;">
+          <span>Production</span>
+          <span class="status">Collaboration</span>
         </div>
-        <div class="browser-pill">https://kanvas.new</div>
-      </div>
-      <div class="browser-body">
-        <div class="browser-body-inner">
-          <div class="browser-scene" id="browserScene">
-            <!-- Reunited 3D Logo — populated by JS when all 6 scroll pieces converge -->
-            <div class="reunited-float">
-              <div class="reunited-logo">
-                <div class="reunited-logo-inner" id="reunitedLogoInner">
-                  <!-- 6 SVG pieces inserted here by initScrollPieces() -->
-                </div>
-              </div>
-              <div class="reunited-glow"></div>
-            </div>
-          </div>
-          <a class="browser-cta shine" href="https://layer5.io/kanvas">
-            <span class="cta-hexagon"></span>
-            <span>See Kanvas in action</span>
-            <span class="cta-arrow" aria-hidden="true"></span>
-          </a>
-        </div>
+
+        {{ partial "cube-scene.html" (dict "Ordinal" 1) }}
+
       </div>
     </div>
-    <div class="browser-stand"></div>
-    <div class="browser-shadow"></div>
+
+    <div class="browser-cta-container">
+      <a class="browser-cta shine" href="https://layer5.io/kanvas" target="_blank" rel="noopener">
+        <span class="cta-hexagon"></span>
+        <span>See Kanvas in action</span>
+        <span class="cta-arrow"></span>
+      </a>
+    </div>
   </div>
-  <script>
-    (function() {
-      const mockup = document.querySelector('.browser-mockup');
-      const inner = document.querySelector('.browser-body-inner');
-      if (mockup && inner) {
-        new ResizeObserver(entries => {
-          for (let entry of entries) {
-             const width = entry.contentRect.width;
-             const scale = Math.min(1, Math.max(0.2, width / 980));
-             inner.style.transform = `scale(${scale})`;
-          }
-        }).observe(mockup);
-      }
-    })();
-  </script>
-</section>
+</div>
+
+<div class="browser-stand"></div>
+<div class="browser-glow"></div>

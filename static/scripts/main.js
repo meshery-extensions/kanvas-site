@@ -73,7 +73,7 @@ const scrubEach = (elements, props, triggerEl, startBase, endBase, offsetPer) =>
                 trigger: triggerEl,
                 start: 'top ' + (startBase - i * offsetPer) + '%',
                 end: 'top ' + (endBase - i * offsetPer) + '%',
-                scrub: 1,
+                scrub: true,
             }
         }));
     });
@@ -163,6 +163,9 @@ const initScrollPieces = () => {
     // ── Per-piece scroll journeys ──
     // Store journey triggers so we can kill the scrubs when convergence fires
     const journeyTriggers = [];
+    const initialLogoEl = document.querySelector('.reunited-logo');
+    const dynamicJourneyScale = initialLogoEl ? (initialLogoEl.offsetWidth / 50) : 5.6;
+    const progressScaleFactor = dynamicJourneyScale - 1;
 
     const browserSection = document.querySelector('.browser');
     const sections = [
@@ -192,7 +195,7 @@ const initScrollPieces = () => {
                 trigger: triggerEl,
                 start: 'top 85%',
                 end: 'top 50%',
-                scrub: 1,
+                scrub: true,
             }
         });
 
@@ -220,7 +223,7 @@ const initScrollPieces = () => {
                 start: 'top 80%',
                 endTrigger: '.browser',
                 end: 'top 40%',
-                scrub: 2,
+                scrub: true,
             }
         });
         journeyTriggers.push(journey.scrollTrigger);
@@ -231,7 +234,7 @@ const initScrollPieces = () => {
             const targetY = parseFloat(startY) + (orbit.y - parseFloat(startY)) * progress;
             const wobbleX = Math.sin(pieceIdx * 1.5 + s * 2) * 5;
             const wobbleY = Math.cos(pieceIdx * 1.2 + s * 1.8) * 3;
-            const targetScale = 1 + progress * 4.6;
+            const targetScale = 1 + progress * progressScaleFactor;
 
             journey.to(anchor, {
                 x: targetX + wobbleX + 'vw',
@@ -278,8 +281,11 @@ const initScrollPieces = () => {
                             t.kill();
                         }
                     });
+                    const scrollYStart = window.scrollY || document.documentElement.scrollTop;
                     anchors.forEach(a => {
                         gsap.killTweensOf(a);
+                        a.style.position = 'absolute';
+                        a.style.top = scrollYStart + 'px';
                         a.style.zIndex = '100'; // above everything during swoop
                     });
                     bodies.forEach(b => gsap.killTweensOf(b));
@@ -291,6 +297,9 @@ const initScrollPieces = () => {
                     const logoCenterX = logoRect.left + logoRect.width / 2;
                     const finalLogoYOffset = -24;
                     const logoCenterY = logoRect.top + logoRect.height / 2 + finalLogoYOffset;
+                    
+                    const dynamicScale = logoRect.width / 50 || 5.6;
+                    const bounceScale = dynamicScale * (5.72 / 5.6);
 
                     let arrived = 0;
                     introSchedule.forEach(({ pieceIdx }, order) => {
@@ -303,42 +312,30 @@ const initScrollPieces = () => {
                         if (svg) gsap.set(svg, { opacity: 1 });
 
                         gsap.to(anchor, {
-                            x: logoCenterX,
-                            y: logoCenterY,
-                            scale: 5.6,
+                            x: logoCenterX + 'px',
+                            y: logoCenterY + 'px',
+                            scale: dynamicScale,
                             opacity: 1,
                             duration: 0.25,
-                            delay: order * 0.045,
                             ease: 'power2.inOut',
                             overwrite: true,
                             onComplete: () => {
                                 arrived++;
                                 if (arrived === introSchedule.length) {
-                                    gsap.to(anchors, {
-                                        scale: 5.72, duration: 0.14, ease: 'sine.out',
-                                        overwrite: true,
-                                        onComplete: () => {
-                                            gsap.to(anchors, {
-                                                scale: 5.6, duration: 0.2, ease: 'sine.inOut',
-                                                onComplete: () => {
-                                                    gsap.set(reunitedFloat, { opacity: 1 });
-                                                    gsap.fromTo(logoEl,
-                                                        { y: finalLogoYOffset - 40, scale: 0.94 },
-                                                        {
-                                                            y: finalLogoYOffset,
-                                                            scale: 1,
-                                                            duration: 0.9,
-                                                            ease: 'bounce.out',
-                                                            overwrite: true,
-                                                        }
-                                                    );
-                                                    anchors.forEach(a => {
-                                                        gsap.set(a, { opacity: 0 });
-                                                        a.style.zIndex = '-1';
-                                                    });
-                                                }
-                                            });
+                                    gsap.set(reunitedFloat, { opacity: 1 });
+                                    gsap.fromTo(logoEl,
+                                        { y: finalLogoYOffset - 40, scale: 0.94 },
+                                        {
+                                            y: finalLogoYOffset,
+                                            scale: 1,
+                                            duration: 0.9,
+                                            ease: 'bounce.out',
+                                            overwrite: true,
                                         }
+                                    );
+                                    anchors.forEach(a => {
+                                        gsap.set(a, { opacity: 0 });
+                                        a.style.zIndex = '-1';
                                     });
                                 }
                             }
@@ -346,7 +343,7 @@ const initScrollPieces = () => {
 
                         gsap.to(body, {
                             rotateY: 0, rotateX: 0,
-                            duration: 0.5, delay: order * 0.045, ease: 'sine.inOut',
+                            duration: 0.25, ease: 'sine.inOut',
                             overwrite: true,
                         });
                     });
@@ -370,15 +367,15 @@ const initScrollAnimations = () => {
 
     gsap.to('.scroll-orb--1', {
         y: '-60vh', x: '15vw', scale: 1.4, opacity: 0.5,
-        scrollTrigger: { trigger: 'body', start: 'top top', end: 'bottom bottom', scrub: 2 }
+        scrollTrigger: { trigger: 'body', start: 'top top', end: 'bottom bottom', scrub: true }
     });
     gsap.to('.scroll-orb--2', {
         y: '-40vh', x: '-20vw', scale: 0.8,
-        scrollTrigger: { trigger: 'body', start: 'top top', end: 'bottom bottom', scrub: 3 }
+        scrollTrigger: { trigger: 'body', start: 'top top', end: 'bottom bottom', scrub: true }
     });
     gsap.to('.scroll-orb--3', {
         y: '-80vh', x: '10vw', scale: 1.2, opacity: 0.7,
-        scrollTrigger: { trigger: 'body', start: 'top top', end: 'bottom bottom', scrub: 2.5 }
+        scrollTrigger: { trigger: 'body', start: 'top top', end: 'bottom bottom', scrub: true }
     });
 
     // ── Scroll Logo Pieces Journey ──
@@ -401,7 +398,7 @@ const initScrollAnimations = () => {
                 trigger: wrapper,
                 start: 'bottom 30%',  // recession begins when bottom of hero reaches 60% viewport
                 end: 'bottom top',
-                scrub: 1,
+                scrub: true,
             }
         });
     }
@@ -411,7 +408,7 @@ const initScrollAnimations = () => {
     if (customersSection) {
         gsap.from('.customers-title', {
             y: 30, opacity: 0,
-            scrollTrigger: { trigger: customersSection, start: 'top 90%', end: 'top 55%', scrub: 1 }
+            scrollTrigger: { trigger: customersSection, start: 'top 90%', end: 'top 55%', scrub: true }
         });
     }
 
@@ -420,19 +417,19 @@ const initScrollAnimations = () => {
     if (heroSection) {
         gsap.from('.hero-badge', {
             y: 40, opacity: 0,
-            scrollTrigger: { trigger: heroSection, start: 'top 90%', end: 'top 50%', scrub: 1 }
+            scrollTrigger: { trigger: heroSection, start: 'top 90%', end: 'top 50%', scrub: true }
         });
         gsap.from('.hero-title', {
             y: 80, opacity: 0,
-            scrollTrigger: { trigger: heroSection, start: 'top 88%', end: 'top 40%', scrub: 1 }
+            scrollTrigger: { trigger: heroSection, start: 'top 88%', end: 'top 40%', scrub: true }
         });
         gsap.from('.hero-subtitle', {
             y: 100, opacity: 0,
-            scrollTrigger: { trigger: heroSection, start: 'top 85%', end: 'top 35%', scrub: 1 }
+            scrollTrigger: { trigger: heroSection, start: 'top 85%', end: 'top 35%', scrub: true }
         });
         gsap.from('.hero-actions', {
             y: 60, opacity: 0,
-            scrollTrigger: { trigger: heroSection, start: 'top 80%', end: 'top 35%', scrub: 1 }
+            scrollTrigger: { trigger: heroSection, start: 'top 80%', end: 'top 35%', scrub: true }
         });
 
         const statItems = heroSection.querySelectorAll('.stat-item');
@@ -450,7 +447,7 @@ const initScrollAnimations = () => {
         // Recession — only after scrolling well past
         gsap.to(heroSection, {
             opacity: 0.4, y: -30,
-            scrollTrigger: { trigger: heroSection, start: 'bottom 10%', end: 'bottom top', scrub: 1 }
+            scrollTrigger: { trigger: heroSection, start: 'bottom 10%', end: 'bottom top', scrub: true }
         });
     }
 
@@ -459,14 +456,14 @@ const initScrollAnimations = () => {
     if (demoSection) {
         gsap.from('.demo-header', {
             y: 50, opacity: 0,
-            scrollTrigger: { trigger: demoSection, start: 'top 88%', end: 'top 50%', scrub: 1 }
+            scrollTrigger: { trigger: demoSection, start: 'top 88%', end: 'top 50%', scrub: true }
         });
 
         const demoContainer = document.querySelector('.demo-container');
         if (demoContainer) {
             gsap.from(demoContainer, {
                 scale: 0.88, opacity: 0, y: 60,
-                scrollTrigger: { trigger: demoContainer, start: 'top 90%', end: 'top 35%', scrub: 1 }
+                scrollTrigger: { trigger: demoContainer, start: 'top 90%', end: 'top 35%', scrub: true }
             });
         }
 
@@ -477,7 +474,7 @@ const initScrollAnimations = () => {
 
         gsap.to(demoSection, {
             opacity: 0.5, y: -20,
-            scrollTrigger: { trigger: demoSection, start: 'bottom 40%', end: 'bottom top', scrub: 1 }
+            scrollTrigger: { trigger: demoSection, start: 'bottom 40%', end: 'bottom top', scrub: true }
         });
     }
 
@@ -500,7 +497,7 @@ const initScrollAnimations = () => {
         if (ctaBox) {
             gsap.from(ctaBox, {
                 y: 40, opacity: 0, scale: 0.96,
-                scrollTrigger: { trigger: ctaBox, start: 'top 90%', end: 'top 55%', scrub: 1 }
+                scrollTrigger: { trigger: ctaBox, start: 'top 90%', end: 'top 55%', scrub: true }
             });
         }
     }
@@ -527,7 +524,7 @@ const initScrollAnimations = () => {
     if (browserShell) {
         gsap.from(browserShell, {
             scale: 0.82, opacity: 0, y: 80,
-            scrollTrigger: { trigger: '.browser', start: 'top 90%', end: 'top 30%', scrub: 1 }
+            scrollTrigger: { trigger: '.browser', start: 'top 90%', end: 'top 30%', scrub: true }
         });
     }
 
@@ -535,7 +532,7 @@ const initScrollAnimations = () => {
     if (browserStand) {
         gsap.from(browserStand, {
             scaleX: 0.5, opacity: 0,
-            scrollTrigger: { trigger: browserStand, start: 'top 95%', end: 'top 65%', scrub: 1 }
+            scrollTrigger: { trigger: browserStand, start: 'top 95%', end: 'top 65%', scrub: true }
         });
     }
 
@@ -553,7 +550,7 @@ const initScrollAnimations = () => {
 
         gsap.from(divider, {
             opacity: 0, scaleX: 0.3,
-            scrollTrigger: { trigger: divider, start: 'top 90%', end: 'top 70%', scrub: 1 }
+            scrollTrigger: { trigger: divider, start: 'top 90%', end: 'top 70%', scrub: true }
         });
     });
 };
@@ -577,7 +574,6 @@ const initVideoHandler = () => {
 
 document.addEventListener("DOMContentLoaded", () => {
     initMarquee();
-    initScrollAnimations();
     initVideoHandler();
 
     const header = document.querySelector(".site-header");
@@ -588,6 +584,10 @@ document.addEventListener("DOMContentLoaded", () => {
             onLeaveBack: () => header.classList.remove("scrolled"),
         });
     }
+});
+
+window.addEventListener("load", () => {
+    initScrollAnimations();
 });
 
 document.addEventListener("scroll", function () {

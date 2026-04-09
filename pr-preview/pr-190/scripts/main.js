@@ -528,13 +528,6 @@ const initScrollAnimations = () => {
         });
     }
 
-    const browserStand = document.querySelector('.browser-stand');
-    if (browserStand) {
-        gsap.from(browserStand, {
-            scaleX: 0.5, opacity: 0,
-            scrollTrigger: { trigger: browserStand, start: 'top 95%', end: 'top 65%', scrub: true }
-        });
-    }
 
     // ── Section Dividers ──
     const dividerSections = document.querySelectorAll(

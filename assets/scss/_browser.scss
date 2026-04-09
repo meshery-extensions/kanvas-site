@@ -98,6 +98,12 @@
   overflow: hidden;
 }
 
+@property --browser-scale {
+  syntax: "<number>";
+  inherits: false;
+  initial-value: 1;
+}
+
 .browser-body-inner {
   display: flex;
   flex-direction: column;
@@ -105,6 +111,15 @@
   justify-content: center;
   gap: 34px;
   transform-origin: center center;
+  /* Scale smoothly with container inline size:
+     - 100cqi = container width
+     - 980px = baseline width
+     - min scale = 0.2 (matches previous <=196px rule)
+     - max scale = 1 (no upscaling above baseline) */
+  --browser-scale: clamp(0.2, calc(100cqi / 980), 1);
+  --browser-scale: 1;
+  scale: var(--browser-scale, 1);
+  transition: scale 0.08s linear;
 }
 
 .browser-body::before {

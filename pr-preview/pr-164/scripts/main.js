@@ -350,6 +350,16 @@ const initScrollAnimations = () => {
         }
     }
 
+    // ── Browser Section ──
+    const browserShell = document.querySelector('.browser-shell');
+    if (browserShell) {
+        gsap.from(browserShell, {
+            scale: 0.82, opacity: 0, y: 80,
+            scrollTrigger: { trigger: '.browser', start: 'top 90%', end: 'top 30%', scrub: 1 }
+        });
+    }
+
+    // ── Section Dividers ──
     const dividerSections = document.querySelectorAll(
         '.customers-section, .hero-section, .demo-section, .capabilities-section, .community-section'
     );

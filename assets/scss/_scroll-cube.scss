@@ -198,6 +198,12 @@
 
 // ─── Responsive ───
 @media (max-width: 768px) {
+
+  body .scroll-piece-stage .scroll-piece-body svg,
+  body .reunited-logo-inner .reunited-piece {
+    filter: none;
+  }
+  
   .scroll-piece-stage {
     width: 50px;
     height: 50px;

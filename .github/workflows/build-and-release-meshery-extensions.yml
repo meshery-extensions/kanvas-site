@@ -100,6 +100,7 @@ jobs:
             message="extension ${{ env.EXTENSION_VERSION }} is not compatible with Meshery UI ${{ env.MESHERY_VERSION }}"
             echo "reason=$message" >> $GITHUB_ENV
             echo "$message"
+            exit 1
           }
       - name: Build meshery-extension at version ${{ env.MESHERY_EXTENSIONS_PATH }}
         if: ${{ !failure() }}

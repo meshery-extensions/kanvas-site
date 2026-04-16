@@ -583,20 +583,20 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 });
 
-// document.addEventListener("scroll", function () {
-//   const btn = document.getElementById("button-scroll-to-up");
+document.addEventListener("scroll", function () {
+  const btn = document.getElementById("button-scroll-to-up");
 
-//   if (window.scrollY > 100) {
-//     btn.classList.add("show");
-//   } else {
-//     btn.classList.remove("show");
-//   }
-// });
+  if (window.scrollY > 100) {
+    btn.classList.add("show");
+  } else {
+    btn.classList.remove("show");
+  }
+});
 
-// document.getElementById("button-scroll-to-up").addEventListener("click", function (e) {
-//   e.preventDefault();
-//   window.scrollTo({ top: 0, behavior: "smooth" });
-// });
+document.getElementById("button-scroll-to-up").addEventListener("click", function (e) {
+  e.preventDefault();
+  window.scrollTo({ top: 0, behavior: "smooth" });
+});
 
 const contents = gsap.utils.toArray(".scroll-container .horizontal");
 gsap.to(contents, {

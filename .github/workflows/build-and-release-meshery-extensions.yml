@@ -110,13 +110,16 @@ jobs:
       - name: Build meshery-extension at version ${{ env.MESHERY_EXTENSIONS_PATH }}
         if: ${{ !failure() }}
         working-directory: ${{ env.MESHERY_EXTENSIONS_PATH }}
+        env:
+          DOCKER_BUILDKIT: "1"
+          RELEASE_NOTES_PAT: ${{ secrets.RELEASE_NOTES_PAT }}
         run: |
           pwd;ls;
           MESHERY_VERSION=${{ env.MESHERY_VERSION }}
           docker build \
             --no-cache \
             -t temp:latest \
-            --build-arg TOKEN="${{ secrets.RELEASE_NOTES_PAT }}" \
+            --secret id=token,env=RELEASE_NOTES_PAT \
             --build-arg GIT_COMMITSHA="${GITHUB_SHA::8}" \
             --build-arg GIT_VERSION="$MESHERY_VERSION" \
             --build-arg RELEASE_CHANNEL="stable" \

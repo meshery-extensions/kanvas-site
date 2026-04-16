@@ -25,6 +25,7 @@ jobs:
         uses: actions/checkout@v6
         with:
           repository: layer5labs/meshery-extensions
+          ref: master
           path: meshery-extensions
           token: ${{ secrets.RELEASE_NOTES_PAT }}
           persist-credentials: false

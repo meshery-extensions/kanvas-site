@@ -65,10 +65,14 @@ jobs:
       - name: Override version and revision, if provided
         if: ${{ inputs.version }}
         run: |
-          echo Using manually dispatch values of ${{ inputs.version }} and ${{ inputs.revision }}
+          revision="${{ inputs.revision }}"
+          if [ -z "$revision" ]; then
+            revision="${{ steps.fetch-versions.outputs.REVISION }}"
+          fi
+          echo Using manually dispatch values of ${{ inputs.version }} and $revision
           echo "MESHERY_VERSION=${{ inputs.version }}" >> $GITHUB_ENV
-          echo "EXTENSION_VERSION=${{ inputs.revision }}" >> $GITHUB_ENV
-          echo "VERSION=${{ inputs.version }}-${{ inputs.revision }}" >> $GITHUB_ENV
+          echo "EXTENSION_VERSION=$revision" >> $GITHUB_ENV
+          echo "VERSION=${{ inputs.version }}-$revision" >> $GITHUB_ENV
       - name: Checkout meshery/meshery to sync go.mod
         uses: actions/checkout@v6
         with:

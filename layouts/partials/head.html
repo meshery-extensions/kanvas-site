@@ -1,7 +1,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-
 <link rel="apple-touch-icon" sizes="180x180" href="/favicons/apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="32x32" href="/favicons/favicon-32x32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="/favicons/favicon-16x16.png">
@@ -21,14 +20,12 @@
 <meta property="og:description" content="{{ with .Description }}{{ . }}{{ else }}{{ .Site.Params.description }}{{ end }}" />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="{{ .Permalink }}" />
-<meta property="og:image" content="{{ printf "%s/brand/kanvas/stacked/kanvas-stacked-color.png" (site.Params.canonicalBaseURL | strings.TrimRight "/") }}" />
-
+<meta property="og:image" content="https://kanvas.new/brand/kanvas/stacked/kanvas-stacked-color.png" />
 
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="{{ if .IsHome }}{{ .Site.Title }}{{ else }}{{ .Title }} | {{ .Site.Title }}{{ end }}">
 <meta name="twitter:description" content="{{ with .Description }}{{ . }}{{ else }}{{ .Site.Params.description }}{{ end }}">
-<meta name="twitter:image" content="{{ printf "%s/brand/kanvas/stacked/kanvas-stacked-color.png" (site.Params.canonicalBaseURL | strings.TrimRight "/") }}" />
-
+<meta name="twitter:image" content="https://kanvas.new/brand/kanvas/stacked/kanvas-stacked-color.png" />
 
 {{- with site.Params.canonicalBaseURL }}
 <link rel="canonical" href="{{ . | strings.TrimRight "/" }}{{ $.RelPermalink }}">

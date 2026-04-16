@@ -21,7 +21,18 @@ jobs:
     outputs:
       revision: ${{ steps.fetch-versions.outputs.REVISION }}
     steps:
-      - name: Checkout layer5labs/meshery-extensions
+      - name: Checkout layer5labs/meshery-extensions with GH_ACCESS_TOKEN
+        id: checkout-meshery-extensions-gh
+        continue-on-error: true
+        uses: actions/checkout@v6
+        with:
+          repository: layer5labs/meshery-extensions
+          ref: master
+          path: meshery-extensions
+          token: ${{ secrets.GH_ACCESS_TOKEN }}
+          persist-credentials: false
+      - name: Checkout layer5labs/meshery-extensions with RELEASE_NOTES_PAT
+        if: ${{ steps.checkout-meshery-extensions-gh.outcome == 'failure' }}
         uses: actions/checkout@v6
         with:
           repository: layer5labs/meshery-extensions

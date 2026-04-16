@@ -26,7 +26,6 @@ jobs:
         with:
           repository: layer5labs/meshery-extensions
           path: meshery-extensions
-          token: ${{ secrets.GH_ACCESS_TOKEN }}
       - name: Disable Source Map Warnings
         run: |
           echo 'DISABLE_SOURCEMAP_WARNINGS=true' >> $GITHUB_ENV

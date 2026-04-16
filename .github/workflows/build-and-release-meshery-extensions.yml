@@ -26,6 +26,7 @@ jobs:
         with:
           repository: layer5labs/meshery-extensions
           path: meshery-extensions
+          token: ${{ secrets.RELEASE_NOTES_PAT }}
       - name: Disable Source Map Warnings
         run: |
           echo 'DISABLE_SOURCEMAP_WARNINGS=true' >> $GITHUB_ENV
@@ -76,7 +77,7 @@ jobs:
         uses: actions/checkout@v6
         with:
           repository: meshery/meshery
-          token: ${{ secrets.GH_ACCESS_TOKEN }}
+          token: ${{ secrets.RELEASE_NOTES_PAT }}
           path: meshery
           ref: ${{ env.MESHERY_VERSION }}
           sparse-checkout: |
@@ -114,7 +115,7 @@ jobs:
           docker build \
             --no-cache \
             -t temp:latest \
-            --build-arg TOKEN="${{ secrets.GH_ACCESS_TOKEN }}" \
+            --build-arg TOKEN="${{ secrets.RELEASE_NOTES_PAT }}" \
             --build-arg GIT_COMMITSHA="${GITHUB_SHA::8}" \
             --build-arg GIT_VERSION="$MESHERY_VERSION" \
             --build-arg RELEASE_CHANNEL="stable" \
@@ -128,7 +129,7 @@ jobs:
           extension_version=$(echo "${{ env.VERSION }}")
       - name: Get Meshery Extensions Release draft
         env:
-          ACCESS_TOKEN: ${{ secrets.GH_ACCESS_TOKEN }}
+          ACCESS_TOKEN: ${{ secrets.RELEASE_NOTES_PAT }}
         run: |
           curl -sL -H "Authorization: token $ACCESS_TOKEN" -H "Accept: application/vnd.github.v3+json" https://api.github.com/repos/layer5labs/meshery-extensions/releases | jq -r '(map(select(.draft)) | first | .body) // ""' > releases.md
       - name: Release Draft Notes
@@ -148,7 +149,7 @@ jobs:
         with:
           owner: layer5labs
           repo: meshery-extensions-packages
-          token: ${{ secrets.GH_ACCESS_TOKEN }}
+          token: ${{ secrets.RELEASE_NOTES_PAT }}
           tag: ${{ env.VERSION }}
           name: Meshery Extensions ${{ env.VERSION }}
           allowUpdates: true
@@ -164,7 +165,7 @@ jobs:
         with:
           owner: layer5labs
           repo: meshery-extensions
-          token: ${{ secrets.GH_ACCESS_TOKEN }}
+          token: ${{ secrets.RELEASE_NOTES_PAT }}
           tag: ${{ env.VERSION }}
           name: Meshery Extensions ${{ env.VERSION }}
           allowUpdates: true
@@ -203,4 +204,4 @@ jobs:
         with:
           name: "Build and Rollout Kanvas"
           repo: layer5labs/meshery-extensions-packages
-          token: ${{ secrets.GH_ACCESS_TOKEN }}
+          token: ${{ secrets.RELEASE_NOTES_PAT }}

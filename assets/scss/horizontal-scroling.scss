@@ -1,0 +1,103 @@
+.scroll-container {
+  display: flex;
+  
+  .horizontal {
+    margin-top: 2rem;
+    height: 100vh;
+    width: 100vw;
+    display: grid;
+    flex-shrink: 0;
+    place-items: center;
+  }
+}
+
+/* Base style for all screens */
+#Screen1, #Screen2, #Screen3, #Screen4 {
+  display: flex;
+  align-items: center; 
+  justify-content: center;
+}
+
+/* Caption Styling */
+.image-group {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin: 0; /* Reset default figure margins */
+
+  figcaption {
+    font-weight: 500;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1px;        /* Optional: Makes uppercase more readable */
+    font-size: 0.6rem;
+  }
+}
+
+.image-group:has(#Relationship) {
+  margin-left: 18rem; /* Moves BOTH the tag and the image together */
+}
+
+/* SCREEN 1 POSITIONS */
+#DragDropGif { width: 500px; height: auto; }
+#Relationship { height: 400px; margin-left: 0; }
+
+/* SCREEN 2 POSITIONS */
+.image-group:has(#comment-dock) {
+  margin-left: -35rem;
+  margin-right: 2rem;
+  margin-bottom: -35rem;
+}
+#comment-dock { width: 500px; height: auto; }
+
+.image-group:has(#comment-section) {
+  margin-bottom: 10rem;
+}
+#comment-section { height: 400px; width: auto; }
+
+/* SCREEN 3 POSITIONS */
+.image-group:has(#deployment-pipeline) {
+  margin-left: -45rem;
+  margin-bottom: -30rem;
+}
+#deployment-pipeline { width: 500px; }
+
+.image-group:has(#validate) {
+  margin-left: 5rem;
+  margin-bottom: 20rem;
+}
+#validate { width: 600px; height: auto; }
+
+.image-group:has(#Deploy) {
+  margin-left: 15rem;
+  margin-bottom: -10rem;
+}
+#Deploy { width: 500px; height: auto; }
+
+/* SCREEN 4 POSITIONS */
+.image-group:has(#undeploy) {
+  margin-bottom: -10rem;
+}
+#undeploy { width: 500px; height: auto; }
+
+.image-group:has(#clonning) {
+  margin-left: 10rem;
+  margin-bottom: 10rem;
+}
+#clonning { width: 600px; height: auto; }
+
+.scroll-arrow {
+  position: absolute;
+  top: 50%;
+  left: 10%;   /* Adjust so it starts at your first image */
+  width: 80%;  /* Adjust so it reaches the second image */
+  height: 150px;
+  overflow: visible; /* Crucial so markers don't disappear */
+  z-index: 10;
+  pointer-events: none;
+}
+
+#arrow-path {
+  stroke-dasharray: 1000;
+  stroke-dashoffset: 1000; /* Hidden by default */
+}

@@ -590,17 +590,66 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 });
 
-document.addEventListener("scroll", function () {
-  const btn = document.getElementById("button-scroll-to-up");
+// document.addEventListener("scroll", function () {
+//   const btn = document.getElementById("button-scroll-to-up");
 
-  if (window.scrollY > 100) {
-    btn.classList.add("show");
+//   if (window.scrollY > 100) {
+//     btn.classList.add("show");
+//   } else {
+//     btn.classList.remove("show");
+//   }
+// });
+
+// document.getElementById("button-scroll-to-up").addEventListener("click", function (e) {
+//   e.preventDefault();
+//   window.scrollTo({ top: 0, behavior: "smooth" });
+// });
+
+const contents = gsap.utils.toArray(".scroll-container .horizontal");
+gsap.to(contents, {
+    xPercent: -100 * (contents.length -1),
+    scrollTrigger: {
+        trigger: ".scroll-container",
+        pin: true,
+        scrub: 1,
+    },
+});
+
+const video = document.getElementById("DragDropVideo");
+
+document.addEventListener("visibilitychange", () => {
+  if (!document.hidden) {
+    // When user comes back to tab
+    video.currentTime = 0; // reset to start
+    video.play();         // play again
   } else {
-    btn.classList.remove("show");
+    // Optional: pause when leaving tab
+    video.pause();
   }
 });
 
 document.getElementById("button-scroll-to-up").addEventListener("click", function (e) {
   e.preventDefault();
   window.scrollTo({ top: 0, behavior: "smooth" });
+});
+
+const path = document.querySelector('#arrow-path');
+const length = path.getTotalLength();
+
+// Hide the path initially
+gsap.set(path, {
+  strokeDasharray: length,
+  strokeDashoffset: length
+});
+
+// Draw the path as you scroll
+gsap.to(path, {
+  strokeDashoffset: 0,
+  ease: "none",
+  scrollTrigger: {
+    trigger: "#Screen1", // Your container ID
+    start: "top 60%",    // Starts when container is 60% down the screen
+    end: "top 20%",      // Finishes as you scroll further
+    scrub: 1             // Smoothly follows the mouse scroll
+  }
 });

@@ -4,6 +4,10 @@ on:
   pull_request_target:
     branches: [master]
     types: [opened, synchronize, reopened, closed]
+  push:
+    paths-ignore:
+      - '.github/**'
+      - 'README.md'
 
 permissions:
   contents: write

@@ -282,10 +282,3 @@
     }
   }
 }
-
-@media (prefers-reduced-motion: reduce) {
-  .feedback-section .feedback-card {
-    transition: none;
-    &:hover { transform: none; }
-  }
-}

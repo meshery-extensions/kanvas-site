@@ -164,8 +164,15 @@ const initScrollPieces = () => {
     // Store journey triggers so we can kill the scrubs when convergence fires
     const journeyTriggers = [];
     const initialLogoEl = document.querySelector('.reunited-logo');
-    const dynamicJourneyScale = initialLogoEl ? (initialLogoEl.offsetWidth / 50) : 5.6;
-    const progressScaleFactor = dynamicJourneyScale - 1;
+    const getTargetScale = () => {
+        const floatEl = document.querySelector('.reunited-float');
+        if (!floatEl) return 5.6;
+        const oldAnim = floatEl.style.animation;
+        floatEl.style.animation = 'none';
+        const w = floatEl.getBoundingClientRect().width;
+        floatEl.style.animation = oldAnim;
+        return w / 50 || 5.6;
+    };
 
     const browserSection = document.querySelector('.browser');
     const sections = [
@@ -224,6 +231,7 @@ const initScrollPieces = () => {
                 endTrigger: '.browser',
                 end: 'top 40%',
                 scrub: true,
+                invalidateOnRefresh: true,
             }
         });
         journeyTriggers.push(journey.scrollTrigger);
@@ -234,12 +242,13 @@ const initScrollPieces = () => {
             const targetY = parseFloat(startY) + (orbit.y - parseFloat(startY)) * progress;
             const wobbleX = Math.sin(pieceIdx * 1.5 + s * 2) * 5;
             const wobbleY = Math.cos(pieceIdx * 1.2 + s * 1.8) * 3;
-            const targetScale = 1 + progress * progressScaleFactor;
-
             journey.to(anchor, {
                 x: targetX + wobbleX + 'vw',
                 y: targetY + wobbleY + 'vh',
-                scale: targetScale,
+                scale: () => {
+                    const currentScaleFactor = getTargetScale() - 1;
+                    return 1 + progress * currentScaleFactor;
+                },
                 duration: 1, ease: 'none',
             }, s > 0 ? '>' : 0);
             journey.to(body, {

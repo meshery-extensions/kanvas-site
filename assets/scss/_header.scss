@@ -84,11 +84,17 @@
     color: #050505;
     transition: background-color 0.3s ease, box-shadow 0.3s ease;
   }
-  @media (max-width: 960px) {
-    .site-header {
-      flex-wrap: wrap;
-      border-radius: 28px;
-    }
+}
+
+@media (max-width: 960px) {
+  .site-header {
+    flex-wrap: wrap;
+    border-radius: 28px;
+    left: 12px;
+    right: 12px;
+    width: auto;
+    max-width: none;
+    padding: 0.75rem 1rem;
   }
 }
 

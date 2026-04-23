@@ -833,6 +833,20 @@ main {
     padding: 44px 28px;
   }
 
+  .hero-content {
+    text-align: center;
+  }
+
+  .hero-content p {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .hero-content .pill {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
   .cta-section {
     padding: 40px 28px;
   }
@@ -850,11 +864,13 @@ main {
   .cta .button.primary {
     flex: 1 1 calc(50% - 6px);
     order: 1;
+    justify-content: center;
   }
 
   .cta .button.ghost:not(.subtle) {
     flex: 1 1 calc(50% - 6px);
     order: 2;
+    justify-content: center;
   }
 
   /* Row 2: Watch Videos (C) - centered */

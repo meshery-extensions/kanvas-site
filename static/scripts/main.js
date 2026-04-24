@@ -15,29 +15,31 @@ const animateCounters = () => {
     const counters = document.querySelectorAll('.counter');
     const speed = 2000;
     const formatCounterValue = (value) => value.toLocaleString('en-US');
+    const isReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
     counters.forEach(counter => {
         const target = +counter.getAttribute('data-target');
-        let startTime = null;
+        const formattedTarget = formatCounterValue(target);
+        const suffix = target === 10 ? "M+" : "+";
 
+        if (isReduced) {
+            counter.innerText = formattedTarget + suffix;
+            return;
+        }
+
+        let startTime = null;
         const updateCount = (timestamp) => {
             if (!startTime) startTime = timestamp;
             const progress = timestamp - startTime;
             const percentage = Math.min(progress / speed, 1);
             const currentValue = Math.floor(percentage * target);
-            const formattedCurrent = formatCounterValue(currentValue);
-            const formattedTarget = formatCounterValue(target);
-
-            if (target === 10) {
-                counter.innerText = formattedCurrent + "M+";
-            } else {
-                counter.innerText = formattedCurrent + "+";
-            }
+            
+            counter.innerText = formatCounterValue(currentValue) + suffix;
 
             if (progress < speed) {
                 requestAnimationFrame(updateCount);
             } else {
-                counter.innerText = formattedTarget + (target === 10 ? "M+" : "+");
+                counter.innerText = formattedTarget + suffix;
             }
         };
         requestAnimationFrame(updateCount);
@@ -397,7 +399,10 @@ const initScrollPieces = () => {
 };
 
 const initScrollAnimations = () => {
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        animateCounters();
+        return;
+    }
 
     // ── Background Ambient Overlay ──
     const ambient = document.createElement('div');

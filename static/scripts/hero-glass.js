@@ -76,25 +76,25 @@ window.addEventListener("scroll", () => {
   heroRectDirty = true;
 }, { passive: true });
 
-const observer = new IntersectionObserver(
-  (entries) => {
-    entries.forEach((entry) => {
-      heroInView = entry.isIntersecting;
-      if (!heroInView) {
-        hero.style.setProperty("--tilt-x", "0deg");
-        hero.style.setProperty("--tilt-y", "0deg");
-        heroRect = null;
-        heroRectDirty = false;
-      } else {
-        heroRectDirty = true;
-      }
-      scheduleUpdateScene();
-    });
-  },
-  { threshold: 0.2 },
-);
-observer.observe(hero);
-
+if(hero){ 
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        heroInView = entry.isIntersecting;
+        if (!heroInView) {
+          hero.style.setProperty("--tilt-x", "0deg");
+          hero.style.setProperty("--tilt-y", "0deg");
+          heroRect = null;
+        } else {
+          heroRectDirty = true;
+        }
+        scheduleUpdateScene();
+      });
+    },
+    { threshold: 0.2 },
+  );
+  observer.observe(hero);
+}
 floaters.forEach((item, index) => {
   item.style.animationDelay = `${index * -2.5}s`;
 });

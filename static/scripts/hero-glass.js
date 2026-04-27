@@ -25,18 +25,22 @@ const refreshHeroRect = () => {
 };
 
 const updateScene = () => {
+  if (!hero || !heroInView) {
+    frame = null;
+    return;
+  }
   root.style.setProperty("--cursor-x", `${pointer.x}px`);
   root.style.setProperty("--cursor-y", `${pointer.y}px`);
 
-  if (hero && heroInView) {
-    if (heroRectDirty || !heroRect) {
-      refreshHeroRect();
-    }
-    const relX = (pointer.x - heroRect.left) / heroRect.width - 0.5;
-    const relY = (pointer.y - heroRect.top) / heroRect.height - 0.5;
-    hero.style.setProperty("--tilt-x", `${(-relY * 7).toFixed(2)}deg`);
-    hero.style.setProperty("--tilt-y", `${(relX * 9).toFixed(2)}deg`);
+
+  if (heroRectDirty || !heroRect) {
+    refreshHeroRect();
   }
+  const relX = (pointer.x - heroRect.left) / heroRect.width - 0.5;
+  const relY = (pointer.y - heroRect.top) / heroRect.height - 0.5;
+  hero.style.setProperty("--tilt-x", `${(-relY * 7).toFixed(2)}deg`);
+  hero.style.setProperty("--tilt-y", `${(relX * 9).toFixed(2)}deg`);
+
 
   tiltTargets.forEach((target) => {
     const rect = target.getBoundingClientRect();
@@ -44,7 +48,7 @@ const updateScene = () => {
     const relY = (pointer.y - rect.top) / rect.height - 0.5;
     target.style.setProperty("--tilt-x", `${(-relY * 6).toFixed(2)}deg`);
     target.style.setProperty("--tilt-y", `${(relX * 6).toFixed(2)}deg`);
-  });
+  });  
 
   frame = null;
 };
@@ -72,28 +76,26 @@ window.addEventListener("scroll", () => {
   heroRectDirty = true;
 }, { passive: true });
 
-if (hero) {
-  const observer = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        heroInView = entry.isIntersecting;
-        if (!heroInView) {
-          hero.style.setProperty("--tilt-x", "0deg");
-          hero.style.setProperty("--tilt-y", "0deg");
-          heroRect = null;
-        } else {
-          heroRectDirty = true;
-          scheduleUpdateScene();
-        }
-      });
-    },
-    { threshold: 0.2 },
-  );
-  observer.observe(hero);
-}
+const observer = new IntersectionObserver(
+  (entries) => {
+    entries.forEach((entry) => {
+      heroInView = entry.isIntersecting;
+      if (!heroInView) {
+        hero.style.setProperty("--tilt-x", "0deg");
+        hero.style.setProperty("--tilt-y", "0deg");
+        heroRect = null;
+        heroRectDirty = false;
+      } else {
+        heroRectDirty = true;
+      }
+      scheduleUpdateScene();
+    });
+  },
+  { threshold: 0.2 },
+);
+observer.observe(hero);
 
 floaters.forEach((item, index) => {
   item.style.animationDelay = `${index * -2.5}s`;
 });
 
-updateScene();

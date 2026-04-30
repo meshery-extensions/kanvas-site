@@ -63,13 +63,13 @@ body {
 
 :root[data-theme="light"] {
   --page-bg: #f7fbfa;
-  --text-primary: #14221f;
+  --text-primary: #000000;
   --surface-bg: #ffffff;
   --header-bg: rgba(255, 255, 255, 0.94);
   --header-scrolled-bg: rgba(255, 255, 255, 0.78);
   --header-border: rgba(0, 0, 0, 0.08);
   --theme-toggle-bg: rgba(0, 0, 0, 0.06);
-  --theme-toggle-text: #14221f;
+  --theme-toggle-text: #000000;
 }
 
 html, body {

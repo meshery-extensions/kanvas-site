@@ -1,6 +1,6 @@
 ---
 title: "Kanvas"
-description: "Collaboration for cloud native infrastructure"
+description: "Kanvas empowers engineers to design, deploy, and manage cloud native infrastructure collaboratively. As a Google Workspace-like experience for Kubernetes, Kanvas transforms infrastructure management from YAML to visual intuition."
 ---
 
 # Kanvas

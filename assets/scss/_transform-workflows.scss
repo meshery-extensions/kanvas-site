@@ -1,0 +1,1734 @@
+$gitops-orange: #f59e0b;
+$gitops-teal: #00d3a9;
+$gitops-purple: #a78bfa;
+$gitops-blue: #3b82f6;
+
+.gitops-card-section {
+    max-width: none;
+    width: 100%;
+}
+
+.gitops-card-wrapper {
+    width: 100%;
+}
+
+.gitops-card {
+    position: relative;
+    border-radius: 16px;
+    background: linear-gradient(145deg,
+            #0f1a20,
+            #0c1117);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    transition: box-shadow 0.3s ease;
+}
+
+.gitops-card-gradient {
+    position: absolute;
+    inset: 0;
+    border-radius: 16px;
+    background: linear-gradient(135deg, rgba($primary, 0.05) 0%, transparent 50%, rgba($secondary, 0.05) 100%);
+    pointer-events: none;
+}
+
+.gitops-card-header {
+    position: relative;
+    padding: 0 $spacer * 1.5 $spacer;
+}
+
+.gitops-card-header-inner {
+    display: flex;
+    align-items: center;
+    gap: $spacer * 0.75;
+    margin-bottom: $spacer * 0.5;
+}
+
+.gitops-card-icon-wrap {
+    padding: $spacer * 0.8;
+    border-radius: 8px;
+    background: rgba($primary, 0.15);
+    color: $primary;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    i {
+        font-size: 1.5rem;
+    }
+}
+
+.gitops-card-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: $white;
+    margin: 0;
+}
+
+.gitops-card-desc {
+    color: $casper;
+    font-size: 1.2rem;
+    line-height: 1.5;
+    margin: 0;
+    max-width: 46rem;
+}
+
+// Pipeline area
+.gitops-pipeline-wrap {
+    position: relative;
+    padding: $spacer * 2.5 $spacer * 1.5;
+}
+
+.gitops-pipeline-inner {
+    position: relative;
+    background: rgba($white, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 12px;
+    padding: $spacer * 1.5;
+}
+
+.gitops-pipeline-nodes {
+    display: flex;
+    align-items: stretch;
+    justify-content: space-between;
+    gap: $spacer * 0.5;
+    flex-wrap: nowrap;
+    @media (max-width: 768px) {
+       justify-content: flex-start;
+    }
+}
+
+.gitops-node-wrap {
+    position: relative;
+    display: flex;
+    align-items: center;
+    flex: 0 0 auto;
+    min-width: 0;
+
+    &.gitops-node-wrap--last .gitops-connector {
+        display: none;
+    }
+}
+
+.gitops-node {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: $spacer * 0.5;
+    padding: $spacer * 0.75;
+    border-radius: 12px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    flex-shrink: 0;
+    background: rgba($white, 0.04);
+    color: $casper;
+    font-family: inherit;
+    font-size: 0.75rem;
+    font-weight: 500;
+    text-align: center;
+
+    &:hover,
+    &.is-active {
+        .gitops-node-label {
+            color: $white;
+        }
+    }
+
+    &.is-active .gitops-node-glow {
+        opacity: 1;
+    }
+}
+
+.gitops-node-glow {
+    position: absolute;
+    inset: 0;
+    border-radius: 12px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+}
+
+.gitops-node-icon-wrap {
+    position: relative;
+    z-index: 1;
+    padding: 0.4rem 0.5rem;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+
+    i {
+        font-size: 1.9rem;
+    }
+}
+
+.gitops-node-label {
+    font-size: 1rem;
+}
+
+.gitops-node--commit {
+    .gitops-node-glow {
+        background: rgba($gitops-orange, 0.2);
+        box-shadow: 0 0 0 2px $gitops-orange;
+    }
+
+    .gitops-node-icon-wrap {
+        background: rgba($gitops-orange, 0.2);
+        color: $gitops-orange;
+    }
+
+    &.is-active .gitops-node-icon-wrap {
+        background: $gitops-orange;
+        color: $black;
+        box-shadow: 0 0 20px rgba($gitops-orange, 0.5);
+    }
+}
+
+.gitops-node--pr {
+    .gitops-node-glow {
+        background: rgba($gitops-orange, 0.2);
+        box-shadow: 0 0 0 2px $gitops-orange;
+    }
+
+    .gitops-node-icon-wrap {
+        background: rgba($gitops-orange, 0.2);
+        color: $gitops-orange;
+    }
+
+    &.is-active .gitops-node-icon-wrap {
+        background: $gitops-orange;
+        color: $black;
+        box-shadow: 0 0 20px rgba($gitops-orange, 0.5);
+    }
+}
+
+.gitops-node--ci {
+    .gitops-node-glow {
+        background: rgba($gitops-teal, 0.2);
+        box-shadow: 0 0 0 2px $gitops-teal;
+    }
+
+    .gitops-node-icon-wrap {
+        background: rgba($gitops-teal, 0.2);
+        color: $gitops-teal;
+    }
+
+    &.is-active .gitops-node-icon-wrap {
+        background: $gitops-teal;
+        color: $black;
+        box-shadow: 0 0 20px rgba($gitops-teal, 0.5);
+    }
+}
+
+.gitops-node--deploy {
+    .gitops-node-glow {
+        background: rgba($gitops-purple, 0.2);
+        box-shadow: 0 0 0 2px $gitops-purple;
+    }
+
+    .gitops-node-icon-wrap {
+        background: rgba($gitops-purple, 0.2);
+        color: $gitops-purple;
+    }
+
+    &.is-active .gitops-node-icon-wrap {
+        background: $gitops-purple;
+        color: $white;
+        box-shadow: 0 0 20px rgba($gitops-purple, 0.5);
+    }
+}
+
+.gitops-node--k8s {
+    .gitops-node-glow {
+        background: rgba($gitops-blue, 0.2);
+        box-shadow: 0 0 0 2px $gitops-blue;
+    }
+
+    .gitops-node-icon-wrap {
+        background: rgba($gitops-blue, 0.2);
+        color: $gitops-blue;
+    }
+
+    &.is-active .gitops-node-icon-wrap {
+        background: $gitops-blue;
+        color: $white;
+        box-shadow: 0 0 20px rgba($gitops-blue, 0.5);
+    }
+}
+
+.gitops-node-label {
+    position: relative;
+    z-index: 1;
+    transition: color 0.3s ease;
+}
+
+.gitops-tooltip {
+    position: absolute;
+    bottom: -3.5rem;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 20;
+    width: 11rem;
+    padding: $spacer * 0.75;
+    border-radius: 8px;
+    background: rgba($dark, 0.95);
+    border: 1px solid rgba($secondary, 0.2);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+    font-size: 0.75rem;
+    color: $casper;
+    text-align: center;
+    pointer-events: none;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.2s ease, visibility 0.2s ease, transform 0.2s ease;
+}
+
+.gitops-node-wrap:hover .gitops-tooltip,
+.gitops-node:focus-visible+.gitops-tooltip {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) translateY(-4px);
+}
+
+.gitops-connector {
+    width: 60px;
+    flex: 1;
+    height: 2px;
+    margin: 0 $spacer * 0.5;
+    position: relative;
+    overflow: hidden;
+    border-radius: 2px;
+    min-width: 6rem;
+
+    @media (max-width: 820px) {
+        min-width: 60px;
+    }
+
+    @media (max-width: 768px) {
+        min-width: 50px;
+    }
+
+}
+
+.gitops-connector-line {
+    position: absolute;
+    inset: 0;
+    background: rgba($secondary, 0.2);
+}
+
+.gitops-connector-flow {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: 2rem;
+    background: linear-gradient(90deg, transparent, $primary, transparent);
+    opacity: 0;
+    animation: gitops-flow 6s linear infinite;
+}
+
+.gitops-flow-paused .gitops-connector-flow {
+    animation-play-state: paused;
+}
+
+@keyframes gitops-flow {
+    0% {
+        transform: translateX(-100%);
+        opacity: 1;
+    }
+
+    25% {
+        transform: translateX(500%);
+        opacity: 1;
+    }
+
+    25.001% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 0;
+        transform: translateX(-100%);
+    }
+}
+
+@keyframes gitops-flow-reverse {
+    0% {
+        transform: translateX(500%);
+        opacity: 1;
+    }
+
+    25% {
+        transform: translateX(-100%);
+        opacity: 1;
+    }
+
+    25.001% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 0;
+        transform: translateX(500%);
+    }
+}
+
+.gitops-connector-flow--2 {
+    animation-delay: 1.5s;
+}
+
+.gitops-connector-flow--3 {
+    animation-name: gitops-flow-reverse;
+    animation-delay: 3s;
+}
+
+.gitops-connector-flow--4 {
+    animation-delay: 4.5s;
+}
+
+.gitops-status {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: $spacer;
+    margin-top: $spacer * 2;
+    padding-top: $spacer;
+    border-top: 1px solid rgba($secondary, 0.15);
+}
+
+.gitops-status-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: $spacer * 0.5;
+    padding: $spacer * 0.5 $spacer;
+    border-radius: 9999px;
+    background: rgba($primary, 0.15);
+    color: $primary;
+    font-size: 1rem;
+    font-weight: 500;
+    animation: gitops-pulse 2s ease-in-out infinite;
+    @media (max-width: 400px) {
+        border-radius: 9px;
+    }
+}
+
+@keyframes gitops-pulse {
+
+    0%,
+    100% {
+        opacity: 0.85;
+    }
+
+    50% {
+        opacity: 1;
+    }
+}
+
+.gitops-flow-btn {
+    padding: $spacer * 0.5 $spacer * 0.75;
+    border-radius: 9999px;
+    background: rgba($white, 0.06);
+    border: 1px solid rgba($secondary, 0.2);
+    color: $casper;
+    font-size: 1rem;
+    font-family: inherit;
+    cursor: pointer;
+    transition: background 0.2s ease, color 0.2s ease;
+
+    &:hover {
+        background: rgba($white, 0.1);
+        color: $white;
+    }
+    @media (max-width: 400px) {
+        border-radius: 9px;
+    }
+}
+
+.gitops-footer {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: $spacer * 0.75;
+    padding: $spacer * 1.5;
+
+    @media (max-width: 600px) {
+        grid-template-columns: 1fr;
+    }
+}
+
+.gitops-footer-item {
+    display: flex;
+    align-items: center;
+    gap: $spacer * 0.5;
+    padding: $spacer * 0.75;
+    border-radius: 8px;
+    background: rgba($white, 0.03);
+    border: 1px solid rgba($secondary, 0.15);
+    font-size: 0.75rem;
+    color: $casper;
+
+    i {
+        color: $primary;
+        font-size: 0.875rem;
+    }
+}
+
+//worflow section 
+.workflow-section {
+    padding: 100px 0;
+}
+
+.workflow-header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.workflow-layout {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.workflow-top {
+    display: flex;
+    justify-content: left;
+    margin-left: 0;
+    margin-bottom: 20px;
+    padding: 0 25px;
+}
+
+.workflow-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: stretch;
+    gap: 20px;
+    padding: 0 25px;
+}
+
+.workflow-card {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+}
+
+.collaboration-section {
+    position: relative;
+    overflow: hidden;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+
+    .container {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .collaboration-content {
+        .icon-box {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            background: rgba(0, 179, 159, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 24px;
+            border: 1px solid rgba(0, 179, 159, 0.2);
+            svg {
+                color: #00D3A9;
+                width: 24px;
+                height: 24px;
+            }
+        }
+
+        h2 {
+            font-size: clamp(2rem, 3vw, 2.8rem);
+            margin-bottom: 20px;
+            line-height: 1.2;
+            background: linear-gradient(to right, #ffffff, #9EFFEC);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        p {
+            color: var(--muted);
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin-bottom: 32px;
+        }
+
+        .feature-list {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+
+            li {
+                display: flex;
+                align-items: flex-start;
+                gap: 12px;
+                color: #e2e8f0;
+                font-size: 1rem;
+
+                .check-icon {
+                    flex-shrink: 0;
+                    width: 20px;
+                    height: 20px;
+                    border-radius: 50%;
+                    background: #00B39F;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    margin-top: 2px;
+
+                    svg {
+                        width: 12px;
+                        height: 12px;
+                        color: #041018;
+                    }
+                }
+            }
+        }
+    }
+
+    .collaboration-visual {
+        position: relative;
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+
+        .visual-inner {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+
+            img {
+                width: 100%;
+                height: auto;
+                border-radius: 12px;
+                display: block;
+            }
+        }
+    }
+
+
+    .team-workspace-card {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        background: linear-gradient(145deg,
+                #0f1a20,
+                #0c1117);
+        border: 1px solid rgba(255, 255, 255, 0.06);
+        border-radius: 24px;
+        overflow: hidden;
+        backdrop-filter: blur(28px) saturate(160%);
+        -webkit-backdrop-filter: blur(28px) saturate(160%);
+        font-family: 'Inter', sans-serif;
+        position: relative;
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 20px 24px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            @media (max-width: 400px) {
+                padding: 18px 12px;
+            }
+
+            .header-left {
+                display: flex;
+                align-items: center;
+                gap: 16px;
+
+                .icon-box {
+                    width: 40px;
+                    height: 40px;
+                    background: rgba(0, 179, 159, 0.15); // Teal tint
+                    border-radius: 12px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    color: #00D3A9; // Teal
+                    border: 1px solid rgba(0, 179, 159, 0.25);
+                    @media (max-width: 400px) {
+                        width:50px;
+                    }
+
+
+                    svg {
+                        width: 20px;
+                        height: 20px;
+                    }
+                }
+
+                .titles {
+                    h3 {
+                        font-size: 1rem;
+                        font-weight: 600;
+                        color: white;
+                        margin: 0;
+                        line-height: 1.2;
+                    }
+
+                    p {
+                        font-size: 0.8rem;
+                        color: #94a3b8;
+                        margin: 0;
+                        line-height: 1.2;
+                        @media (max-width: 1024px){
+                            margin: 10px 0;
+                        }
+                    }
+                }
+            }
+
+            .header-right {
+                display: flex;
+                align-items: center;
+                gap: 16px;
+
+                .avatars {
+                    display: flex;
+                    align-items: center;
+
+                    .initials {
+                        font-size: 0.85rem;
+                        font-weight: 600;
+                        margin-left: 8px;
+                        position: relative;
+
+                        &::after {
+                            content: '';
+                            position: absolute;
+                            bottom: 0;
+                            right: -2px;
+                            width: 6px;
+                            height: 6px;
+                            background: #00D3A9; 
+                            border-radius: 50%;
+                            border: 1px solid #0f172a;
+                            box-shadow: 0 0 6px rgba(0, 211, 169, 0.5);
+                        }
+
+                        &:nth-child(1) {
+                            color: #d946ef; 
+                        }
+
+                        &:nth-child(2) {
+                            color: #359AC0; 
+                        }
+
+                        &:nth-child(3) {
+                            color: #B91C1C; 
+                        }
+
+                        &:nth-child(4) {
+                            color: #6750A3;
+                        }
+
+                        &:nth-child(5) {
+                            color: $primary;
+                        }
+
+                        // Taylor
+                    }
+
+                    .status-dot {
+                        display: none;
+                    }
+                }
+
+                .add-btn {
+                    width: 32px;
+                    height: 32px;
+                    border: 1px solid rgba(255, 255, 255, 0.1);
+                    border-radius: 50%;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    color: #94a3b8;
+                    cursor: pointer;
+                    transition: all 0.2s;
+
+                    &:hover {
+                        background: rgba(255, 255, 255, 0.05);
+                        color: white;
+                    }
+                }
+            }
+        }
+
+
+        .card-canvas {
+            height: 340px;
+            position: relative;
+            overflow: hidden;
+            @media (max-width: 1024px){
+                height: 380px; 
+            }
+
+            .canvas-grid {
+                position: absolute;
+                top: 0;
+                bottom: 0;
+                left: 50%;
+                transform: translateX(-50%);
+                width: 540px;
+                height: 100%;
+                border-radius: 0;
+                background-size: 48px 48px;
+                @media (max-width: 1024px){
+                    width: 440px;
+                }
+                @media (max-width: 820px){
+                    width: 340px;
+                }
+            }
+
+
+            .multi-cursor {
+                position: absolute;
+                width: 50px;
+                height: 50px;
+                z-index: 20;
+                opacity: 0.9;
+                pointer-events: none;
+                overflow: visible;
+                top: 0;
+                left: 0;
+
+                img {
+                    width: 100%;
+                    height: auto;
+                    display: block;
+                    border-radius: 0; 
+                    filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.2));
+                }
+            }
+        }
+
+
+        .card-footer {
+            padding: 20px 24px;
+            background: rgba(5, 10, 20, 0.6);
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(10px);
+
+            .toolbar {
+                display: flex;
+                gap: 12px;
+                margin-bottom: 24px;
+                flex-wrap: wrap;
+
+                .tool-btn {
+                    display: flex;
+                    align-items: center;
+                    gap: 8px;
+                    padding: 8px 14px;
+                    background: rgba(255, 255, 255, 0.03);
+                    border: 1px solid rgba(255, 255, 255, 0.06);
+                    border-radius: 8px;
+                    font-size: 0.85rem;
+                    font-weight: 500;
+                    color: #cbd5e1;
+                    cursor: pointer;
+                    transition: all 0.2s;
+
+                    &:hover {
+                        background: rgba(255, 255, 255, 0.08);
+                    }
+
+                    &.active {
+                        background: rgba(0, 179, 159, 0.15); 
+                        border-color: rgba(0, 179, 159, 0.4);
+                        color: #9EFFEC;
+                    }
+
+                    svg {
+                        width: 16px;
+                        height: 16px;
+                    }
+
+                    .icon-blue {
+                        color: #3b82f6;
+                    }
+
+                    .icon-purple {
+                        color: #d946ef;
+                    }
+
+                    .icon-green {
+                        color: #22c55e;
+                    }
+
+                    .icon-orange {
+                        color: #f97316;
+                    }
+                }
+            }
+
+            .live-activity {
+                h4 {
+                    font-size: 0.7rem;
+                    text-transform: uppercase;
+                    letter-spacing: 0.08em;
+                    color: #64748b;
+                    margin-bottom: 16px;
+                    font-weight: 600;
+                }
+
+                .activity-item {
+                    display: flex;
+                    justify-content: space-between;
+                    font-size: 0.85rem;
+                    margin-bottom: 10px;
+                    align-items: center;
+
+                    &:last-child {
+                        margin-bottom: 0;
+                    }
+
+                    .left {
+                        display: flex;
+                        align-items: center;
+                        gap: 10px;
+                        color: #94a3b8;
+
+                        .dot {
+                            width: 6px;
+                            height: 6px;
+                            border-radius: 50%;
+                            box-shadow: 0 0 8px currentColor;
+                        }
+
+                        strong {
+                            color: #e2e8f0;
+                            font-weight: 600;
+                        }
+
+                        .target {
+                            color: #f8fafc;
+                            font-weight: 600;
+                        }
+                    }
+
+                    .time {
+                        color: #475569;
+                        font-size: 0.8rem;
+                    }
+                }
+            }
+        }
+    }
+
+
+    &::before {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 80%;
+        height: 80%;
+        background: radial-gradient(circle, rgba(0, 179, 159, 0.15) 0%, transparent 70%);
+        filter: blur(100px);
+        z-index: -1;
+        opacity: 0.5;
+    }
+}
+
+@keyframes pulse-glow {
+    0% {
+        opacity: 0.4;
+        transform: scale(0.95);
+    }
+
+    100% {
+        opacity: 0.7;
+        transform: scale(1.05);
+    }
+}
+
+.capabilities-badge {
+    color: $casper;
+    font-size: 0.8rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: $spacer * 0.75;
+    margin-bottom: 15px;
+
+    .dot {
+    display: inline-block; 
+    width: 8px;            
+    height: 8px;
+    background-color: $primary; 
+    border-radius: 50%;
+    flex-shrink: 0;
+    }
+}
+
+.timeline-section {
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+
+    .container {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .timeline-visual {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+
+        .visual-inner {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            background: transparent;
+        }
+    }
+
+    // Timeline DVR Card Styles
+    .timeline-card {
+        background: linear-gradient(145deg, #0f1a20, #0c1117);
+        border: 1px solid rgba(255, 255, 255, 0.06);
+        border-radius: 16px;
+        overflow: hidden;
+        backdrop-filter: blur(28px) saturate(160%);
+        -webkit-backdrop-filter: blur(28px) saturate(160%);
+        font-family: $font-serif;
+        flex: 1;
+
+        .timeline-card-gradient {
+            position: absolute;
+            inset: 0;
+            border-radius: 16px;
+            background: linear-gradient(135deg, rgba($primary, 0.05) 0%, transparent 50%, rgba($secondary, 0.05) 100%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        // Card Header
+        .card-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 20px 24px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            flex-shrink: 0;
+
+            .header-left {
+                display: flex;
+                align-items: center;
+                gap: 16px;
+
+                .icon-box {
+                    width: 40px;
+                    height: 40px;
+                    background: rgba($primary, 0.15);
+                    border-radius: 12px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    color: $secondary;
+                    border: 1px solid rgba($primary, 0.25);
+
+                    svg {
+                        width: 20px;
+                        height: 20px;
+                    }
+                }
+
+                .titles {
+                    h3 {
+                        font-size: 1rem;
+                        font-weight: 600;
+                        color: white;
+                        margin: 0;
+                        line-height: 1.2;
+                    }
+
+                    p {
+                        font-size: 0.8rem;
+                        color: $casper;
+                        margin: 0;
+                        line-height: 1.2;
+                    }
+                }
+            }
+
+            .header-right {
+                display: flex;
+                align-items: center;
+                gap: 12px;
+
+                .live-badge {
+                    display: flex;
+                    align-items: center;
+                    gap: 6px;
+                    padding: 4px 10px;
+                    background: rgba($danger, 0.1);
+                    border: 1px solid rgba($danger, 0.3);
+                    border-radius: 12px;
+                    font-size: 0.75rem;
+                    font-weight: 600;
+                    color: $light;
+                    letter-spacing: 0.05em;
+
+                    .dot {
+                        width: 6px;
+                        height: 6px;
+                        background: $danger;
+                        border-radius: 50%;
+                        animation: pulse-live 2s ease-in-out infinite;
+                    }
+                }
+            }
+        }
+
+        .active-event-display {
+            display: flex;
+            align-items: flex-start;
+            gap: 16px;
+            padding: 20px 24px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            background: rgba($dark, 0.4);
+            height: 108px;
+            overflow: hidden;
+            flex-shrink: 0;
+            @media (max-width: 780px){
+                height: 138px;
+            }
+
+            .event-icon-box {
+                width: 44px;
+                height: 44px;
+                flex-shrink: 0;
+                border-radius: 12px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                transition: all 0.3s ease;
+
+                &.success {
+                    background: rgba($primary, 0.15);
+                    color: $secondary;
+                    border: 1px solid rgba($primary, 0.25);
+                }
+
+                &.warning {
+                    background: rgba($warning, 0.15);
+                    color: $warning;
+                    border: 1px solid rgba($warning, 0.25);
+                }
+
+                &.error {
+                    background: rgba($danger, 0.15);
+                    color: $danger;
+                    border: 1px solid rgba($danger, 0.25);
+                }
+
+                svg {
+                    width: 24px;
+                    height: 24px;
+                }
+            }
+
+            .event-details {
+                flex: 1;
+                min-width: 0;
+                display: flex;
+                flex-direction: column;
+                gap: 6px;
+
+                .event-header {
+                    display: flex;
+                    align-items: center;
+                    gap: 10px;
+                    flex-wrap: nowrap;
+                    overflow: hidden;
+
+                    h4 {
+                        font-size: 1.15rem;
+                        font-weight: 600;
+                        margin: 0;
+                        color: white;
+                        white-space: nowrap;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                        min-width: 0;
+                    }
+
+                    .status-badge {
+                        padding: 4px 10px;
+                        border-radius: 12px;
+                        font-size: 0.75rem;
+                        font-weight: 600;
+                        display: flex;
+                        align-items: center;
+                        gap: 6px;
+                        flex-shrink: 0;
+
+                        .dot {
+                            width: 6px;
+                            height: 6px;
+                            border-radius: 50%;
+                        }
+
+                        &.success {
+                            background: rgba($primary, 0.1);
+                            color: $secondary;
+                            border: 1px solid rgba($primary, 0.25);
+
+                            .dot {
+                                background: $secondary;
+                            }
+                        }
+
+                        &.warning {
+                            background: rgba($warning, 0.1);
+                            color: $warning;
+                            border: 1px solid rgba($warning, 0.25);
+
+                            .dot {
+                                background: $warning;
+                            }
+                        }
+
+                        &.error {
+                            background: rgba($danger, 0.1);
+                            color: $danger;
+                            border: 1px solid rgba($danger, 0.25);
+
+                            .dot {
+                                background: $danger;
+                            }
+                        }
+                    }
+                }
+
+                p {
+                    margin: 0;
+                    font-size: 0.9rem;
+                    color: $casper;
+                    white-space: nowrap;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    @media (max-width: 780px){
+                        white-space: normal;
+                    }
+                }
+
+                .event-meta {
+                    display: flex;
+                    align-items: center;
+                    gap: 12px;
+                    font-size: 0.8rem;
+                    color: rgba($casper, 0.7);
+                    font-family: $font-family-monospace;
+
+                    .service-tag {
+                        background: rgba(255, 255, 255, 0.08);
+                        padding: 2px 8px;
+                        border-radius: 4px;
+                        border: 1px solid rgba(255, 255, 255, 0.1);
+                    }
+                }
+            }
+        }
+
+        .timeline-track {
+            position: relative;
+            padding: 28px 24px 16px;
+            background: transparent;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+
+            .segments {
+                position: relative;
+                width: 100%;
+                height: 90px;
+                background: rgba(255, 255, 255, 0.03);
+                border-radius: 12px;
+                box-shadow:
+                    inset 0 1px 0 rgba(255, 255, 255, 0.04),
+                    inset 0 2px 8px rgba(0, 0, 0, 0.4);
+                border: 1px solid rgba(255, 255, 255, 0.06);
+                cursor: pointer;
+                overflow: visible;
+
+                .tmdvr-track-progress {
+                    position: absolute;
+                    left: 0;
+                    top: 0;
+                    height: 100%;
+                    width: 0%;
+                    background: linear-gradient(90deg, rgba($primary, 0.06), rgba($secondary, 0.2));
+                    border-radius: 11px;
+                    pointer-events: none;
+                    transition: none;
+                }
+
+                .tmdvr-marker {
+                    position: absolute;
+                    top: 50%;
+                    transform: translate(-50%, -50%);
+                    width: 10px;
+                    height: 10px;
+                    border-radius: 50%;
+                    padding: 0;
+                    border: 1.5px solid rgba(255, 255, 255, 0.2);
+                    cursor: pointer;
+                    transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+                    z-index: 5;
+                    opacity: 0.65;
+
+                    &:hover {
+                        opacity: 1;
+                        transform: translate(-50%, -50%) scale(1.5);
+                        border-color: rgba(255, 255, 255, 0.5);
+                    }
+
+                    &.active {
+                        width: 14px;
+                        height: 14px;
+                        opacity: 1;
+                        z-index: 10;
+                        border-color: rgba(255, 255, 255, 0.6);
+                    }
+
+                    &.success {
+                        background: $primary;
+                        box-shadow: 0 0 6px rgba($primary, 0.5);
+                    }
+
+                    &.warning {
+                        background: $warning;
+                        box-shadow: 0 0 6px rgba($warning, 0.5);
+                    }
+
+                    &.error {
+                        background: $danger;
+                        box-shadow: 0 0 6px rgba($danger, 0.5);
+                    }
+
+                    &.active.success {
+                        box-shadow: 0 0 16px rgba($primary, 0.9);
+                    }
+
+                    &.active.warning {
+                        box-shadow: 0 0 16px rgba($warning, 0.9);
+                    }
+
+                    &.active.error {
+                        box-shadow: 0 0 16px rgba($danger, 0.9);
+                    }
+                }
+
+                // Playhead — child of .segments so % coords align exactly with markers
+                .playhead {
+                    position: absolute;
+                    top: 0;
+                    height: 100%;
+                    width: 2px;
+                    background: linear-gradient(180deg,
+                            rgba($primary, 0.1) 0%,
+                            $primary 20%,
+                            $secondary 80%,
+                            rgba($secondary, 0.1) 100%);
+                    box-shadow: 0 0 14px rgba($secondary, 0.7);
+                    border-radius: 2px;
+                    z-index: 15;
+                    pointer-events: none;
+                    transform: translateX(-50%);
+                    will-change: left;
+
+                    &::before {
+                        content: '';
+                        position: absolute;
+                        top: -5px;
+                        left: 50%;
+                        transform: translateX(-50%);
+                        width: 11px;
+                        height: 11px;
+                        background: $secondary;
+                        border-radius: 50%;
+                        border: 2px solid #0c1117;
+                        box-shadow: 0 0 10px $secondary;
+                    }
+
+                    &::after {
+                        content: '';
+                        position: absolute;
+                        bottom: -5px;
+                        left: 50%;
+                        transform: translateX(-50%);
+                        width: 11px;
+                        height: 11px;
+                        background: $secondary;
+                        border-radius: 50%;
+                        border: 2px solid #0c1117;
+                        box-shadow: 0 0 10px $secondary;
+                    }
+                }
+            }
+
+            .time-labels {
+                display: flex;
+                justify-content: space-between;
+                padding: 0 1px;
+                margin-top: 10px;
+
+                span {
+                    font-size: 0.7rem;
+                    color: rgba($casper, 0.5);
+                    font-family: $font-family-monospace;
+                    letter-spacing: 0.03em;
+                }
+            }
+        }
+
+        .card-controls {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 20px 24px;
+            background: rgba(5, 10, 20, 0.6);
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            flex-shrink: 0;
+            @media (max-width: 1024px){
+                padding: 20px 24px;
+                display: block;
+            }
+
+            .playback-controls {
+                display: flex;
+                gap: 10px;
+                align-items: center;
+
+                .control-btn {
+                    width: 40px;
+                    height: 40px;
+                    border-radius: 12px;
+                    background: rgba(255, 255, 255, 0.03);
+                    border: 1px solid rgba(255, 255, 255, 0.06);
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    color: $casper;
+                    cursor: pointer;
+                    transition: all 0.2s;
+
+                    svg {
+                        width: 18px;
+                        height: 18px;
+                    }
+
+                    &:hover {
+                        background: rgba(255, 255, 255, 0.08);
+                        color: white;
+                        transform: scale(1.05);
+                    }
+
+                    &.pause-btn {
+                        background: linear-gradient(135deg, $primary 0%, $secondary 100%);
+                        border: none;
+                        color: $dark;
+                        box-shadow: 0 4px 12px rgba($primary, 0.3);
+
+                        &:hover {
+                            background: linear-gradient(135deg, $secondary 0%, $light 100%);
+                            box-shadow: 0 6px 16px rgba($secondary, 0.4);
+                            transform: scale(1.08);
+                        }
+                    }
+                }
+            }
+
+            .time-display {
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                padding: 10px 18px;
+                background: rgba(15, 23, 42, 0.6);
+                border-radius: 14px;
+                font-size: 0.95rem;
+                font-weight: 500;
+                border: 1px solid rgba(255, 255, 255, 0.05);
+                font-family: $font-family-monospace;
+                @media (max-width: 1024px){
+                   margin-top: 1rem;
+                }
+
+                svg {
+                    color: $secondary;
+                }
+
+                .current-time {
+                    font-weight: 700;
+                    background: linear-gradient(90deg, $primary 0%, $light 100%);
+                    -webkit-background-clip: text;
+                    -webkit-text-fill-color: transparent;
+                    background-clip: text;
+                }
+
+                .separator {
+                    color: rgba($casper, 0.3);
+                }
+
+                .total-time {
+                    color: rgba($casper, 0.5);
+                }
+            }
+        }
+    }
+
+
+    &::before {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 80%;
+        height: 80%;
+        background: radial-gradient(circle, rgba($primary, 0.15) 0%, transparent 70%);
+        filter: blur(100px);
+        z-index: -1;
+        opacity: 0.5;
+        pointer-events: none;
+    }
+}
+
+@keyframes pulse-live {
+
+    0%,
+    100% {
+        opacity: 1;
+        box-shadow: 0 0 0 0 rgba($danger, 0.7);
+    }
+
+    50% {
+        opacity: 0.7;
+        box-shadow: 0 0 0 6px rgba($danger, 0);
+    }
+}
+
+@media (max-width: 767px) {
+    .workflow-section {
+        padding: 60px 0;
+    }
+    
+    .workflow-header {
+        margin-bottom: 30px;
+        padding: 0 16px;
+    }
+    
+    .workflow-layout {
+        padding: 0;
+    }
+    
+    .workflow-top {
+        padding: 0 16px;
+        margin-bottom: 16px;
+    }
+    
+    .workflow-row {
+        flex-direction: column;
+        gap: 16px;
+        padding: 0 16px;
+    }
+    
+    .workflow-card {
+        width: 100%;
+    }
+    
+    // Mobile - Stack GitOps pipeline vertically
+    .gitops-pipeline-nodes {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .gitops-node-wrap {
+        width: 100%;
+        flex-direction: column;
+        
+        &:not(.gitops-node-wrap--last)::after {
+            display: none;
+        }
+    }
+
+    .gitops-node {
+        flex-direction: row;
+        width: 100%;
+        justify-content: center;
+        gap: $spacer * 1;
+        
+        .gitops-node-icon-wrap i {
+            font-size: 1.3rem;
+        }
+        
+        .gitops-node-label {
+            font-size: 0.85rem;
+        }
+    }
+    
+    .gitops-card-header {
+        padding: 0 $spacer * 1 $spacer;
+    }
+    
+    .gitops-card-title {
+        font-size: 1.2rem;
+    }
+    
+    .gitops-card-desc {
+        font-size: 0.9rem;
+    }
+
+    .gitops-connector {
+        min-width: 3px;
+        width: 3px;
+        height: 30px;
+        margin: 6px 0;
+        flex: none;
+        position: relative;
+        background: rgba($secondary, 0.2); // Thin static line
+        border-radius: 2px;
+    }
+
+    .gitops-connector-flow {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;  // Keep 100% width
+        height: 2rem;
+        background: linear-gradient(180deg, transparent, $primary, transparent);
+        opacity: 0;
+        animation: gitops-flow-vertical 6s linear infinite;
+
+        &::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 0;
+            transform: translateX(-50%);
+            width: 2px;  // Thin line width
+            height: 100%;
+            background: $primary;
+            box-shadow: 0 0 8px $primary;
+        }
+    }
+    
+    .gitops-flow-paused .gitops-connector-flow {
+        animation-play-state: paused;
+    }
+
+
+        
+    @keyframes gitops-flow-vertical {
+        0% {
+            transform: translateY(-100%);
+            opacity: 1;
+        }
+        25% {
+            transform: translateY(500%);
+            opacity: 1;
+        }
+        25.001% {
+            opacity: 0;
+        }
+        100% {
+            opacity: 0;
+            transform: translateY(-100%);
+        }
+    }
+    
+    // Handle multiple flows with delays
+    .gitops-connector-flow--2 {
+        animation-delay: 1.5s;
+    }
+    
+    .gitops-connector-flow--3 {
+        animation-name: gitops-flow-vertical-reverse;
+        animation-delay: 3s;
+    }
+    
+    .gitops-connector-flow--4 {
+        animation-delay: 4.5s;
+    }
+    
+    @keyframes gitops-flow-vertical-reverse {
+        0% {
+            transform: translateY(500%);
+            opacity: 1;
+        }
+        25% {
+            transform: translateY(-100%);
+            opacity: 1;
+        }
+        25.001% {
+            opacity: 0;
+        }
+        100% {
+            opacity: 0;
+            transform: translateY(500%);
+        }
+    }
+}
+
+@media (min-width: 768px) and (max-width: 1024px) {
+    .workflow-row {
+        gap: 16px;
+    }
+    
+    .workflow-top {
+        padding: 0 20px;
+    }
+    
+    .workflow-row {
+        padding: 0 20px;
+    }
+    
+    // Keep GitOps pipeline in single row on tablet
+    .gitops-pipeline-nodes {
+        gap: $spacer * 0.25;
+    }
+
+    .gitops-node {
+        padding: $spacer * 0.5;
+        
+        .gitops-node-icon-wrap {
+            padding: 0.3rem 0.4rem;
+            
+            i {
+                font-size: 1.1rem; // Even smaller for iPad Mini
+            }
+        }
+        
+        .gitops-node-label {
+            font-size: 0.65rem; // Smaller text to fit
+        }
+    }
+
+    .gitops-connector {
+        max-width: 1.5rem;
+    }
+
+    .gitops-pipeline-wrap {
+        padding: $spacer * 1.5 $spacer;
+    }
+
+    .gitops-pipeline-inner {
+        padding: $spacer * 1;
+    }
+}

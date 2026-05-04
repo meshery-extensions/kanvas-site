@@ -308,12 +308,23 @@
       grid-template-columns: repeat(2, 1fr);
     }
 
+    .footer-subscribe {
+      margin-top: 1.25rem;
+    }
+
     .footer-subscribe-row {
-      flex-direction: column;
-      align-items: stretch;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 0.5rem;
+      align-items: center;
 
       input[type="email"] {
         max-width: 100%;
+        min-width: 0;
+      }
+
+      button {
+        padding: 0 1.1rem;
       }
     }
 

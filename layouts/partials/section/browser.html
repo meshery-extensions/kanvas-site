@@ -36,19 +36,4 @@
     <div class="browser-stand"></div>
     <div class="browser-shadow"></div>
   </div>
-  <script>
-    (function() {
-      const mockup = document.querySelector('.browser-mockup');
-      const inner = document.querySelector('.browser-body-inner');
-      if (mockup && inner) {
-        new ResizeObserver(entries => {
-          for (let entry of entries) {
-             const width = entry.contentRect.width;
-             const scale = Math.min(1, Math.max(0.2, width / 980));
-             inner.style.transform = `scale(${scale})`;
-          }
-        }).observe(mockup);
-      }
-    })();
-  </script>
 </section>

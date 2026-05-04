@@ -104,33 +104,33 @@
 
 // 3D depth offsets — front/mid/back pairs
 .reunited-piece--0 {
-  transform: translateZ(2px);
+  transform: translateZ(0);
   filter: drop-shadow(0 4px 20px rgba(0, 211, 169, 0.25));
 }
 
 .reunited-piece--1 {
-  transform: translateZ(18px);
+  transform: translateZ(0);
   filter: drop-shadow(0 4px 16px rgba(0, 211, 169, 0.22));
 }
 
 .reunited-piece--2 {
-  transform: translateZ(14px);
+  transform: translateZ(0);
   filter: drop-shadow(0 2px 12px rgba(0, 179, 159, 0.25));
 }
 
 .reunited-piece--3 {
-  transform: translateZ(10px);
+  transform: translateZ(0);
   filter: drop-shadow(0 2px 10px rgba(0, 179, 159, 0.18));
 }
 
 .reunited-piece--4 {
-  transform: translateZ(-2px);
+  transform: translateZ(0);
   filter: drop-shadow(0 0 8px rgba(0, 179, 159, 0.2));
   opacity: 0.85;
 }
 
 .reunited-piece--5 {
-  transform: translateZ(-18px) rotateY(-1deg);
+  transform: translateZ(0) rotateY(-1deg);
   filter: drop-shadow(0 0 6px rgba(0, 211, 169, 0.08));
   opacity: 0.78;
 }
@@ -198,6 +198,12 @@
 
 // ─── Responsive ───
 @media (max-width: 768px) {
+
+  body .scroll-piece-stage .scroll-piece-body svg,
+  body .reunited-logo-inner .reunited-piece {
+    filter: none;
+  }
+  
   .scroll-piece-stage {
     width: 50px;
     height: 50px;
@@ -208,12 +214,12 @@
     height: 180px;
   }
 
-  .reunited-piece--0 { transform: translateZ(14px); }
-  .reunited-piece--1 { transform: translateZ(10px); }
-  .reunited-piece--2 { transform: translateZ(2px); }
-  .reunited-piece--3 { transform: translateZ(0px); }
-  .reunited-piece--4 { transform: translateZ(-8px); }
-  .reunited-piece--5 { transform: translateZ(-12px); }
+  .reunited-piece--0 { transform: translateZ(0); }
+  .reunited-piece--1 { transform: translateZ(0); }
+  .reunited-piece--2 { transform: translateZ(0); }
+  .reunited-piece--3 { transform: translateZ(0); }
+  .reunited-piece--4 { transform: translateZ(0); }
+  .reunited-piece--5 { transform: translateZ(0); }
 
   .reunited-glow {
     width: 200px;

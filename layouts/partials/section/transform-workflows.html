@@ -364,6 +364,7 @@ document.addEventListener("DOMContentLoaded", () => {
             }
 
             marker.className = classes.join(" ");
+            marker.setAttribute("aria-label", `Timeline event: ${ev.title}`);
             marker.style.left = ev.timestamp;
 
             marker.addEventListener("click", (e) => {

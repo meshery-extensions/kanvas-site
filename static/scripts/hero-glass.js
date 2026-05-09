@@ -25,14 +25,14 @@ const refreshHeroRect = () => {
 };
 
 const updateScene = () => {
+  root.style.setProperty("--cursor-x", `${pointer.x}px`);
+  root.style.setProperty("--cursor-y", `${pointer.y}px`);
+
   if (!hero || !heroInView) {
     frame = null;
     return;
   }
-  root.style.setProperty("--cursor-x", `${pointer.x}px`);
-  root.style.setProperty("--cursor-y", `${pointer.y}px`);
-
-
+  
   if (heroRectDirty || !heroRect) {
     refreshHeroRect();
   }
@@ -48,7 +48,7 @@ const updateScene = () => {
     const relY = (pointer.y - rect.top) / rect.height - 0.5;
     target.style.setProperty("--tilt-x", `${(-relY * 6).toFixed(2)}deg`);
     target.style.setProperty("--tilt-y", `${(relX * 6).toFixed(2)}deg`);
-  });  
+  });
 
   frame = null;
 };
@@ -56,7 +56,7 @@ const updateScene = () => {
 const handlePointer = (event) => {
   pointer.x = event.clientX;
   pointer.y = event.clientY;
-  scheduleUpdateScene();
+  heroInView && scheduleUpdateScene();
 };
 
 window.addEventListener("pointermove", handlePointer, { passive: true });
@@ -76,7 +76,7 @@ window.addEventListener("scroll", () => {
   heroRectDirty = true;
 }, { passive: true });
 
-if(hero){ 
+if(hero){
   const observer = new IntersectionObserver(
     (entries) => {
       entries.forEach((entry) => {

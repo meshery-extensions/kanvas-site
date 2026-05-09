@@ -273,6 +273,7 @@
 </section>
 
 <script>
+(function(){
 // Pipeline visualization
 const section = document.querySelector('.gitops-card-section');
 if (section) {
@@ -309,23 +310,28 @@ if (section) {
   }
 
   // 2. Intersection Observer: Handles auto-pause/resume on scroll
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        // If it comes into view, resume ONLY if the user hasn't manually paused it
-        if (!userPaused) {
-          updateFlowState(true);
-        }
-      } else {
-        // When it leaves the screen, always pause to save CPU/GPU resources
-        section.classList.add('gitops-flow-paused');
-      }
-    });
-  }, { threshold: 0.1 });
+  if ("IntersectionObserver" in window) {
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                // If it comes into view, resume ONLY if the user hasn't manually paused it
+                if (!userPaused) {
+                updateFlowState(true);
+                }
+            } else {
+                // When it leaves the screen, always pause to save CPU/GPU resources
+                updateFlowState(false);
+            }
+        });
+    }, { threshold: 0.1 });
 
-  observer.observe(section);
+    observer.observe(section);
+  } else {
+    // Fallback for browsers without IntersectionObserver support
+    updateFlowState(true);
+  }
 }
-
+}())
 document.addEventListener("DOMContentLoaded", () => {
     const events = [
         { id: "1", timestamp: "0%", time: "09:00:12", title: "Deploy v2.4.1", description: "Frontend service updated with new auth flow", type: "deploy", service: "frontend", status: "success" },

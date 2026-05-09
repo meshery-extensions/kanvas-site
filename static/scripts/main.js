@@ -399,10 +399,7 @@ const initScrollPieces = () => {
 };
 
 const initScrollAnimations = () => {
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-        animateCounters();
-        return;
-    }
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
     // ── Background Ambient Overlay ──
     const ambient = document.createElement('div');
@@ -616,6 +613,10 @@ const initVideoHandler = () => {
 document.addEventListener("DOMContentLoaded", () => {
     initMarquee();
     initVideoHandler();
+
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        animateCounters();
+    }
 
     const header = document.querySelector(".site-header");
     if (header) {

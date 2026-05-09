@@ -83,34 +83,18 @@ const scrubEach = (elements, props, triggerEl, startBase, endBase, offsetPer) =>
 
 // ── 5. Scroll Logo Pieces — 6 independent pieces that reunite in the browser section ──
 const initScrollPieces = () => {
-    // The 6 polygons of the Kanvas isometric logo
-    // Each piece: SVG polygon data, fill color, depth class, intro section
-    const pieces = [
-        { // 0: top-right triangle (light teal)
-            points: '362.54 42.38 362.54 253.13 545.2 147.38',
-            fill: '#00d3a9', depth: 'front',
-        },
-        { // 1: bottom-right triangle (light teal)
-            points: '362.54 297.22 362.54 508.98 546.87 403.59',
-            fill: '#00d3a9', depth: 'front',
-        },
-        { // 2: top-left triangle (dark teal)
-            points: '336.24 251.68 336.24 44.16 155.82 147.58',
-            fill: '#00b39f', depth: 'mid',
-        },
-        { // 3: bottom-left triangle (dark teal)
-            points: '336.24 508 336.24 298.75 155.38 403.45',
-            fill: '#00b39f', depth: 'mid',
-        },
-        { // 4: right side triangle (dark teal)
-            points: '559.39 380.45 559.39 169.55 376.95 275.18',
-            fill: '#00b39f', depth: 'back',
-        },
-        { // 5: left side triangle (light teal)
-            points: '140.61 169.16 140.61 381.62 324.4 275.21',
-            fill: '#00d3a9', depth: 'back',
-        },
-    ];
+    // Read the pieces from the DOM to avoid duplication with HTML fallback
+    const pieceElements = document.querySelectorAll('#reunitedLogoInner .reunited-piece');
+    if (!pieceElements.length) return;
+
+    const pieces = Array.from(pieceElements).map(svg => {
+        const poly = svg.querySelector('polygon');
+        return {
+            points: poly.getAttribute('points'),
+            fill: poly.getAttribute('fill'),
+            depth: svg.getAttribute('data-depth')
+        };
+    });
 
     // Piece introduction schedule:
     // Which section introduces each piece, and starting position
@@ -145,16 +129,7 @@ const initScrollPieces = () => {
         bodies.push(anchor.querySelector('.scroll-piece-body'));
     });
 
-    // Also populate the reunited logo in browser-scene
-    // Use innerHTML to ensure correct SVG namespace parsing
-    const reunitedInner = document.getElementById('reunitedLogoInner');
-    if (reunitedInner) {
-        reunitedInner.innerHTML = pieces.map((p, i) =>
-            '<svg class="reunited-piece reunited-piece--' + i + '" viewBox="130 30 440 490" xmlns="http://www.w3.org/2000/svg">' +
-            '<polygon points="' + p.points + '" fill="' + p.fill + '"/>' +
-            '</svg>'
-        ).join('');
-    }
+
 
     // Hidden until all pieces have physically assembled in place
     const reunitedFloat = document.querySelector('.reunited-float');

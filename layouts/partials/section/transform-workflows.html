@@ -482,11 +482,12 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     btnPlayPause.addEventListener("click", () => {
-        isAnimationPausedManually = !isAnimationPausedManually;
         if (autoPlayEnabled) {
+            isAnimationPausedManually = true;
             setIsPlaying(false);
             if (animRef) cancelAnimationFrame(animRef);
         } else {
+            isAnimationPausedManually = false;
             if (scrubPosition >= 100) {
                 setScrubPosition(0);
                 setActiveEvent(events[0]);
@@ -504,6 +505,7 @@ document.addEventListener("DOMContentLoaded", () => {
         setActiveEvent(events[newIdx]);
         setScrubPosition(parseFloat(events[newIdx].timestamp));
         setIsPlaying(false);
+        isAnimationPausedManually = true;
         if (animRef) cancelAnimationFrame(animRef);
     }
 
@@ -517,15 +519,12 @@ document.addEventListener("DOMContentLoaded", () => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 if (isAnimationPausedManually) return;
-                if (!autoPlayEnabled) {
-                    setIsPlaying(true);
-                    animRef = requestAnimationFrame(() => playTick(performance.now(), scrubPosition));
-                }
+                setIsPlaying(true);
+                animRef = requestAnimationFrame(() => playTick(performance.now(), scrubPosition));
+               
             } else {
-                if (autoPlayEnabled) {
-                    setIsPlaying(false);
-                    if (animRef) cancelAnimationFrame(animRef);
-                }
+                setIsPlaying(false);
+                if (animRef) cancelAnimationFrame(animRef);
             }
         });
     }, { threshold: 0.5 });

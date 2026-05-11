@@ -591,6 +591,40 @@ const initScrollAnimations = () => {
     });
 };
 
+
+const initThemeToggle = () => {
+    const root = document.documentElement;
+    const toggle = document.getElementById('theme-toggle');
+    if (!toggle) return;
+
+    const icon = toggle.querySelector('i');
+    const label = toggle.querySelector('.theme-toggle-label');
+    const storageKey = 'kanvas-theme';
+
+    const applyTheme = (theme) => {
+        root.setAttribute('data-theme', theme);
+        const isDark = theme === 'dark';
+        toggle.setAttribute('aria-pressed', String(!isDark));
+        toggle.setAttribute('aria-label', isDark ? 'Switch to light theme' : 'Switch to dark theme');
+        if (icon) {
+            icon.classList.toggle('fa-moon', isDark);
+            icon.classList.toggle('fa-sun', !isDark);
+        }
+        if (label) label.textContent = isDark ? 'Dark' : 'Light';
+    };
+
+    const savedTheme = localStorage.getItem(storageKey);
+    if (savedTheme === 'light' || savedTheme === 'dark') {
+        applyTheme(savedTheme);
+    }
+
+    toggle.addEventListener('click', () => {
+        const nextTheme = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+        localStorage.setItem(storageKey, nextTheme);
+        applyTheme(nextTheme);
+    });
+};
+
 const initVideoHandler = () => {
     const wrapper = document.getElementById('video-wrapper');
     const btn = document.getElementById('play-button-trigger');
@@ -611,6 +645,7 @@ const initVideoHandler = () => {
 document.addEventListener("DOMContentLoaded", () => {
     initMarquee();
     initVideoHandler();
+    initThemeToggle();
 
     const header = document.querySelector(".site-header");
     if (header) {

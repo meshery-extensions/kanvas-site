@@ -28,15 +28,19 @@ const updateScene = () => {
   root.style.setProperty("--cursor-x", `${pointer.x}px`);
   root.style.setProperty("--cursor-y", `${pointer.y}px`);
 
-  if (hero && heroInView) {
-    if (heroRectDirty || !heroRect) {
-      refreshHeroRect();
-    }
-    const relX = (pointer.x - heroRect.left) / heroRect.width - 0.5;
-    const relY = (pointer.y - heroRect.top) / heroRect.height - 0.5;
-    hero.style.setProperty("--tilt-x", `${(-relY * 7).toFixed(2)}deg`);
-    hero.style.setProperty("--tilt-y", `${(relX * 9).toFixed(2)}deg`);
+  if (!hero || !heroInView) {
+    frame = null;
+    return;
   }
+  
+  if (heroRectDirty || !heroRect) {
+    refreshHeroRect();
+  }
+  const relX = (pointer.x - heroRect.left) / heroRect.width - 0.5;
+  const relY = (pointer.y - heroRect.top) / heroRect.height - 0.5;
+  hero.style.setProperty("--tilt-x", `${(-relY * 7).toFixed(2)}deg`);
+  hero.style.setProperty("--tilt-y", `${(relX * 9).toFixed(2)}deg`);
+
 
   tiltTargets.forEach((target) => {
     const rect = target.getBoundingClientRect();
@@ -52,7 +56,7 @@ const updateScene = () => {
 const handlePointer = (event) => {
   pointer.x = event.clientX;
   pointer.y = event.clientY;
-  scheduleUpdateScene();
+  heroInView && scheduleUpdateScene();
 };
 
 window.addEventListener("pointermove", handlePointer, { passive: true });
@@ -72,7 +76,7 @@ window.addEventListener("scroll", () => {
   heroRectDirty = true;
 }, { passive: true });
 
-if (hero) {
+if(hero){
   const observer = new IntersectionObserver(
     (entries) => {
       entries.forEach((entry) => {
@@ -83,17 +87,15 @@ if (hero) {
           heroRect = null;
         } else {
           heroRectDirty = true;
-          scheduleUpdateScene();
         }
+        scheduleUpdateScene();
       });
     },
     { threshold: 0.2 },
   );
   observer.observe(hero);
 }
-
 floaters.forEach((item, index) => {
   item.style.animationDelay = `${index * -2.5}s`;
 });
 
-updateScene();

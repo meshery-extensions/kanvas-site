@@ -235,6 +235,24 @@ const initScrollPieces = () => {
             }, '<');
         }
     });
+    const glassEls = Array.from(document.querySelectorAll('.glass, .glass--dark'));
+    if (glassEls.length) {
+        const updateBlurOnOverlap = () => {
+            anchors.forEach((anchor) => {
+                const stage = anchor.querySelector('.scroll-piece-stage');
+                if (!stage) return;
+                const sr = stage.getBoundingClientRect();
+                const overlaps = glassEls.some(gl => {
+                    const gr = gl.getBoundingClientRect();
+                    return sr.left < gr.right && sr.right > gr.left &&
+                        sr.top < gr.bottom && sr.bottom > gr.top;
+                });
+                stage.style.filter = overlaps ? 'blur(2px)' : '';
+            });
+        };
+        gsap.ticker.add(updateBlurOnOverlap);
+    }
+
 
     // ── Step 1: Reveal — pieces rise from background as browser section approaches ──
     if (browserSection) {
@@ -264,12 +282,12 @@ const initScrollPieces = () => {
             '.customers-section', '.hero-section', '.demo-section',
             '.capabilities-section', '.community-section', '.browser'
         ];
-        
+
         const orbitTargets = [
             { x: 35, y: 30 }, { x: 65, y: 30 }, { x: 70, y: 52 },
             { x: 60, y: 70 }, { x: 30, y: 52 }, { x: 48, y: 22 }
         ];
-        
+
         const startPositions = [];
         introSchedule.forEach((intro) => {
             const { pieceIdx, section } = intro;
@@ -296,19 +314,19 @@ const initScrollPieces = () => {
             scrub: true,
             onRefresh: () => {
                 if (!logoEl) return;
-                
+
                 // Temporarily disable the float animation to get the true untransformed center
                 const oldAnim = reunitedFloat.style.animation;
                 reunitedFloat.style.animation = 'none';
-                
+
                 const floatRect = reunitedFloat.getBoundingClientRect();
                 const scrollY = window.scrollY || document.documentElement.scrollTop;
                 const scrollX = window.scrollX || document.documentElement.scrollLeft;
-                
+
                 docLogoCenterX = floatRect.left + scrollX + floatRect.width / 2;
                 docLogoCenterY = floatRect.top + scrollY + floatRect.height / 2 - 24;
                 cachedDynamicScale = floatRect.width / 50 || 5.6;
-                
+
                 // Restore the float animation
                 reunitedFloat.style.animation = oldAnim;
             },
@@ -351,7 +369,7 @@ const initScrollPieces = () => {
                         y: currentY + 'px',
                         scale: cachedDynamicScale,
                         opacity: anchorOpacity,
-                        zIndex: progress > 0.8 ? -1 : 100
+                        zIndex: progress > 0.8 ? -1 : 10
                     });
 
                     gsap.set(body, { rotateY: 0, rotateX: 0 });

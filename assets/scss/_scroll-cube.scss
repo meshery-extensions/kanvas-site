@@ -232,15 +232,11 @@
   .scroll-piece-anchor {
     display: none;
   }
+  .reunited-logo {
+    transform: translateY(-24px);
+  }
   .reunited-logo-inner {
     animation: none;
     transform: rotateY(-10deg) rotateX(4deg);
-  }
-  .reunited-float {
-    animation: none;
-  }
-  .reunited-glow {
-    animation: none;
-    opacity: 0.7;
   }
 }

@@ -167,3 +167,10 @@
     font-size: 0.62rem;
   }
 }
+
+@media (prefers-reduced-motion: reduce) {
+  .multi-cursor,
+  .cursor-social-proof {
+    display: none;
+  }
+}

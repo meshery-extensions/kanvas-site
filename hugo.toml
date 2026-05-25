@@ -1,4 +1,4 @@
-baseURL = "http://www.kanvas.new"
+baseURL = "https://www.kanvas.new"
 title = "Kanvas"
 relativeURLs = true
 canonifyurls = false

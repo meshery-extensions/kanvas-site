@@ -146,7 +146,7 @@
                                                 <span class="initials">OA</span>
                                                 <span class="initials">JE</span>
                                             </div>
-                                            <button class="add-btn">
+                                            <button class="add-btn" aria-label="Add team member">
                                                 <i class="fas fa-plus"></i>
                                             </button>
                                         </div>
@@ -243,14 +243,14 @@
                                     <!-- Controls -->
                                     <div class="card-controls">
                                         <div class="playback-controls">
-                                            <button class="control-btn" id="tmdvr-btn-prev">
+                                            <button class="control-btn" id="tmdvr-btn-prev" aria-label="Previous event">
                                                 <i class="fas fa-backward-step"></i>
                                             </button>
-                                            <button class="control-btn pause-btn" id="tmdvr-btn-play">
+                                            <button class="control-btn pause-btn" id="tmdvr-btn-play" aria-label="Play or pause timeline">
                                                 <i id="tmdvr-icon-play" class="fas fa-play"></i>
                                                 <i id="tmdvr-icon-pause" class="fas fa-pause" style="display: none;"></i>
                                             </button>
-                                            <button class="control-btn" id="tmdvr-btn-next">
+                                            <button class="control-btn" id="tmdvr-btn-next" aria-label="Next event">
                                                 <i class="fas fa-forward-step"></i>
                                             </button>
                                         </div>
@@ -364,6 +364,7 @@ document.addEventListener("DOMContentLoaded", () => {
             }
 
             marker.className = classes.join(" ");
+            marker.setAttribute("aria-label", `Timeline event: ${ev.title}`);
             marker.style.left = ev.timestamp;
 
             marker.addEventListener("click", (e) => {

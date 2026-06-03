@@ -39,14 +39,73 @@
       width: 34px;
       height: 34px;
       border-radius: 7px;
-      color: rgba($white, 0.4);
-      font-size: 1.05rem;
       text-decoration: none;
-      transition: color 0.2s ease, background 0.2s ease;
+      transition: background 0.2s ease;
+
+      svg {
+        fill: #999;
+        width: 20px;
+        height: 20px;
+        transition: fill 0.2s ease;
+      }
 
       &:hover {
-        color: $white;
         background: rgba($white, 0.07);
+      }
+
+      &:hover svg {
+        fill: #fff;
+      }
+      &.github-icon svg {
+        width: 24px;
+        height: 24px;
+      }
+      &.github-icon:hover svg {
+        fill: #fff;
+      }
+
+      &.twitter-icon:hover svg {
+        fill: #fff;
+      }
+
+      &.youtube-icon svg {
+        width: 24px;
+        height: 24px;
+      }
+      &.youtube-icon:hover svg {
+        fill: #cd201f;
+      }
+
+      &.linkedin-icon svg {
+        width: 23px;
+        height: 23px;
+      }
+      &.linkedin-icon:hover svg {
+        fill: #0077b5;
+      }
+      &.slack-icon:hover svg .first {
+        fill: #e91e63;
+      }
+      &.slack-icon:hover svg .second {
+        fill: #e91e63;
+      }
+      &.slack-icon:hover svg .third {
+        fill: #00bcd4;
+      }
+      &.slack-icon:hover svg .fourth {
+        fill: #00bcd4;
+      }
+      &.slack-icon:hover svg .fifth {
+        fill: #4caf50;
+      }
+      &.slack-icon:hover svg .sixth {
+        fill: #4caf50;
+      }
+      &.slack-icon:hover svg .seventh {
+        fill: #ff9800;
+      }
+      &.slack-icon:hover svg .eigth {
+        fill: #ff9800;
       }
     }
   }

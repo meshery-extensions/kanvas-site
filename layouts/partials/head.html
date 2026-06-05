@@ -28,6 +28,16 @@
   <meta name="twitter:description" content="{{ with .Description }}{{ . }}{{ else }}{{ .Site.Params.description }}{{ end }}">
   <meta name="twitter:image" content="{{ printf "%s/brand/kanvas/horizontal/kanvas-horizontal-color.png" (site.Params.canonicalBaseURL | strings.TrimRight "/") }}" />
   <meta name="twitter:image:alt" content="Kanvas - collaborative cloud native design" />
+  {{- if .IsHome }}
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "{{ .Site.Title }}",
+    "url": "{{ site.Params.canonicalBaseURL | strings.TrimRight "/" }}/"
+  }
+  </script>
+  {{- end }}
   {{- with site.Params.canonicalBaseURL }}
   <link rel="canonical" href="{{ . | strings.TrimRight "/" }}{{ $.RelPermalink }}">
   {{- end }}

@@ -195,6 +195,8 @@
   .demo-card {
     padding: 40px;
     text-align: left;
+    backdrop-filter: blur(16px) saturate(160%);
+    -webkit-backdrop-filter: blur(16px) saturate(160%);
 
     .card-badges {
       display: flex;

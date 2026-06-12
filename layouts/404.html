@@ -1,0 +1,136 @@
+{{ define "main" }}
+<script>document.body.classList.add('is-404');</script>
+<section class="error404-lab" aria-label="404 — page not found">
+
+  <div class="error404-atmosphere" aria-hidden="true">
+    <div class="error404-grid" id="bgGrid"></div>
+    <div class="error404-grain"></div>
+  </div>
+
+  <div class="error404-content">
+
+    <p class="error404-status">404 &mdash; Page not found</p>
+
+    <div class="error404-insight" aria-live="polite">
+
+      <div class="insight-header">
+        <span class="insight-live">
+          <span class="insight-dot" aria-hidden="true"></span>
+          Live insight
+        </span>
+        <span class="insight-rule" aria-hidden="true"></span>
+        <span class="insight-counter" id="insightCounter" aria-label="Insight 1 of 8">01 / 08</span>
+      </div>
+
+      <div class="insight-body">
+        <p class="error404-insight-headline" id="insightHeadline"></p>
+        <p class="error404-insight-copy" id="insightCopy"></p>
+        <span class="insight-cursor" aria-hidden="true"></span>
+      </div>
+
+      <div class="insight-footer">
+        <a class="error404-insight-link" id="insightLink" href="https://kanvas.new" target="_blank" rel="noreferrer">
+          <span id="insightLinkText">Explore Kanvas</span>
+          <svg width="11" height="11" viewBox="0 0 12 12" fill="none" aria-hidden="true">
+            <path d="M2.5 9.5L9.5 2.5M9.5 2.5H4M9.5 2.5V8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </a>
+        <div class="insight-progress" aria-hidden="true">
+          <span class="insight-progress-bar" id="insightProgressBar"></span>
+        </div>
+      </div>
+
+    </div>
+
+    <section class="error404-topology-wrap" aria-label="Interactive service topology with a broken route">
+      <svg class="error404-topology" id="topologySvg" viewBox="0 0 860 320"
+           role="img" aria-label="Service topology showing a disconnected node representing the missing page">
+        <defs>
+          <linearGradient id="edgeGrad" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0%" stop-color="#00d3a9"></stop>
+            <stop offset="100%" stop-color="#00b39f"></stop>
+          </linearGradient>
+          <filter id="nodeGlow" x="-60%" y="-60%" width="220%" height="220%">
+            <feGaussianBlur stdDeviation="3" result="blur"></feGaussianBlur>
+            <feMerge>
+              <feMergeNode in="blur"></feMergeNode>
+              <feMergeNode in="SourceGraphic"></feMergeNode>
+            </feMerge>
+          </filter>
+          <filter id="errorGlow" x="-70%" y="-70%" width="240%" height="240%">
+            <feGaussianBlur stdDeviation="5.5" result="blur"></feGaussianBlur>
+            <feMerge>
+              <feMergeNode in="blur"></feMergeNode>
+              <feMergeNode in="SourceGraphic"></feMergeNode>
+            </feMerge>
+          </filter>
+        </defs>
+
+        <line id="edge-ing-auth"   class="edge edge-active"  x1="70"  y1="185" x2="210" y2="185"></line>
+        <line id="edge-auth-gw"    class="edge edge-active"  x1="210" y1="185" x2="370" y2="150"></line>
+        <line id="edge-gw-pol"     class="edge edge-active"  x1="370" y1="150" x2="530" y2="120"></line>
+        <line id="edge-pol-home"   class="edge edge-active"  x1="530" y1="120" x2="700" y2="185"></line>
+
+        <line id="edge-auth-cat"   class="edge edge-muted"   x1="210" y1="185" x2="370" y2="250"></line>
+        <line id="edge-cat-mesh"   class="edge edge-muted"   x1="370" y1="250" x2="530" y2="205"></line>
+        <line id="edge-mesh-home"  class="edge edge-muted"   x1="530" y1="205" x2="700" y2="185"></line>
+        <line id="edge-gw-cat"     class="edge edge-muted"   x1="370" y1="150" x2="370" y2="250"></line>
+
+        <line id="edge-gw-missing" class="edge edge-broken"  x1="370" y1="150" x2="530" y2="58"></line>
+        <line id="edge-miss-home"  class="edge edge-reconnect edge-hidden" x1="530" y1="58" x2="700" y2="185"></line>
+
+        <g class="node-group" id="node-ingress">
+          <circle cx="70"  cy="185" r="13" class="node node-entry" filter="url(#nodeGlow)"></circle>
+          <text x="70"  y="213" class="node-label">ingress</text>
+        </g>
+        <g class="node-group" id="node-auth">
+          <circle cx="210" cy="185" r="11" class="node"></circle>
+          <text x="210" y="211" class="node-label">auth</text>
+        </g>
+        <g class="node-group" id="node-gateway">
+          <circle cx="370" cy="150" r="13" class="node node-hub" filter="url(#nodeGlow)"></circle>
+          <text x="370" y="127" class="node-label">gateway</text>
+        </g>
+        <g class="node-group" id="node-catalog">
+          <circle cx="370" cy="250" r="10" class="node"></circle>
+          <text x="370" y="277" class="node-label">catalog</text>
+        </g>
+        <g class="node-group" id="node-policy">
+          <circle cx="530" cy="120" r="10" class="node"></circle>
+          <text x="530" y="97"  class="node-label">policy</text>
+        </g>
+        <g class="node-group" id="node-mesh">
+          <circle cx="530" cy="205" r="10" class="node"></circle>
+          <text x="530" y="231" class="node-label">mesh</text>
+        </g>
+        <g class="node-group" id="node-home">
+          <circle cx="700" cy="185" r="13" class="node node-home" filter="url(#nodeGlow)"></circle>
+          <text x="700" y="213" class="node-label">home</text>
+        </g>
+
+        <g class="node-group node-group-missing" id="node-missing">
+          <circle cx="530" cy="58" r="22" class="node-missing-ring"></circle>
+          <circle cx="530" cy="58" r="14" class="node node-missing" filter="url(#errorGlow)"></circle>
+          <text x="530" y="33"  class="node-label node-label-missing" id="missingNodeLabel">404</text>
+        </g>
+
+        <circle id="packetA"    class="packet"             r="4"   cx="70"  cy="185"></circle>
+        <circle id="packetB"    class="packet packet-b"    r="3.5" cx="210" cy="185"></circle>
+        <circle id="packetC"    class="packet packet-c"    r="2.5" cx="370" cy="150"></circle>
+        <circle id="packetDrop" class="packet packet-drop" r="3.5" cx="370" cy="150"></circle>
+      </svg>
+
+      <p class="error404-hint" id="reconnectHint" aria-live="polite">
+        Drag the <span class="hint-em">broken node</span> onto home to restore the route
+      </p>
+    </section>
+
+    <div class="error404-actions">
+      <a href="/" class="error404-cta">Return to Kanvas</a>
+      <a href="https://github.com/meshery-extensions/kanvas-site/issues/new" class="error404-issue" target="_blank" rel="noreferrer">Report broken route</a>
+    </div>
+
+  </div>
+</section>
+<script src="/scripts/404.js" defer></script>
+{{ end }}

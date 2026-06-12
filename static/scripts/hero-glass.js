@@ -34,8 +34,10 @@ const updateScene = () => {
     }
     const relX = (pointer.x - heroRect.left) / heroRect.width - 0.5;
     const relY = (pointer.y - heroRect.top) / heroRect.height - 0.5;
-    hero.style.setProperty("--tilt-x", `${(-relY * 7).toFixed(2)}deg`);
-    hero.style.setProperty("--tilt-y", `${(relX * 9).toFixed(2)}deg`);
+    const clampedX = Math.max(-0.5, Math.min(0.5, relX));
+    const clampedY = Math.max(-0.5, Math.min(0.5, relY));
+    hero.style.setProperty("--tilt-x", `${(-clampedY * 7).toFixed(2)}deg`);
+    hero.style.setProperty("--tilt-y", `${(clampedX * 9).toFixed(2)}deg`);
   }
 
   tiltTargets.forEach((target) => {

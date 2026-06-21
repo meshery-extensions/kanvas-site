@@ -309,32 +309,31 @@ main {
 }
 
 .node--a {
-  top: 24px;
-  left: 32px;
+  top: 27px;
+  left: 43px;
 }
 
 .node--b {
-  top: 48px;
-  right: 168px;
+  top: 45px;
+  left: 223px;
   background: linear-gradient(120deg, rgba(158, 255, 236, 0.9), rgba(0, 179, 159, 0.9));
 }
 
 .node--c {
-  bottom: 36px;
-  left: 64px;
-  background: radial-gradient( circle at 30% 130%, rgba(23, 36, 33, 0.9), rgba(91, 24, 1, 0.9));
+  bottom: 32px;
+  left: 72px;
+  background: radial-gradient(circle at 30% 130%, rgba(23, 36, 33, 0.9), rgba(91, 24, 1, 0.9));
 }
 
 .node--d {
-  bottom: 68px;
-  right: 106px;
+  bottom: 65px;
+  left: 281px;
 }
 
 .node--e {
-  bottom: 96px;
-  left: 50%;
-  transform: translateX(-50%);
-  background: linear-gradient(40deg, rgba(91, 24, 1, 1),  rgba(0, 179, 159, 0.8), rgba(0, 179, 159, 0.8));
+  bottom: 92px;
+  left: 207px;
+  background: linear-gradient(40deg, rgba(91, 24, 1, 1), rgba(0, 179, 159, 0.8), rgba(0, 179, 159, 0.8));
 }
 
 .connector {
@@ -889,9 +888,9 @@ main {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
+  *:not([class*="gitops-connector-flow"]):not(.gitops-status-badge),
+  *:not([class*="gitops-connector-flow"]):not(.gitops-status-badge)::before,
+  *:not([class*="gitops-connector-flow"]):not(.gitops-status-badge)::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;

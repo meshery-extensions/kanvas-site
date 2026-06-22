@@ -1,0 +1,537 @@
+$_err:     $danger;
+$_err-dim: rgba($danger, 0.35);
+
+body.is-404 {
+  padding-top: 0;
+  background: #0f1214;
+
+  main {
+    max-width: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .scroll-ambient,
+  .scroll-piece-anchor {
+    display: none !important;
+  }
+}
+
+.error404-lab {
+  min-height: 100vh;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 7rem 1.2rem 3.5rem;
+  position: relative;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+.error404-atmosphere {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background:
+    radial-gradient(circle at 16% 12%, rgba($primary, 0.2), rgba($primary, 0) 42%),
+    radial-gradient(circle at 84% 80%, rgba($secondary, 0.16), rgba($secondary, 0) 46%),
+    radial-gradient(circle at 52% 50%, rgba($white, 0.02), rgba($white, 0) 52%),
+    linear-gradient(180deg, #0f1214 0%, #121212 52%, #0e1112 100%);
+  animation: auroraShift 14s ease-in-out infinite alternate;
+}
+
+@keyframes auroraShift {
+  0%   { opacity: 1; }
+  100% { opacity: 0.92; }
+}
+
+.error404-grid {
+  position: absolute;
+  inset: -40px;
+  opacity: 0.07;
+  background-image: radial-gradient(rgba($secondary, 0.65) 0.8px, transparent 0.8px);
+  background-size: 28px 28px;
+  will-change: transform;
+  transition: transform 0.08s linear;
+}
+
+.error404-grain {
+  position: absolute;
+  inset: 0;
+  opacity: 0.04;
+  background-image: radial-gradient(rgba($white, 0.5) 0.55px, transparent 0.55px);
+  background-size: 3px 3px;
+}
+
+.error404-content {
+  width: 100%;
+  max-width: 980px;
+  position: relative;
+  z-index: 2;
+  text-align: center;
+}
+
+.error404-status {
+  margin: 0 0 1.8rem;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba($white, 0.28);
+  font-family: $font-family-monospace, monospace;
+}
+
+.error404-topology-wrap {
+  margin: 1.35rem auto 0;
+  width: 100%;
+  max-width: 980px;
+  position: relative;
+}
+
+.error404-topology {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
+  cursor: grab;
+  touch-action: none;
+  filter: drop-shadow(0 0 22px rgba($secondary, 0.08));
+
+  &:active {
+    cursor: grabbing;
+  }
+}
+
+.edge {
+  fill: none;
+}
+
+.edge-active {
+  stroke: rgba($secondary, 0.72);
+  stroke-width: 2;
+  animation: pulseActive 2.4s ease-in-out infinite;
+}
+
+@keyframes pulseActive {
+  0%, 100% { opacity: 0.52; }
+  50%       { opacity: 1; }
+}
+
+.edge-muted {
+  stroke: rgba($white, 0.18);
+  stroke-width: 1.5;
+}
+
+.edge-broken {
+  stroke: rgba($_err, 0.72);
+  stroke-width: 2;
+  stroke-dasharray: 8 5;
+  animation: marchBroken 1.3s linear infinite;
+}
+
+@keyframes marchBroken {
+  to { stroke-dashoffset: -26; }
+}
+
+.edge-reconnect {
+  stroke: url(#edgeGrad);
+  stroke-width: 2.5;
+  animation: pulseRecon 0.9s ease-in-out infinite alternate;
+}
+
+@keyframes pulseRecon {
+  0%   { opacity: 0.55; }
+  100% { opacity: 1; }
+}
+
+.edge-hidden {
+  display: none;
+}
+
+.node {
+  fill: rgba($white, 0.94);
+  stroke: rgba($white, 0.12);
+  stroke-width: 1;
+}
+
+.node-entry {
+  fill: rgba($secondary, 0.92);
+}
+
+.node-hub {
+  fill: rgba($secondary, 0.65);
+}
+
+.node-home {
+  fill: rgba($secondary, 0.92);
+}
+
+.node-missing {
+  fill: rgba($_err, 0.88);
+  stroke: rgba($_err, 0.45);
+  stroke-width: 1.5;
+  animation: missingFlicker 1.9s ease-in-out infinite;
+}
+
+@keyframes missingFlicker {
+  0%, 100% { fill: rgba($_err, 0.82); }
+  48%       { fill: rgba($_err, 1); }
+  52%       { fill: rgba($_err, 0.7); }
+}
+
+.node-missing-ring {
+  fill: none;
+  stroke: $_err-dim;
+  stroke-width: 1.5;
+  stroke-dasharray: 6 4;
+  animation: ringOrbit 2.2s linear infinite;
+}
+
+@keyframes ringOrbit {
+  to { stroke-dashoffset: -40; }
+}
+
+.node-home-attract .node-home {
+  stroke: rgba($secondary, 0.8);
+  stroke-width: 3;
+}
+
+.node-group-missing {
+  cursor: grab;
+
+  &:active {
+    cursor: grabbing;
+  }
+}
+
+.node-label {
+  fill: rgba($white, 0.8);
+  text-anchor: middle;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  pointer-events: none;
+  user-select: none;
+}
+
+.node-label-missing {
+  fill: rgba($_err, 0.92);
+  font-size: 12px;
+  letter-spacing: 0.06em;
+}
+
+.packet {
+  fill: rgba($secondary, 0.96);
+  filter: drop-shadow(0 0 6px rgba($secondary, 0.78));
+}
+
+.packet-b {
+  fill: rgba($primary, 0.88);
+  filter: drop-shadow(0 0 5px rgba($primary, 0.68));
+}
+
+.packet-c {
+  fill: rgba($white, 0.65);
+  filter: none;
+}
+
+.packet-drop {
+  fill: rgba($_err, 0.9);
+  filter: drop-shadow(0 0 6px rgba($_err, 0.75));
+}
+
+.error404-lab.is-reconnected {
+  .node-missing {
+    fill: rgba($secondary, 0.9);
+    animation: none;
+    stroke: rgba($secondary, 0.3);
+  }
+
+  .node-missing-ring {
+    animation: none;
+    opacity: 0;
+  }
+
+  .node-label-missing {
+    fill: rgba($white, 0.8);
+  }
+
+  .edge-broken {
+    stroke: rgba($secondary, 0.72);
+    stroke-dasharray: none;
+    animation: pulseActive 2.4s ease-in-out infinite;
+  }
+
+  .error404-insight-headline {
+    background: linear-gradient(135deg, $secondary 0%, rgba($primary, 0.9) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+  }
+
+  .error404-insight-copy {
+    color: rgba($white, 0.55);
+  }
+
+  .error404-cta {
+    box-shadow: 0 0 28px rgba($secondary, 0.45);
+    animation: ctaPulse 1.4s ease-in-out infinite alternate;
+  }
+}
+
+@keyframes ctaPulse {
+  0%   { box-shadow: 0 0 18px rgba($secondary, 0.35); }
+  100% { box-shadow: 0 0 36px rgba($secondary, 0.6); }
+}
+
+.error404-hint {
+  margin: 0.65rem 0 0;
+  font-size: 0.79rem;
+  color: rgba($white, 0.48);
+  letter-spacing: 0.01em;
+  transition: color 0.3s ease;
+
+  .hint-em {
+    color: rgba($_err, 0.82);
+    font-weight: 700;
+  }
+
+  a {
+    color: $secondary;
+    text-decoration: underline;
+    text-decoration-color: rgba($secondary, 0.5);
+
+    &:hover {
+      color: $primary;
+    }
+  }
+}
+
+.error404-insight {
+  margin: 0 auto 2.4rem;
+  max-width: 660px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.insight-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+}
+
+.insight-live {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba($secondary, 0.75);
+  font-family: $font-family-monospace, monospace;
+  flex-shrink: 0;
+}
+
+.insight-dot {
+  display: inline-block;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: $secondary;
+  flex-shrink: 0;
+  animation: insightPulse 2s ease-out infinite;
+}
+
+@keyframes insightPulse {
+  0%   { box-shadow: 0 0 0 0 rgba($secondary, 0.6); }
+  70%  { box-shadow: 0 0 0 7px rgba($secondary, 0); }
+  100% { box-shadow: 0 0 0 0 rgba($secondary, 0); }
+}
+
+.insight-rule {
+  flex: 1;
+  height: 1px;
+  background: rgba($white, 0.08);
+}
+
+.insight-counter {
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  color: rgba($white, 0.25);
+  font-family: $font-family-monospace, monospace;
+  flex-shrink: 0;
+}
+
+.insight-body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+  min-height: 7.5rem;
+}
+
+.error404-insight-headline {
+  margin: 0;
+  color: transparent;
+  background: linear-gradient(135deg, $white 20%, rgba($secondary, 0.88) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  font-size: clamp(1.8rem, 3.6vw, 2.6rem);
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: -0.035em;
+  transition: opacity 0.18s ease;
+}
+
+.error404-insight-copy {
+  margin: 0;
+  color: rgba($white, 0.48);
+  font-size: clamp(0.9rem, 1.5vw, 1.02rem);
+  font-weight: 400;
+  line-height: 1.6;
+  transition: opacity 0.22s ease;
+}
+
+.insight-cursor {
+  display: inline-block;
+  width: 2px;
+  height: 0.9em;
+  background: $secondary;
+  border-radius: 1px;
+  margin-left: 3px;
+  animation: cursorBlink 1.1s step-end infinite;
+  vertical-align: baseline;
+  position: relative;
+  top: 1px;
+}
+
+@keyframes cursorBlink {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0; }
+}
+
+.insight-footer {
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+  margin-top: 1.4rem;
+}
+
+.error404-insight-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: rgba($secondary, 0.85);
+  text-decoration: none;
+  letter-spacing: 0.02em;
+  flex-shrink: 0;
+  transition: color 0.18s ease, gap 0.18s ease;
+
+  svg {
+    transition: transform 0.18s ease;
+    opacity: 0.7;
+  }
+
+  &:hover {
+    color: $white;
+    gap: 0.6rem;
+
+    svg {
+      transform: translate(2px, -2px);
+      opacity: 1;
+    }
+  }
+}
+
+.insight-progress {
+  flex: 1;
+  height: 1px;
+  background: rgba($white, 0.07);
+  border-radius: 1px;
+  overflow: hidden;
+}
+
+.insight-progress-bar {
+  display: block;
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, rgba($secondary, 0.6), rgba($secondary, 0.2));
+  border-radius: 1px;
+  transition: none;
+}
+
+.error404-actions {
+  margin-top: 1.25rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.65rem;
+  flex-wrap: wrap;
+}
+
+.error404-cta,
+.error404-issue {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  height: 42px;
+  line-height: 1;
+  padding: 0 1.3rem;
+  text-decoration: none;
+  font-size: 0.84rem;
+  border-radius: 999px;
+  white-space: nowrap;
+  vertical-align: middle;
+  transform: none;
+}
+
+.error404-cta {
+  font-weight: 700;
+  background: linear-gradient(130deg, $secondary, $primary);
+  color: $dark;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+  &:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 9px 24px rgba($primary, 0.32);
+  }
+}
+
+.error404-issue {
+  font-weight: 600;
+  border: 1px solid rgba($white, 0.17);
+  color: rgba($white, 0.68);
+  transition: border-color 0.2s ease, color 0.2s ease;
+
+  &:hover {
+    border-color: rgba($secondary, 0.6);
+    color: $secondary;
+  }
+}
+
+@media (max-width: 760px) {
+  .error404-topology-wrap,
+  .error404-insight {
+    max-width: 100%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .edge-broken,
+  .edge-active,
+  .edge-reconnect,
+  .error404-atmosphere,
+  .node-missing,
+  .node-missing-ring,
+  .error404-cta,
+  .error404-insight-copy {
+    animation: none !important;
+    transition: none !important;
+  }
+}

@@ -301,6 +301,7 @@
     });
   }
 })();
+
 document.addEventListener("DOMContentLoaded", () => {
     const events = [
         { id: "1", timestamp: "0%", time: "09:00:12", title: "Deploy v2.4.1", description: "Frontend service updated with new auth flow", type: "deploy", service: "frontend", status: "success" },
@@ -324,8 +325,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
     let activeEvent = events[0];
     let scrubPosition = 0;
-    let isPlaying = false;
+    let autoPlayEnabled = true;
     let animRef = null;
+    let isAnimationPausedManually = false;
 
     // DOM Elements
     const track = document.getElementById("tmdvr-track");
@@ -406,8 +408,8 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function setIsPlaying(p) {
-        isPlaying = p;
-        if (isPlaying) {
+        autoPlayEnabled = p;
+        if (autoPlayEnabled) {
             iconPlay.style.display = "none";
             iconPause.style.display = "block";
         } else {
@@ -440,7 +442,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function playTick(start, startPos) {
-        if (!isPlaying) return;
+        if (!autoPlayEnabled) return;
 
         const now = performance.now();
         const elapsed = now - start;
@@ -481,10 +483,12 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     btnPlayPause.addEventListener("click", () => {
-        if (isPlaying) {
+        if (autoPlayEnabled) {
+            isAnimationPausedManually = true;
             setIsPlaying(false);
             if (animRef) cancelAnimationFrame(animRef);
         } else {
+            isAnimationPausedManually = false;
             if (scrubPosition >= 100) {
                 setScrubPosition(0);
                 setActiveEvent(events[0]);
@@ -502,6 +506,7 @@ document.addEventListener("DOMContentLoaded", () => {
         setActiveEvent(events[newIdx]);
         setScrubPosition(parseFloat(events[newIdx].timestamp));
         setIsPlaying(false);
+        isAnimationPausedManually = true;
         if (animRef) cancelAnimationFrame(animRef);
     }
 
@@ -511,7 +516,19 @@ document.addEventListener("DOMContentLoaded", () => {
     // Initial render
     setActiveEvent(events[0]);
     setScrubPosition(0);
-    setIsPlaying(true);
-    animRef = requestAnimationFrame(() => playTick(performance.now(), 0));
+    const timelineObserver = new IntersectionObserver((entries, _) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                if (isAnimationPausedManually) return;
+                setIsPlaying(true);
+                animRef = requestAnimationFrame(() => playTick(performance.now(), scrubPosition));
+               
+            } else {
+                setIsPlaying(false);
+                if (animRef) cancelAnimationFrame(animRef);
+            }
+        });
+    }, { threshold: 0.5 });
+    timelineObserver.observe(document.getElementById("timeline"));
 });
 </script>

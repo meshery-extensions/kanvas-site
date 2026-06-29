@@ -273,21 +273,18 @@
 </section>
 
 <script>
-(function(){
-// Pipeline visualization
-const section = document.querySelector('.gitops-card-section');
-if (section) {
-  const nodes = section.querySelectorAll('.gitops-node');
-  const flowBtn = section.querySelector('#gitops-flow-btn');
-  const flowText = section.querySelector('.gitops-flow-btn-text');
-  
-  // Track the user's manual preference
-  let userPaused = false;
+(function() {
+  var section = document.querySelector('.gitops-card-section');
+  if (!section) return;
 
-  // 1. One-time Setup: Event Listeners
+  var nodes = section.querySelectorAll('.gitops-node');
+  var flowBtn = section.querySelector('#gitops-flow-btn');
+  var flowText = section.querySelector('.gitops-flow-btn-text');
+  var flowing = true;
+
   nodes.forEach(function(node) {
     node.addEventListener('mouseenter', function() {
-      nodes.forEach(function(n) { n.classList.remove('is-active'); });
+      section.querySelectorAll('.gitops-node').forEach(function(n) { n.classList.remove('is-active'); });
       this.classList.add('is-active');
     });
     node.addEventListener('mouseleave', function() {
@@ -297,41 +294,14 @@ if (section) {
 
   if (flowBtn) {
     flowBtn.addEventListener('click', function() {
-      userPaused = !userPaused; // Toggle the user's choice
-      updateFlowState(!userPaused); // Update UI immediately
+      flowing = !flowing;
+      flowBtn.setAttribute('aria-pressed', flowing ? 'true' : 'false');
+      flowText.textContent = flowing ? 'Pause' : 'Resume';
+      section.classList.toggle('gitops-flow-paused', !flowing);
     });
   }
+})();
 
-  // Helper to sync UI and Classes
-  function updateFlowState(shouldFlow) {
-    flowBtn.setAttribute('aria-pressed', shouldFlow ? 'true' : 'false');
-    flowText.textContent = shouldFlow ? 'Pause' : 'Resume';
-    section.classList.toggle('gitops-flow-paused', !shouldFlow);
-  }
-
-  // 2. Intersection Observer: Handles auto-pause/resume on scroll
-  if ("IntersectionObserver" in window) {
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                // If it comes into view, resume ONLY if the user hasn't manually paused it
-                if (!userPaused) {
-                updateFlowState(true);
-                }
-            } else {
-                // When it leaves the screen, always pause to save CPU/GPU resources
-                updateFlowState(false);
-            }
-        });
-    }, { threshold: 0.1 });
-
-    observer.observe(section);
-  } else {
-    // Fallback for browsers without IntersectionObserver support
-    updateFlowState(true);
-  }
-}
-}())
 document.addEventListener("DOMContentLoaded", () => {
     const events = [
         { id: "1", timestamp: "0%", time: "09:00:12", title: "Deploy v2.4.1", description: "Frontend service updated with new auth flow", type: "deploy", service: "frontend", status: "success" },

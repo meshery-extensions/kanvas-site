@@ -274,13 +274,37 @@
 
 <script>
 (function() {
+  var workflowTop = document.querySelector('.workflow-top');
   var section = document.querySelector('.gitops-card-section');
-  if (!section) return;
+  if (!workflowTop || !section) return;
 
   var nodes = section.querySelectorAll('.gitops-node');
   var flowBtn = section.querySelector('#gitops-flow-btn');
   var flowText = section.querySelector('.gitops-flow-btn-text');
   var flowing = true;
+  var manuallyPaused = false;
+
+  function applyFlowState(isRunning) {
+    flowing = isRunning;
+    section.classList.toggle('gitops-flow-paused', !isRunning);
+    if (flowBtn) {
+      flowBtn.setAttribute('aria-pressed', isRunning ? 'true' : 'false');
+    }
+    if (flowText) {
+      flowText.textContent = isRunning ? 'Pause' : 'Resume';
+    }
+  }
+
+  function syncFlowState() {
+    if (manuallyPaused) {
+      applyFlowState(false);
+      return;
+    }
+
+    var rect = workflowTop.getBoundingClientRect();
+    var isVisible = rect.bottom >= 0 && rect.top <= window.innerHeight;
+    applyFlowState(isVisible);
+  }
 
   nodes.forEach(function(node) {
     node.addEventListener('mouseenter', function() {
@@ -294,12 +318,28 @@
 
   if (flowBtn) {
     flowBtn.addEventListener('click', function() {
-      flowing = !flowing;
-      flowBtn.setAttribute('aria-pressed', flowing ? 'true' : 'false');
-      flowText.textContent = flowing ? 'Pause' : 'Resume';
-      section.classList.toggle('gitops-flow-paused', !flowing);
+      manuallyPaused = !manuallyPaused;
+      if (manuallyPaused) {
+        applyFlowState(false);
+      } else {
+        syncFlowState();
+      }
     });
   }
+
+  var visibilityObserver = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) {
+        if (!manuallyPaused) {
+          applyFlowState(true);
+        }
+      } else {
+        applyFlowState(false);
+      }
+    });
+  }, { threshold: 0.25 });
+
+  visibilityObserver.observe(workflowTop);
 })();
 
 document.addEventListener("DOMContentLoaded", () => {

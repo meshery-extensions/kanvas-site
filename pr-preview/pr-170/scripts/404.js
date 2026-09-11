@@ -4,6 +4,9 @@ function init() {
   var lab = document.querySelector(".error404-lab");
   if (!lab) return;
 
+  var prefersReducedMotion = window.matchMedia(
+    "(prefers-reduced-motion: reduce)",
+  ).matches;
   var topologySvg = document.getElementById("topologySvg");
   var reconnectHint = document.getElementById("reconnectHint");
   var missingNodeLabel = document.getElementById("missingNodeLabel");
@@ -103,6 +106,11 @@ function init() {
 
   function startProgress() {
     if (!insightProgressBar) return;
+    if (prefersReducedMotion) {
+      insightProgressBar.style.transition = "none";
+      insightProgressBar.style.width = "100%";
+      return;
+    }
     insightProgressBar.style.transition = "none";
     insightProgressBar.style.width = "0%";
     insightProgressBar.offsetWidth;
@@ -113,6 +121,11 @@ function init() {
 
   function typeText(el, text, speed, onDone) {
     if (!el) {
+      if (onDone) onDone();
+      return;
+    }
+    if (prefersReducedMotion) {
+      el.textContent = text;
       if (onDone) onDone();
       return;
     }
@@ -141,6 +154,15 @@ function init() {
     insightLinkEl.href = next.href;
     updateCounter(insightIndex);
 
+    if (prefersReducedMotion) {
+      insightHeadlineEl.textContent = next.headline;
+      insightHeadlineEl.style.opacity = "1";
+      insightCopyEl.textContent = next.copy;
+      insightCopyEl.style.opacity = "1";
+      startProgress();
+      return;
+    }
+
     function show() {
       insightHeadlineEl && (insightHeadlineEl.style.opacity = "1");
       insightCopyEl && (insightCopyEl.style.opacity = "0");
@@ -164,7 +186,7 @@ function init() {
   }
 
   function runEntrance() {
-    if (typeof gsap === "undefined") return;
+    if (prefersReducedMotion || typeof gsap === "undefined") return;
     gsap
       .timeline({ defaults: { ease: "power2.out" } })
       .from(".error404-insight", {
@@ -182,7 +204,7 @@ function init() {
   }
 
   function onMouseParallax(e) {
-    if (!bgGrid) return;
+    if (prefersReducedMotion || !bgGrid) return;
     var cx = window.innerWidth / 2;
     var cy = window.innerHeight / 2;
     var dx = (e.clientX - cx) / cx;
@@ -193,9 +215,11 @@ function init() {
 
   if (!topologySvg) {
     setInsight(false);
-    setInterval(function () {
-      setInsight(true);
-    }, CYCLE_MS);
+    if (!prefersReducedMotion) {
+      setInterval(function () {
+        setInsight(true);
+      }, CYCLE_MS);
+    }
     runEntrance();
     document.addEventListener("mousemove", onMouseParallax);
     return;
@@ -358,13 +382,11 @@ function init() {
 
     if (reconnectEdge) reconnectEdge.classList.remove("edge-hidden");
     if (brokenEdge) {
-      brokenEdge.classList.remove("edge-broken");
       brokenEdge.classList.add("edge-active");
     }
 
     var mc = nodeCircles["missing"];
     if (mc) {
-      mc.classList.remove("node-missing");
       mc.classList.add("node-hub");
     }
 
@@ -372,7 +394,6 @@ function init() {
     if (ring) ring.style.display = "none";
 
     if (missingNodeLabel) {
-      missingNodeLabel.classList.remove("node-label-missing");
       missingNodeLabel.textContent = labelText;
     }
 
@@ -393,7 +414,8 @@ function init() {
     if (reconnectHint)
       reconnectHint.textContent = "Topology healed \u2014 redirecting\u2026";
 
-    stirTopology(1.1);
+    if (!prefersReducedMotion) stirTopology(1.1);
+    paint();
 
     setTimeout(function () {
       window.location.href = "/";
@@ -494,6 +516,7 @@ function init() {
       n.vy = (ny - n.y) * 0.42;
       n.x = nx;
       n.y = ny;
+      if (prefersReducedMotion) paint();
       dragLastX = nx;
       dragLastY = ny;
       topologySvg.style.cursor = "grabbing";
@@ -578,12 +601,14 @@ function init() {
   document.addEventListener("mousemove", onMouseParallax);
 
   setInsight(false);
-  setInterval(function () {
-    setInsight(true);
-  }, CYCLE_MS);
+  if (!prefersReducedMotion) {
+    setInterval(function () {
+      setInsight(true);
+    }, CYCLE_MS);
+  }
   runEntrance();
   paint();
-  loop();
+  if (!prefersReducedMotion) loop();
 
   window.addEventListener("pagehide", function () {
     if (raf) {

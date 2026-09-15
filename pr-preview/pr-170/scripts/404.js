@@ -82,6 +82,7 @@ function init() {
   var lastInsight = null;
   var insightIndex = 0;
   var typeTimer = null;
+  var insightInterval = null;
   var CYCLE_MS = 9000;
 
   function pickInsight() {
@@ -143,6 +144,21 @@ function init() {
     tick();
   }
 
+  function clearInsightRotation() {
+    if (insightInterval !== null) {
+      clearInterval(insightInterval);
+      insightInterval = null;
+    }
+  }
+
+  function startInsightRotation() {
+    if (prefersReducedMotion) return;
+    clearInsightRotation();
+    insightInterval = setInterval(function () {
+      setInsight(true);
+    }, CYCLE_MS);
+  }
+
   function setInsight(animate) {
     var next = pickInsight();
     lastInsight = next;
@@ -185,24 +201,6 @@ function init() {
     }
   }
 
-  function runEntrance() {
-    if (prefersReducedMotion || typeof gsap === "undefined") return;
-    gsap
-      .timeline({ defaults: { ease: "power2.out" } })
-      .from(".error404-insight", {
-        y: 24,
-        opacity: 0,
-        duration: 0.65,
-        scale: 0.97,
-      })
-      .from(
-        ".error404-topology-wrap",
-        { y: 20, opacity: 0, duration: 0.55 },
-        "-=0.22",
-      )
-      .from(".error404-actions", { opacity: 0, duration: 0.4 }, "-=0.15");
-  }
-
   function onMouseParallax(e) {
     if (prefersReducedMotion || !bgGrid) return;
     var cx = window.innerWidth / 2;
@@ -215,13 +213,13 @@ function init() {
 
   if (!topologySvg) {
     setInsight(false);
-    if (!prefersReducedMotion) {
-      setInterval(function () {
-        setInsight(true);
-      }, CYCLE_MS);
-    }
-    runEntrance();
+    startInsightRotation();
     document.addEventListener("mousemove", onMouseParallax);
+    window.addEventListener("pagehide", function () {
+      clearInsightRotation();
+      clearTimeout(typeTimer);
+      document.removeEventListener("mousemove", onMouseParallax);
+    });
     return;
   }
 
@@ -401,6 +399,7 @@ function init() {
 
     lab.classList.add("is-reconnected");
 
+    clearInsightRotation();
     clearTimeout(typeTimer);
     if (insightHeadlineEl) insightHeadlineEl.textContent = "Route restored.";
     if (insightCopyEl) insightCopyEl.textContent = "Taking you home\u2026";
@@ -562,6 +561,7 @@ function init() {
         dragLastX = n.x;
         dragLastY = n.y;
         topologySvg.style.cursor = "grabbing";
+        topologySvg.setPointerCapture(e.pointerId);
         break;
       }
     }
@@ -569,7 +569,7 @@ function init() {
     if (!dragging) stirTopology(1.0);
   }
 
-  function onPointerUp() {
+  function onPointerUp(e) {
     if (!dragging) return;
     var n = state[dragging];
     n.vx += (n.x - dragLastX) * 0.06;
@@ -591,6 +591,9 @@ function init() {
     }
 
     dragging = null;
+    if (topologySvg.hasPointerCapture(e.pointerId)) {
+      topologySvg.releasePointerCapture(e.pointerId);
+    }
     topologySvg.style.cursor = "grab";
   }
 
@@ -598,15 +601,11 @@ function init() {
   topologySvg.addEventListener("pointerleave", onPointerLeave);
   topologySvg.addEventListener("pointerdown", onPointerDown);
   topologySvg.addEventListener("pointerup", onPointerUp);
+  topologySvg.addEventListener("pointercancel", onPointerUp);
   document.addEventListener("mousemove", onMouseParallax);
 
   setInsight(false);
-  if (!prefersReducedMotion) {
-    setInterval(function () {
-      setInsight(true);
-    }, CYCLE_MS);
-  }
-  runEntrance();
+  startInsightRotation();
   paint();
   if (!prefersReducedMotion) loop();
 
@@ -614,6 +613,8 @@ function init() {
     if (raf) {
       cancelAnimationFrame(raf);
     }
+    clearInsightRotation();
+    clearTimeout(typeTimer);
     document.removeEventListener("mousemove", onMouseParallax);
   });
 }

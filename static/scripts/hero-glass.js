@@ -1,4 +1,3 @@
-const root = document.documentElement;
 const hero = document.querySelector("#hero");
 const tiltTargets = document.querySelectorAll("[data-tilt]");
 const floaters = document.querySelectorAll("[data-float]");
@@ -25,20 +24,22 @@ const refreshHeroRect = () => {
 };
 
 const updateScene = () => {
-  root.style.setProperty("--cursor-x", `${pointer.x}px`);
-  root.style.setProperty("--cursor-y", `${pointer.y}px`);
-
-  if (hero && heroInView) {
-    if (heroRectDirty || !heroRect) {
-      refreshHeroRect();
-    }
-    const relX = (pointer.x - heroRect.left) / heroRect.width - 0.5;
-    const relY = (pointer.y - heroRect.top) / heroRect.height - 0.5;
-    const clampedX = Math.max(-0.5, Math.min(0.5, relX));
-    const clampedY = Math.max(-0.5, Math.min(0.5, relY));
-    hero.style.setProperty("--tilt-x", `${(-clampedY * 7).toFixed(2)}deg`);
-    hero.style.setProperty("--tilt-y", `${(clampedX * 9).toFixed(2)}deg`);
+  if (!hero || !heroInView) {
+    frame = null;
+    return;
   }
+
+  if (heroRectDirty || !heroRect) {
+    refreshHeroRect();
+  }
+  const relX = (pointer.x - heroRect.left) / heroRect.width - 0.5;
+  const relY = (pointer.y - heroRect.top) / heroRect.height - 0.5;
+  const clampedX = Math.max(-0.5, Math.min(0.5, relX));
+  const clampedY = Math.max(-0.5, Math.min(0.5, relY));
+  hero.style.setProperty("--cursor-x", `${((clampedX + 0.5) * 100).toFixed(2)}%`);
+  hero.style.setProperty("--cursor-y", `${((clampedY + 0.5) * 100).toFixed(2)}%`);
+  hero.style.setProperty("--tilt-x", `${(-clampedY * 7).toFixed(2)}deg`);
+  hero.style.setProperty("--tilt-y", `${(clampedX * 9).toFixed(2)}deg`);
 
   tiltTargets.forEach((target) => {
     const rect = target.getBoundingClientRect();
@@ -54,7 +55,9 @@ const updateScene = () => {
 const handlePointer = (event) => {
   pointer.x = event.clientX;
   pointer.y = event.clientY;
-  scheduleUpdateScene();
+  if (heroInView) {
+    scheduleUpdateScene();
+  }
 };
 
 window.addEventListener("pointermove", handlePointer, { passive: true });

@@ -1,6 +1,7 @@
 const root = document.documentElement;
 const hero = document.querySelector("#hero");
 const floaters = document.querySelectorAll("[data-float]");
+const reducedMotionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
 
 let frame;
 let heroInView = true;
@@ -29,6 +30,12 @@ const refreshHeroRect = () => {
 };
 
 const updateScene = () => {
+  if (reducedMotionQuery.matches) {
+    if (hero) updateTilt(hero, 0, 0);
+    frame = null;
+    return;
+  }
+
   if (!hero || !heroInView) {
     frame = null;
     return;

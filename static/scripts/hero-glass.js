@@ -1,6 +1,7 @@
 const hero = document.querySelector("#hero");
 const tiltTargets = document.querySelectorAll("[data-tilt]");
 const floaters = document.querySelectorAll("[data-float]");
+const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
 
 let frame;
 let heroInView = true;
@@ -23,6 +24,18 @@ const refreshHeroRect = () => {
   heroRectDirty = false;
 };
 
+const resetTilt = () => {
+  if (hero) {
+    hero.style.setProperty("--tilt-x", "0deg");
+    hero.style.setProperty("--tilt-y", "0deg");
+  }
+
+  tiltTargets.forEach((target) => {
+    target.style.setProperty("--tilt-x", "0deg");
+    target.style.setProperty("--tilt-y", "0deg");
+  });
+};
+
 const updateScene = () => {
   if (!hero || !heroInView) {
     frame = null;
@@ -38,6 +51,13 @@ const updateScene = () => {
   const clampedY = Math.max(-0.5, Math.min(0.5, relY));
   hero.style.setProperty("--cursor-x", `${((clampedX + 0.5) * 100).toFixed(2)}%`);
   hero.style.setProperty("--cursor-y", `${((clampedY + 0.5) * 100).toFixed(2)}%`);
+
+  if (prefersReducedMotion.matches) {
+    resetTilt();
+    frame = null;
+    return;
+  }
+
   hero.style.setProperty("--tilt-x", `${(-clampedY * 7).toFixed(2)}deg`);
   hero.style.setProperty("--tilt-y", `${(clampedX * 9).toFixed(2)}deg`);
 
@@ -77,14 +97,26 @@ window.addEventListener("scroll", () => {
   heroRectDirty = true;
 }, { passive: true });
 
+const handleReducedMotionChange = () => {
+  resetTilt();
+  if (!prefersReducedMotion.matches && heroInView) {
+    scheduleUpdateScene();
+  }
+};
+
+if (typeof prefersReducedMotion.addEventListener === "function") {
+  prefersReducedMotion.addEventListener("change", handleReducedMotionChange);
+} else if (typeof prefersReducedMotion.addListener === "function") {
+  prefersReducedMotion.addListener(handleReducedMotionChange);
+}
+
 if (hero) {
   const observer = new IntersectionObserver(
     (entries) => {
       entries.forEach((entry) => {
         heroInView = entry.isIntersecting;
         if (!heroInView) {
-          hero.style.setProperty("--tilt-x", "0deg");
-          hero.style.setProperty("--tilt-y", "0deg");
+          resetTilt();
           heroRect = null;
         } else {
           heroRectDirty = true;

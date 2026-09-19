@@ -35,7 +35,7 @@ body {
     "Segoe UI", sans-serif;
   color: var(--text);
   background: radial-gradient(
-      1200px circle at var(--cursor-x) var(--cursor-y),
+      1200px circle at 50% 20vh,
       rgba(0, 34, 30, 0.18),
       transparent 60%
     ),
@@ -165,6 +165,8 @@ main {
 }
 
 .hero {
+  --cursor-x: 50%;
+  --cursor-y: 50%;
   margin-top: 40px;
   padding: 72px;
   transform: perspective(1200px) rotateX(var(--tilt-x)) rotateY(var(--tilt-y));
@@ -584,6 +586,16 @@ main {
   );
   animation: borderSpin 7s linear infinite;
   opacity: 1;
+}
+
+.hero.glass {
+  background:
+    radial-gradient(
+      820px circle at var(--cursor-x) var(--cursor-y),
+      rgba(0, 34, 30, 0.18),
+      transparent 62%
+    ),
+    linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.02));
 }
 
 [data-tilt] {

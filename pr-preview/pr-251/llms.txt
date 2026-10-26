@@ -1,0 +1,39 @@
+# Kanvas
+
+> Visual, real-time collaborative cloud native infrastructure design and management platform by Layer5.
+
+Kanvas (often described as "Google Docs for infrastructure") provides a multiplayer canvas where platform engineers, DevOps teams, and developers can collaborate on architecture maps, Kubernetes topologies, and cloud patterns in real-time. It replaces manual YAML configuration with an intuitive drag-and-drop experience.
+
+## Core Capabilities
+- **Designer Mode**: Model cloud native infrastructure visually using a component catalog.
+- **Operator Mode**: Manage live Kubernetes clusters and monitor performance from the canvas.
+- **Multiplayer Collaboration**: Real-time multi-user design sessions.
+- **390+ Integrations**: Supports Kubernetes, Helm, AWS, GCP, Azure, Istio, Prometheus, and more.
+- **GitOps & CI/CD**: Visual reviews for version-controlled designs and deployment dry-runs.
+- **Observability**: Interactive terminal sessions and timeline DVR for deployment history.
+
+## Key Resources
+- [Launch Kanvas](https://kanvas.new) - Access the hosted platform.
+- [Documentation](https://docs.kanvas.new/) - Official guides and API references.
+- [Designer Overview](https://layer5.io/cloud-native-management/kanvas/design) - Visual modeling features.
+- [Operator Overview](https://layer5.io/cloud-native-management/kanvas/operate) - Cluster management features.
+- [Integration Catalog](https://layer5.io/cloud-native-management/meshery/integrations) - List of all 390+ supported technologies.
+
+## Community & Support
+- [GitHub Repository](https://github.com/meshery-extensions/kanvas-site) - Source code and issue tracking.
+- [Community Slack](https://slack.layer5.io) - Real-time discussion and support.
+- [Discussion Forum](https://discuss.layer5.io) - Longer-form technical help.
+- [Status Page](https://layer5.statuspage.io) - Service availability and uptime.
+
+## LLM Usage Policy
+- **Training**: Allowed with attribution (Non-commercial); Contact required (Commercial).
+- **Fine-tuning**: Please contact maintainers via the [Community Slack](https://slack.layer5.io) for commercial or specialized fine-tuning requests.
+- **Summarization & Embeddings**: Allowed.
+- **Attribution**: Must reference https://kanvas.new and https://layer5.io.
+- **Restrictions**: Do not misrepresent integrations or imply unauthorized affiliation.
+
+## Ownership & Legal
+- Maintained by [Layer5](https://layer5.io).
+- License: Apache 2.0.
+- [Privacy Policy](https://layer5.io/company/legal/privacy) | [Terms of Service](https://layer5.io/company/legal/terms-of-service)
+- Last-Updated: 2026-02-24

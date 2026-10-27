@@ -37,6 +37,22 @@
     "url": "{{ site.Params.canonicalBaseURL | strings.TrimRight "/" }}/"
   }
   </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "Kanvas",
+    "applicationCategory": "DeveloperApplication",
+    "operatingSystem": "Web",
+    "url": "https://www.kanvas.new",
+    "author": {
+      "@type": "Organization",
+      "name": "Layer5",
+      "url": "https://layer5.io"
+    },
+    "description": "A collaborative cloud infrastructure diagramming tool for engineering teams. Design, review, and deploy Kubernetes and multi-cloud infrastructure visually, in real time."
+  }
+  </script>
   {{- end }}
   {{- with site.Params.canonicalBaseURL }}
   <link rel="canonical" href="{{ . | strings.TrimRight "/" }}{{ $.RelPermalink }}">

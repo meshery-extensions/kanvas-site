@@ -168,7 +168,7 @@ main {
   margin-top: 40px;
   padding: 72px;
   transform: perspective(1200px) rotateX(var(--tilt-x)) rotateY(var(--tilt-y));
-  transition: transform 0.35s ease;
+  will-change: transform;
   transform-style: preserve-3d;
 }
 
@@ -586,10 +586,6 @@ main {
   opacity: 1;
 }
 
-[data-tilt] {
-  transform: perspective(1200px) rotateX(var(--tilt-x)) rotateY(var(--tilt-y));
-  transition: transform 0.35s ease;
-}
 
 .tilt {
   transform-style: preserve-3d;

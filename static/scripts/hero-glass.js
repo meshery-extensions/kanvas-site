@@ -59,6 +59,8 @@ const handlePointer = (event) => {
   heroInView && scheduleUpdateScene();
 };
 
+reducedMotionQuery.addEventListener("change", scheduleUpdateScene);
+
 window.addEventListener("pointermove", handlePointer, { passive: true });
 window.addEventListener("pointerdown", handlePointer, { passive: true });
 window.addEventListener("pointerleave", () => {

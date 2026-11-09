@@ -17,8 +17,6 @@
   --glass: rgba(12, 19, 33, 0.72);
   --glass-soft: rgba(14, 22, 36, 0.5);
   --border: rgba(255, 255, 255, 0.18);
-  --cursor-x: 50vw;
-  --cursor-y: 20vh;
   --tilt-x: 0deg;
   --tilt-y: 0deg;
 }
@@ -34,11 +32,7 @@ body {
   font-family: "Qanelas Soft", "Space Grotesk", "Inter", -apple-system, BlinkMacSystemFont,
     "Segoe UI", sans-serif;
   color: var(--text);
-  background: radial-gradient(
-      1200px circle at var(--cursor-x) var(--cursor-y),
-      rgba(0, 34, 30, 0.18),
-      transparent 60%
-    ),
+  background: radial-gradient(1200px circle at 50vw 20vh, rgba(0, 34, 30, 0.18), transparent 60%),
     radial-gradient(900px circle at 85% 15%, rgba(0, 211, 169, 0.2), transparent 60%),
     radial-gradient(800px circle at 15% 80%, rgba(158, 255, 236, 0.16), transparent 55%),
     linear-gradient(180deg, #041013 0%, #0a151c 55%, #0b1c24 100%);
@@ -168,7 +162,7 @@ main {
   margin-top: 40px;
   padding: 72px;
   transform: perspective(1200px) rotateX(var(--tilt-x)) rotateY(var(--tilt-y));
-  transition: transform 0.35s ease;
+  will-change: transform;
   transform-style: preserve-3d;
 }
 
@@ -586,10 +580,6 @@ main {
   opacity: 1;
 }
 
-[data-tilt] {
-  transform: perspective(1200px) rotateX(var(--tilt-x)) rotateY(var(--tilt-y));
-  transition: transform 0.35s ease;
-}
 
 .tilt {
   transform-style: preserve-3d;

@@ -43,7 +43,8 @@ Hugo dev server runs at `http://localhost:1313` by default.
 - CSS custom properties for cursor-tracking tilt: `--tilt-x`, `--tilt-y`, `--cursor-x`, `--cursor-y`
 
 ### JavaScript
-- GSAP 3.13 + ScrollTrigger 3.12.5 loaded via CDN in `footer.html`
+- GSAP and ScrollTrigger 3.13.0 load via CDN in `layouts/partials/footer.html`, GSAP core first: ScrollTrigger needs it
+- Vanilla JS in `static/scripts/` - no bundler, no imports
 - `hero-glass.js` updates CSS custom properties on pointermove for 3D perspective tilt
 - `multi-player-cursors.js` creates animated cursor elements with social proof indicators
 - `main.js` handles GSAP timeline for header, counter animations, marquee, scroll detection
@@ -55,6 +56,24 @@ Hugo dev server runs at `http://localhost:1313` by default.
 - Hugo pipes handle SCSS compilation and PostCSS processing
 - Always use `$primary` SCSS variable — never hardcode `#00b39f`
 - Scroll animations are scrub-based (`scrub: 1`) via `scrubEach()` — never one-shot `gsap.from()`
+- No inline `style="..."` in HTML - styling belongs in SCSS
+- Never edit `public/` - it is Hugo build output, wiped by `make build`
+
+## Worktrees and landing a change
+
+- **Work in a treehouse worktree, never in the main clone.** Other agent sessions and the
+  no-mistakes pipeline share the main clone. Take a worktree with
+  `treehouse get --lease -b <branch>` (it prints the path; `--base <branch>` starts it from
+  another branch), work there, and release it with `treehouse return <path>` once the change
+  has merged. `treehouse status` lists the pool. Never make one with `git worktree add` or a
+  second clone.
+- **Land every change through no-mistakes, at most three runs per pull request.** Commit in
+  the worktree, then run `no-mistakes axi run --intent "<goal>"` (a clone without a
+  `no-mistakes` remote needs `no-mistakes init` once). `no-mistakes axi status` shows the step
+  and its findings, and `no-mistakes axi respond` answers a review gate. The pipeline reviews,
+  tests, pushes and opens the pull request. After the third run, merge the pull request as it
+  stands and open an issue for anything still flagged. A run that stopped on a usage limit
+  counts; one cancelled before it did anything does not.
 
 ## Claude Code Setup
 

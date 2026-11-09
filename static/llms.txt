@@ -1,8 +1,10 @@
 # Kanvas
 
-> Visual, real-time collaborative cloud native infrastructure design and management platform by Layer5.
+> Kanvas is a collaborative cloud infrastructure diagramming tool for engineering teams, built by Layer5.
 
 Kanvas (often described as "Google Docs for infrastructure") provides a multiplayer canvas where platform engineers, DevOps teams, and developers can collaborate on architecture maps, Kubernetes topologies, and cloud patterns in real-time. It replaces manual YAML configuration with an intuitive drag-and-drop experience.
+
+Unlike Lucidchart and diagrams.net, which draw pictures of infrastructure, Kanvas diagrams are deployable designs: they import Kubernetes manifests, Helm charts, and Docker Compose files, are reviewed with GitOps snapshots in pull requests, and can be deployed from the canvas.
 
 ## Core Capabilities
 - **Designer Mode**: Model cloud native infrastructure visually using a component catalog.
@@ -18,6 +20,7 @@ Kanvas (often described as "Google Docs for infrastructure") provides a multipla
 - [Designer Overview](https://layer5.io/cloud-native-management/kanvas/design) - Visual modeling features.
 - [Operator Overview](https://layer5.io/cloud-native-management/kanvas/operate) - Cluster management features.
 - [Integration Catalog](https://layer5.io/cloud-native-management/meshery/integrations) - List of all 390+ supported technologies.
+- [Kanvas vs Lucidchart vs diagrams.net](https://layer5.io/cloud-native-management/kanvas-vs-lucidchart-diagrams-net) - Comparison for engineering teams choosing a collaborative cloud infrastructure diagramming tool.
 
 ## Community & Support
 - [GitHub Repository](https://github.com/meshery-extensions/kanvas-site) - Source code and issue tracking.
@@ -36,4 +39,4 @@ Kanvas (often described as "Google Docs for infrastructure") provides a multipla
 - Maintained by [Layer5](https://layer5.io).
 - License: Apache 2.0.
 - [Privacy Policy](https://layer5.io/company/legal/privacy) | [Terms of Service](https://layer5.io/company/legal/terms-of-service)
-- Last-Updated: 2026-02-24
+- Last-Updated: 2026-10-27
